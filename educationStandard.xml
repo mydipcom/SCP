@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <category>education</category>
+    <scope>primary</scope>
+    <introduction>some data of primary education</introduction>
+    <background>used for education data excavate</background>
+    <version>1.0</version>
+    <fileformat>txt;csv;xml</fileformat>
+    <copyright>missionSky</copyright>
+    <content>
+    	<column>
+			<name>education_id</name>
+			<type>String</type>
+			<required>yes</required>
+			<format>^[A-Za-z0-9]+$</format>
+			<description>a unique alpha-numeric identifier created or assigned for education</description>
+		</column>
+    </content>
+</root>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<dataSource name="Accela">
+		<dataFormat>1</dataFormat>
+		<step>100</step>
+		<taskTimer>true</taskTimer>
+		<fecthDuration>86400000</fecthDuration>
+		<link>http://opendata8.cloudapp.net:5000/api/action/datastore_search?resource_id=c8d78a97-dd7e-4d75-901f-bc273882c54e</link>
+		<offsetParamName>offset</offsetParamName>
+		<standardFiles>
+			<standardFile name="standard1.xml" id="1"></standardFile>
+			<standardFile name="standard2.xml" id="2"></standardFile>
+			<standardFile name="standard3.xml" id="3"></standardFile>
+		</standardFiles>
+		<successFlag path="success">
+			<value name="true">1</value>
+			<value name="false">0</value>
+			<value name="none">-1</value>
+		</successFlag>
+		<error errorTypePath="error _type" errorMessagePath="error message"></error>
+		<total path="result total"></total>
+		<storePath>
+			<subStorePath index="1" type="country" value="china"></subStorePath>
+			<subStorePath index="2" type="city" value="shenzhen"></subStorePath>
+			<subStorePath index="3" type="category" value="education"></subStorePath>
+			<subStorePath index="4" type="business" value="primary"></subStorePath>
+			<subStorePath index="5" type="business" value="senior"></subStorePath>
+			<subStorePath index="6" type="business" value="university"></subStorePath>
+		</storePath>
+		<description>Accela Open Data,DC-Building_Permit.</description>
+		<dataStructures>
+			<fieldMap path="result records">
+				<field type="text" name="AppURL">
+					<map standardId="1" standardName="AppURL"></map>
+					<map standardId="2" standardName="AppURL"></map>
+					<map standardId="3" standardName="AppURL"></map>
+				</field>
+				<field type="text" name="WorkDescription">
+					<map standardId="1" standardName="WorkDescription"></map>
+				</field>
+				<field type="text" name="ApplicationStatus">
+					<map standardId="1" standardName="ApplicationStatus"></map>
+				</field>
+				<field type="text" name="CompleteDate">
+					<map standardId="1" standardName="CompleteDate"></map>
+				</field>
+				<field type="text" name="ProcessStatus">
+					<map standardId="1" standardName="ProcessStatus"></map>
+				</field>
+				<field type="text" name="Process">
+					<map standardId="1" standardName="Process"></map>
+				</field>
+				<field type="text" name="Location">
+					<map standardId="1" standardName="Location"></map>
+				</field>
+				<field type="text" name="ZipCode">
+					<map standardId="1" standardName="ZipCode"></map>
+				</field>
+				<field type="text" name="ProjectStreetSufx">
+					<map standardId="1" standardName="ProjectStreetSufx"></map>
+				</field>
+				<field type="text" name="ProjectStreetName">
+					<map standardId="1" standardName="ProjectStreetName"></map>
+				</field>
+				<field type="text" name="ProjectStreetDir">
+					<map standardId="1" standardName="ProjectStreetDir"></map>
+				</field>
+				<field type="text" name="ProjectUnit">
+					<map standardId="1" standardName="ProjectUnit"></map>
+				</field>
+				<field type="text" name="ProjectHouseNbr">
+					<map standardId="1" standardName="ProjectHouseNbr"></map>
+				</field>
+				<field type="text" name="ApplicantBusinessName">
+					<map standardId="1" standardName="ApplicantBusinessName"></map>
+				</field>
+				<field type="text" name="TotalPayment">
+					<map standardId="1" standardName="TotalPayment"></map>
+				</field>
+				<field type="text" name="TotalFee">
+					<map standardId="1" standardName="TotalFee"></map>
+				</field>
+				<field type="text" name="Balance">
+					<map standardId="1" standardName="Balance"></map>
+				</field>
+				<field type="text" name="ProjectNumber">
+					<map standardId="1" standardName="ProjectNumber"></map>
+				</field>
+				<field type="text" name="ProjectName">
+					<map standardId="1" standardName="ProjectName"></map>
+				</field>
+				<field type="text" name="ApplicationDate">
+					<map standardId="1" standardName="ApplicationDate"></map>
+				</field>
+				<field type="text" name="ProjectSubType">
+					<map standardId="1" standardName="ProjectSubType"></map>
+				</field>
+				<field type="text" name="ProjectType">
+					<map standardId="1" standardName="ProjectType"></map>
+				</field>
+				<field type="text" name="Module">
+					<map standardId="1" standardName="Module"></map>
+				</field>
+				<field type="text" name="ContactNumber">
+					<map standardId="1" standardName="ContactNumber"></map>
+				</field>
+				<field type="text" name="AddressNumber">
+					<map standardId="1" standardName="AddressNumber"></map>
+				</field>
+				<field type="text" name="PermitNumber">
+					<map standardId="1" standardName="PermitNumber"></map>
+				</field>
+				<field type="int4" name="_id">
+					<map standardId="1" standardName="id"></map>
+				</field>
+			</fieldMap>
+		</dataStructures>
+	</dataSource>
+</root>

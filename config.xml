@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<filePath>c:\\config</filePath>
+	<standardFiles>
+		<standardFile id="1" fileName="standard1.xml"></standardFile>
+		<standardFile id="2" fileName="educationStandard.xml"></standardFile>
+	</standardFiles>
+	<configFiles>
+		<configFile id="1" fileName="King-County-WA-Planning.xml"></configFile>
+		<configFile id="2" fileName="conf_template.xml"></configFile>
+	</configFiles>
+</root>
