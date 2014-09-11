@@ -32,6 +32,7 @@ public class Main {
 		
 		
 		// 加载配置文件
+		
 		ConfigParser.loadConfiguration();
 		
 		String filePath = SingleInstance.getFilePath();
