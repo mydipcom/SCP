@@ -1,5 +1,6 @@
 package com.missionsky.scp.dataadapter.persistence;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -290,9 +291,12 @@ public class HadoopFileUtil {
 	}
 	
 	public static void appendFile(byte[] bytes,String hdfsPath){
+		
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(URI.create(hdfsPath),conf);
+			
+			
 			FSDataOutputStream out = hdfs.append(new Path(hdfsPath));
 			out.write(bytes);
 			out.flush();

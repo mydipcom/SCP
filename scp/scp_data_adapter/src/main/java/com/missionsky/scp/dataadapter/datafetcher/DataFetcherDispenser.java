@@ -49,6 +49,7 @@ public class DataFetcherDispenser {
 	public void gainParsedData(Document doc) {
 				
 		List<Element> dataSources = doc.getRootElement().elements();
+		//为每一个数据源开启线程
 		
 		threadPool =  new ScheduledThreadPoolExecutor(dataSources.size());
 		

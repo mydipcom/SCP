@@ -32,11 +32,13 @@ public class ExcuteFecthThread extends Thread {
 
 	@Override
 	public void run() {
+		
 		HashMap<String, DataSource> dataSources = SingleInstance.getDataSources();
 		Integer step = dataSource.getStep();
 		Integer offset = 0;
 		
 		if (dataSources.get(dataSource.getName()).getIsFirst()) {
+			
 			Integer total = divideProcess(offset, step);
 			
 			dataSource.setIsFirst(false);
@@ -44,6 +46,7 @@ public class ExcuteFecthThread extends Thread {
 			dataSources.put(dataSource.getName(), dataSource);
 			SingleInstance.setDataSources(dataSources);
 		} else {
+			
 			Integer currentTotal = dataFetcher.getTotal(dataSource);
 			
 			if (dataSource.getTotal() != null && currentTotal != null) {
@@ -60,6 +63,7 @@ public class ExcuteFecthThread extends Thread {
 	
 	// 分块处理
 	protected Integer divideProcess(Integer offset, Integer step){
+		
 		Integer total = 0;
 		Integer result = null;
 		if (step != null && step > 0) {
@@ -76,10 +80,12 @@ public class ExcuteFecthThread extends Thread {
 	
 	// 处理数据
 	protected Integer dataProcess(Integer offset) {
+		
 		List<Map<String, String>> records = dataFetcher.renderMergedFetchedData(dataSource, offset);
+		
 		logger.info("Save data to hdfs.");
 		DataFilterApi.filterClassifiedStorage(records, dataSource.getName(), SystemConstants.DATA_FLITER_TYPE_INSERT);
-
+        
 		return records.size();
 	}
 

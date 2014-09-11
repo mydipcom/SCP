@@ -33,6 +33,7 @@ public class JSONDataFetcher implements DataFetcher {
 
 	@Override
 	public List<Map<String, String>> renderMergedFetchedData(DataSource dataSource, Integer offset) {
+		
 		String jsonStr = getJSONString(dataSource.getLink(), dataSource.getOffsetParameterName(), offset);
 		JsonNode successNode = (JsonNode) getTargetByPath(jsonStr, dataSource.getSuccessFlagPath());
 		Integer successValue = dataSource.getSuccessValues().get(successNode.toString());
@@ -41,21 +42,28 @@ public class JSONDataFetcher implements DataFetcher {
 
 		// 判断获取数据操作是否成功
 		if (successValue.equals(SystemConstants.SUCCESS_FLAG_HALT)) {
+			
 			logger.error("{}:{}",getTargetByPath(jsonStr, dataSource.getErrorTypePath()),getTargetByPath(jsonStr, dataSource.getErrorMessagePath()));
 			return null;
 		} else if (successValue.equals(SystemConstants.SUCCESS_FLAG_GOON)) {
+			
 			JsonNode recordsNode = (JsonNode) getTargetByPath(jsonStr, dataSource.getRecordsPath());
+			
 			if (!recordsNode.isNull() && recordsNode.isArray()) {
+				
 				for (JsonNode record : recordsNode) {
+					
 					singleField = new HashMap<String, String>();
 					for (String key : dataSource.getFields().keySet()) {
-						singleField.put(key, record.get(key).toString());
+						
+						singleField.put(key,record.get(key).toString());
 					}
+					
 					result.add(singleField);
 				}
 			}
 		}
-
+		
 		return result;
 	}
 
@@ -63,6 +71,7 @@ public class JSONDataFetcher implements DataFetcher {
 	 * @author Ellis Xie 获取JSON字符串
 	 */
 	protected String getJSONString(String link, String offsetParameterName, Integer offset) {
+		
 		if (offset != null) {
 			if (link.contains("?")) {
 				link = link + "&" + offsetParameterName + "=" + offset;
@@ -86,6 +95,7 @@ public class JSONDataFetcher implements DataFetcher {
 			while ((str = bufferedReader.readLine()) != null) {
 				sb.append(str);
 			}
+			
 			// 关闭reader，断开连接
 			reader.close();
 			connection.disconnect();
@@ -94,7 +104,7 @@ public class JSONDataFetcher implements DataFetcher {
 		} catch (IOException e) {
 			logger.error("Can not get the input stream of the URL {}:{}", link, e.toString());
 		}
-
+		
 		return sb.toString();
 	}
 

@@ -121,7 +121,7 @@ public class DataFilterApi {
 			HadoopFileUtil.createFile("/"+name+"/"+fileName, bytes);
 		}else{
 			String path = hdfsPath.get("path");
-			String[] paths = path.split(":9000");
+			String[] paths = path.split(":8020");
 			path = paths[paths.length-1];
 			logger.info("append data to exist file {}",path);
 			HadoopFileUtil.appendFile(bytes, path);

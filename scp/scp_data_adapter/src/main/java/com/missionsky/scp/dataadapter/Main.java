@@ -37,14 +37,14 @@ public class Main {
 		String filePath = SingleInstance.getFilePath();
 		HashMap<String, String> configFiles = SingleInstance.getConfigFiles();
 		for (String key : configFiles.keySet()) {
-			String confFileName = filePath + "/" + configFiles.get(key);
+			String confFileName = filePath + "" + configFiles.get(key);
 			try {
 				logger.info("Begin to parser the datasources configuration file:{}", confFileName);
-				
 				Document doc = XmlUtil.read(confFileName);
 				DataFetcherDispenser dataFetcherDispenser = new DataFetcherDispenser();
 				dataFetcherDispenser.gainParsedData(doc);
 			} catch (DocumentException e) {
+				
 				logger.error("The configuration file {} is not found.", confFileName);
 			}
 		}

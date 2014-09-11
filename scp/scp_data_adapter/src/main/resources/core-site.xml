@@ -19,17 +19,17 @@
 <configuration>
   <property>
 	<name>hadoop.home.dir</name>
-	<value>/home/hadoop/hadoop/</value>
+	<value>/usr/hadoop</value>
 	<description>A base for other temporary directories</description>
   </property>
   <property>
 	<name>hadoop.tmp.dir</name>
-	<value>/hadoop/tmp</value>
+	<value>file:/home/hadoop/tmp</value>
 	<description>A base for other temporary directories</description>
   </property>
   <property>
 	<name>fs.default.name</name>
-	<value>hdfs://localhost:9000</value>
+	<value>hdfs://192.168.10.115:8020</value>
   </property>
   <property>
 	<name>hadoop.native.lib</name>
