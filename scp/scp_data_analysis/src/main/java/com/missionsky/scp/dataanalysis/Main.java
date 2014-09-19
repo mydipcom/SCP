@@ -21,13 +21,6 @@ public class Main {
 			LocateRegistry.getRegistry(rmiPort);
 			
 			
-			
-			
-			
-			
-			
-			
-			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<?xml-stylesheet type="text/xsl" href="cofiguration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -18,69 +18,27 @@
 
 <configuration>
     <property>
-        <name>dfs.replication</name>
-        <value>1</value>
-    </property>
-    <property>
-        <name>dfs.namenode.name.dir</name>
-        <value>file:/hadoop/hdfs/name</value>
-        <final>true</final>
-    </property>
-    <property>
-        <name>dfs.federation.nameservice.id</name>
-        <value>ns1</value>
-    </property>
-    <property>
-        <name>dfs.namenode.backup.address.ns1</name>
-        <value>192.168.0.109:50100</value>
-    </property>
-    <property>
-        <name>dfs.namenode.backup.http-address.ns1</name>
-        <value>192.168.0.109:50105</value>
-    </property>
-    <property>
-        <name>dfs.federation.nameservices</name>
-        <value>ns1</value>
-    </property>
-    <property>
-        <name>dfs.namenode.rpc-address.ns1</name>
-        <value>192.168.0.109:9000</value>
-    </property>
-    <property>
-        <name>dfs.namenode.rpc-address.ns2</name>
-        <value>192.168.0.109:9000</value>
-    </property>
-    <property>
-        <name>dfs.namenode.http-address.ns1</name>
-        <value>192.168.0.109:23001</value>
-    </property>
-    <property>
-        <name>dfs.namenode.http-address.ns2</name>
-        <value>192.168.0.109:13001</value>
-    </property>
-    <property>
-        <name>dfs.dataname.data.dir</name>
-        <value>file:/hadoop/hdfs/data</value>
-        <final>true</final>
-    </property>
-    <property>
-        <name>dfs.namenode.secondary.http-address.ns1</name>
-        <value>192.168.0.109:23002</value>
-    </property>
-    <property>
-        <name>dfs.namenode.secondary.http-address.ns2</name>
-        <value>192.168.0.109:23002</value>
-    </property>
-    <property>
-        <name>dfs.namenode.secondary.http-address.ns1</name>
-        <value>192.168.0.109:23003</value>
-    </property>
-    <property>
-        <name>dfs.namenode.secondary.http-address.ns2</name>
-        <value>192.168.0.109:23003</value>
-    </property>
-    <property>
-	    <name>dfs.permissions</name>
-	    <value>false</value>
+                <name>dfs.namenode.secondary.http-address</name>
+               <value>192.168.10.115:9001</value>
+       </property>
+     <property>
+             <name>dfs.namenode.name.dir</name>
+             <value>file:/home/hadoop/dfs/name</value>
+       </property>
+      <property>
+              <name>dfs.datanode.data.dir</name>
+              <value>file:/home/hadoop/dfs/data</value>
+       </property>
+       <property>
+               <name>dfs.replication</name>
+               <value>3</value>
+        </property>
+        <property>
+                 <name>dfs.webhdfs.enabled</name>
+                  <value>true</value>
+         </property>
+          <property>
+		<name>dfs.support.append</name>
+		<value>true</value>
 	</property>
 </configuration>

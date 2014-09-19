@@ -25,6 +25,7 @@ public class StandardFileDao {
 		if(result != null){
 			StandardFile file = new StandardFile();
 			file.setRowKey(Bytes.toString(result.getRow()));
+			
 			byte[] name = result.getValue(Bytes.toBytes(FAMILY), Bytes.toBytes(QUALIFIERS[0]));
 			if(name != null){
 				file.setName(Bytes.toString(name));

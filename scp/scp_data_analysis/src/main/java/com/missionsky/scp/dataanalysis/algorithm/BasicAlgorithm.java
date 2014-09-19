@@ -37,9 +37,11 @@ public abstract class BasicAlgorithm implements Algorithm {
 		ArrayList<String> inputpaths = new ArrayList<String>();
 		try {
 			FileSystem fs = FileSystem.get(conf);
-			Path standardPath = new Path(getHDFSUrl() + "/scp/data-adapter/" + (standardFileName.endsWith(".xml")?standardFileName.replace(".xml", ""):standardFileName));			
+			
+			Path standardPath = new Path(getHDFSUrl() + "/Fire/fire_1411112358989");			
 			FileStatus[] fileStatus = fs.listStatus(standardPath);
 			for (FileStatus fStatus : fileStatus) {
+				
 				inputpaths.add(fStatus.getPath().toString());
 			}
 		} catch (IOException e) {

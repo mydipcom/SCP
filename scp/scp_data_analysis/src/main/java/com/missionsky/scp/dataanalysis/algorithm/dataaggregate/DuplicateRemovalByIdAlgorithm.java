@@ -19,7 +19,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.glassfish.gmbal.Description;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  * @version 1.0
  */
 
-@Description("Duplicate Removal By ID Algorithm")
+
 public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 	
 	private static Logger logger = LoggerFactory.getLogger(DuplicateRemovalByIdAlgorithm.class);
@@ -86,7 +86,7 @@ public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 					while (matrixIterator.hasNext()) {
 						String[] nextData = matrixIterator.next();
 						for (int i = 0; i < temp.length; i++) {
-							if (StringUtils.isBlank(temp[i]) && StringUtils.isNotBlank(nextData[i])) {
+							if (StringUtils.isBlank(temp[i])  && StringUtils.isNotBlank(nextData[i])) {
 								temp[i] = nextData[i];
 							}
 						}

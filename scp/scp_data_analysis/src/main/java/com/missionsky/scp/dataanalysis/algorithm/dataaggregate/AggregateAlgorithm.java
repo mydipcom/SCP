@@ -7,7 +7,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.glassfish.gmbal.Description;
+
 
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
 
@@ -17,7 +17,7 @@ import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
  * @version 1.0
  */
 
-@Description("Aggregate algorithm  abstract class")
+
 public abstract class AggregateAlgorithm extends BasicAlgorithm{
 	
 	/**

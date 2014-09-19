@@ -13,28 +13,32 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
-	<property>
-		<name>yarn.resourcemanager.address</name>
-		<value>192.168.0.109:18040</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.scheduler.address</name>
-		<value>192.168.0.109:18030</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.webapp.address</name>
-		<value>192.168.0.109:18088</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.resource-tracker.address</name>
-		<value>192.168.0.109:18025</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.admin.address</name>
-		<value>192.168.0.109:18141</value>
-	</property>
-	<property>
-		<name>yarn.nodemanager.aux-services</name>
-		<value>mapreduce_shuffle</value>
-	</property>
+	  <property>
+               <name>yarn.nodemanager.aux-services</name>
+               <value>mapreduce_shuffle</value>
+        </property>
+        <property>                                                                
+               <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+               <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+        </property>
+        <property>
+               <name>yarn.resourcemanager.address</name>
+               <value>192.168.10.115:8032</value>
+       </property>
+       <property>
+               <name>yarn.resourcemanager.scheduler.address</name>
+               <value>192.168.10.115:8030</value>
+       </property>
+       <property>
+            <name>yarn.resourcemanager.resource-tracker.address</name>
+             <value>192.168.10.115:8031</value>
+      </property>
+      <property>
+              <name>yarn.resourcemanager.admin.address</name>
+               <value>192.168.10.115:8033</value>
+       </property>
+       <property>
+               <name>yarn.resourcemanager.webapp.address</name>
+               <value>192.168.10.115:8088</value>
+       </property>
 </configuration>

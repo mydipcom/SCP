@@ -2,6 +2,8 @@ package com.missionsky.scp.dataanalysis;
 
 import java.util.ArrayList;
 
+import org.apache.hadoop.mapred.YARNRunner;
+
 import com.missionsky.scp.dataanalysis.algorithm.dataaggregate.DuplicateRemovalSimpleAlgorithm;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 import com.missionsky.scp.dataanalysis.facadeinterface.BasicTaskAssemblyLine;
@@ -18,6 +20,7 @@ public class test {
 		task.setStandardFile("standard01.xml");
 		
 		task.setName("test_X");
+		
 		
 		BasicTaskAssemblyLine basicTaskAssemblyLine = new BasicTaskAssemblyLine();
 		basicTaskAssemblyLine.stream(task);

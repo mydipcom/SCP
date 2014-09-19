@@ -40,6 +40,7 @@ public class StandardFile {
 	public StandardFile(String standardFileKey){
 		try {
 			com.missionsky.scp.entity.StandardFile sf = StandardFileDao.getFileByRowKey(standardFileKey);
+			
 			Document document = DocumentHelper.parseText(sf.getContent());
 			this.root = document.getRootElement();
 			this.name = sf.getName();

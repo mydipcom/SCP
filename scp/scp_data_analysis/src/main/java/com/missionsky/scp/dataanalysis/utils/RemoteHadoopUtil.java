@@ -17,12 +17,16 @@ public class RemoteHadoopUtil {
      */
     public static void setConf(Class<?> clazz, Thread thread, String path) {
         URL url = clazz.getResource(path);
+        
+        
         try {
             File confDir = new File(url.toURI());
+            
             if (!confDir.exists()) {
                 return;
             }
             URL key = confDir.getCanonicalFile().toURI().toURL();
+            
             ClassLoader classLoader = thread.getContextClassLoader();
             classLoader = new URLClassLoader(new URL[] { key }, classLoader);
             thread.setContextClassLoader(classLoader);

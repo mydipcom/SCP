@@ -1,6 +1,6 @@
 package com.missionsky.scp.dataanalysis.algorithm.dataaggregate;
 
-import org.glassfish.gmbal.Description;
+
 
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
 
@@ -10,7 +10,7 @@ import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
  * @version 1.0
  */
 
-@Description("Duplicate Removal Algorithm  abstract class")
+
 public abstract class DuplicateRemovalAlgorithm extends BasicAlgorithm {
 
 }

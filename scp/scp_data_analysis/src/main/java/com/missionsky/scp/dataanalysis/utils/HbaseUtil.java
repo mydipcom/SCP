@@ -10,6 +10,7 @@ import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.MasterNotRunningException;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.ZooKeeperConnectionException;
@@ -19,8 +20,11 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HConnection;
 import org.apache.hadoop.hbase.client.HConnectionManager;
 import org.apache.hadoop.hbase.client.HTableInterface;
+import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +36,7 @@ public class HbaseUtil {
 
 	static {
 		config = HBaseConfiguration.create();
+		
 	}
 
 	/**
@@ -71,13 +76,21 @@ public class HbaseUtil {
 		connection.close();
 	}
 	
-	public static Result selectRowResult(String tableName,String rowKey) throws IOException{
-		HConnection connection = HConnectionManager.createConnection(config);
-		HTableInterface table = connection.getTable(tableName);
-		Get get = new Get(Bytes.toBytes(rowKey));
-		Result result = table.get(get);
-		table.close();
-		connection.close();
+	public static Result selectRowResult(String tableName,String rowKey){
+		Result result = null;
+		HConnection connection;
+		try {
+			connection = HConnectionManager.createConnection(config);
+			HTableInterface table = connection.getTable(tableName);
+			Get get = new Get(Bytes.toBytes(rowKey));
+			result = table.get(get);
+			table.close();
+			connection.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+         		}
+		
 		return result;
 	}
 

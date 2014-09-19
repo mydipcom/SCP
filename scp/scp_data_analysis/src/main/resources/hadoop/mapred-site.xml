@@ -23,12 +23,42 @@
 	</property>
 	<property>
 		<name>mapred.system.dir</name>
-		<value>file:/hadoop/mapred/system</value>
+		<value>file:/home/hadoop/mapred/system</value>
 		<final>true</final>
 	</property>
 	<property>
 		<name>mapred.local.dir</name>
-		<value>file:/hadoop/mapred/local</value>
+		<value>file:/home/hadoop/mapred/local</value>
 		<final>true</final>
 	</property>
+	<property>
+                  <name>mapreduce.jobhistory.address</name>
+                  <value>192.168.10.115:10020</value>
+          </property>
+          <property>
+                <name>mapreduce.jobhistory.webapp.address</name>
+                <value>192.168.10.115:19888</value>
+       </property>
+ 
+ <property>
+ <name>mapred.remote.os</name>
+ <value>Linux</value>
+ <description>
+  Remote MapReduce framework's OS, can be either Linux or Windows
+ </description>
+</property>
+<property>
+       <name>mapreduce.application.classpath</name>
+       <value>
+            /usr/hadoop/etc/hadoop,
+             /usr/hadoop/share/hadoop/common/*,
+            /usr/hadoop/share/hadoop/common/lib/*,
+             /usr/hadoop/share/hadoop/hdfs/*,
+             /usr/hadoop/share/hadoop/hdfs/lib/*,
+             /usr/hadoop/share/hadoop/mapreduce/*,
+            /usr/hadoop/share/hadoop/mapreduce/lib/*,
+             /usr/hadoop/share/hadoop/yarn/*,
+             /usr/hadoop/share/hadoop/yarn/lib/*
+       </value>
+</property>
 </configuration>

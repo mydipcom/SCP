@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-import org.glassfish.gmbal.Description;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  * @version 1.0
  */
 
-@Description("Simple Duplicate Removal Algorithm")
+
 public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 	
 	private Logger logger = LoggerFactory.getLogger(DuplicateRemovalSimpleAlgorithm.class);

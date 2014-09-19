@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.glassfish.gmbal.Description;
+
+
+
 
 import com.missionsky.scp.dataanalysis.entity.ClassInfo;
 
@@ -69,7 +71,7 @@ public class ClassUtil {
 			classInfo = new ClassInfo();
 			classInfo.setSimpleName(cl.getSimpleName());
 			classInfo.setName(cl.getName());
-			classInfo.setDescription(((Description)cl.getAnnotation(Description.class)).value());
+			//classInfo.setDescription(((Description)cl.getAnnotation(Description.class)).value());
 		}
 		
 		return classInfos;

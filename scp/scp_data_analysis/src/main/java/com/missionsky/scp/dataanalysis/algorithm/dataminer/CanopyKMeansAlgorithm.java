@@ -17,7 +17,7 @@ import org.apache.mahout.common.commandline.DefaultOptionCreator;
 import org.apache.mahout.common.distance.DistanceMeasure;
 import org.apache.mahout.common.distance.SquaredEuclideanDistanceMeasure;
 import org.apache.mahout.utils.clustering.ClusterDumper;
-import org.glassfish.gmbal.Description;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ import com.missionsky.scp.dataanalysis.algorithm.MinerAlgorithm;
  * @version 1.0
  */
 
-@Description("Mahout Canopy + K-means Miner Algorithm")
+
 public class CanopyKMeansAlgorithm extends MinerAlgorithm {
 
 	private static final Logger log = LoggerFactory.getLogger(Job.class);

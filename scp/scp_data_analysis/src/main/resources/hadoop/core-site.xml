@@ -19,12 +19,12 @@
 <configuration>
   <property>
 	<name>hadoop.tmp.dir</name>
-	<value>/hadoop/tmp</value>
+	<value>file:/home/hadoop/tmp</value>
 	<description>A base for other temporary directories</description>
   </property>
   <property>
 	<name>fs.default.name</name>
-	<value>hdfs://192.168.0.109:9000</value>
+	<value>hdfs://192.168.10.115:8020</value>
   </property>
   <property>
 	<name>hadoop.native.lib</name>
@@ -33,6 +33,6 @@
   </property>
   <property>
 	<name>mapreduce.jobhistory.address</name>
-	<value>master:10020</value>
+	<value>192.168.10.115:10020</value>
   </property>
 </configuration>
