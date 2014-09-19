@@ -56,6 +56,7 @@ public class HadoopFileUtil {
 	 */
 	public static void uploadFile(String srcFile,String dstFile){
 		Configuration conf = new Configuration();
+		
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
 			Path src = new Path(srcFile);
@@ -279,6 +280,7 @@ public class HadoopFileUtil {
 	 */
 	public static void appendFile(String localFile,String hdfsPath){
 		Configuration conf = new Configuration();
+		
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
 			InputStream in = new FileInputStream(localFile);
@@ -293,6 +295,7 @@ public class HadoopFileUtil {
 	public static void appendFile(byte[] bytes,String hdfsPath){
 		
 		Configuration conf = new Configuration();
+		
 		try {
 			FileSystem hdfs = FileSystem.get(URI.create(hdfsPath),conf);
 			

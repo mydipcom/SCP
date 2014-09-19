@@ -18,7 +18,7 @@
 		<spring-data-hadoop.version>1.0.1.RELEASE</spring-data-hadoop.version>
 		
 		<!-- Hadoop -->
-		<hadoop.version>2.2.0</hadoop.version>
+		<hadoop.version>2.5.0</hadoop.version>
 		
 		<!-- Dom4j -->
 		<dom4j.version>1.6.1</dom4j.version>

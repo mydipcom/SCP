@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<filePath>d:\\config\</filePath>
+	<standardFiles>
+		
+		<standardFile id="1" fileName="educationStandard.xml"></standardFile>
+	</standardFiles>
+	<configFiles>
+		
+		<configFile id="1" fileName="conf_template.xml"></configFile>
+	</configFiles>
+</root>

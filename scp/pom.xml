@@ -29,7 +29,7 @@
 		<sitemesh.version>2.4.2</sitemesh.version>
 		
 		<!-- Hadoop -->
-		<hadoop.version>2.2.0</hadoop.version>
+		<hadoop.version>2.5.0</hadoop.version>
 		
 		<!-- HBase -->
 		<hbase.version>0.96.1-hadoop2</hbase.version>
