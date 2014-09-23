@@ -13,9 +13,9 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.StaticApplicationContext;
 
 import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
@@ -62,9 +62,12 @@ public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 			Path outputPathSub = null;
 			int i = 0;
 			
+			
 			for (String in : inputPaths) {
 				input = new Path(in);
-				outputPathSub = new Path(outputPath, "simple_duplicate_removal_" + i);
+				outputPathSub = new Path(outputPath, DuplicateRemovalSimpleAlgorithm.class.getSimpleName()+"_" + i);
+				
+
 				Job job = Job.getInstance(conf, taskName + "_duplicate_removal_simple_job_" + i++);
 				
 				jarPath = storeTempJarToHDFS(conf, DuplicateRemovalSimpleAlgorithm.class);
@@ -91,6 +94,7 @@ public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 					}
 				}
 			}
+			input_count=i;   //返回处理后输出文件数量
 		} catch (IOException e) {
 			//TODO log info
 			e.printStackTrace();

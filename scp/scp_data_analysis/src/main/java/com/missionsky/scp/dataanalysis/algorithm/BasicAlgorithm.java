@@ -27,10 +27,10 @@ import com.missionsky.scp.dataanalysis.utils.RemoteHadoopUtil;
 
 @AlgorithmInfoAnnotation(name="BasicAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="Basic algorithm abstract class.")
 public abstract class BasicAlgorithm implements Algorithm {
-	
+	public static int input_count=0;
 	private static Logger logger = LoggerFactory.getLogger(BasicAlgorithm.class);
 	
-	public Pattern pattern = Pattern.compile(",");
+	public static Pattern pattern = Pattern.compile(",");
 	
 	public int run(Configuration conf, String output, String standardFileName, StandardTask task){
 		
@@ -38,7 +38,7 @@ public abstract class BasicAlgorithm implements Algorithm {
 		try {
 			FileSystem fs = FileSystem.get(conf);
 			
-			Path standardPath = new Path(getHDFSUrl() + "/Fire/fire_1411112358989");			
+			Path standardPath = new Path(getHDFSUrl() + "/"+standardFileName);			
 			FileStatus[] fileStatus = fs.listStatus(standardPath);
 			for (FileStatus fStatus : fileStatus) {
 				

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.slf4j.Logger;
@@ -52,7 +55,10 @@ public class BasicTaskAssemblyLine {
 					algorithmResult = algorithm.run(conf,algorithmTaskOutput, standardFile.getName(), task);
 					
 					if (algorithmResult == Constants.ALGORITHM_RESULT_SUCCESS) {
-						tempIntput.add(algorithmTaskOutput);
+						for(int i=0;i<BasicAlgorithm.input_count;i++){
+						
+						tempIntput.add(algorithmTaskOutput+"/"+algorithm.getClass().getSimpleName()+"_" + i);
+						}
 					} else {
 						throw new InterruptedException("the algorithm "+ algorithmName +" in the task " + taskName + " fail");
 					}
@@ -63,7 +69,9 @@ public class BasicTaskAssemblyLine {
 					
 					if (algorithmResult == Constants.ALGORITHM_RESULT_SUCCESS) {
 						tempIntput.clear();
-						tempIntput.add(algorithmTaskOutput);
+						for(int i=0;i<BasicAlgorithm.input_count;i++){
+							 tempIntput.add(algorithmTaskOutput+"/"+algorithm.getClass().getSimpleName()+"_" + i);
+							}
 					} else {
 						throw new InterruptedException("the algorithm "+ algorithmName +" in the task " + taskName + " fail.");
 					}
@@ -74,7 +82,11 @@ public class BasicTaskAssemblyLine {
 			HbaseUtil.CreateHBaseTable(taskName, standardFile.getColumnNames());
 			algorithm = new StoreToHBaseAlgorithm();
 			conf = HBaseConfiguration.create();
+			conf.set("TABLE_NAME", taskName);
+			conf.setStrings("COLUMN_NAMES",  (String[]) standardFile.getColumnNames().toArray(new String[standardFile.getColumnNames().size()]));
+			
 			conf.set("mapreduce.jobtracker.address", getJobTracker());
+			
 			algorithmResult = algorithm.run(conf, tempIntput, null, task, taskName);
 			if (algorithmResult == Constants.ALGORITHM_RESULT_FAIL) {
 				throw new InterruptedException("the algorithm StoreToHBaseAlgorithm in the task " + taskName + " fail.");
@@ -95,5 +107,6 @@ public class BasicTaskAssemblyLine {
 		Properties properties = PropertiesUtil.loadPropertiesFile(BasicTaskAssemblyLine.class.getResource("/").getPath() + "/hadoop.properties");
 		return (String) properties.get("mapreduce.jobtracker.address");
 	}
+	
 
 }

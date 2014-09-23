@@ -49,7 +49,6 @@ public class StandardFile {
 		} catch (DocumentException e) {
 			logger.error("Can not convert string into XML Document Object:{}",e.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

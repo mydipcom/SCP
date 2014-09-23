@@ -1,11 +1,15 @@
 package com.missionsky.scp.dataanalysis.algorithm.dataaggregate;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
+import org.apache.cassandra.cli.CliParser.newColumnFamily_return;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
@@ -24,12 +28,14 @@ import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
 import com.missionsky.scp.dataanalysis.entity.StandardFile;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 import com.missionsky.scp.dataanalysis.utils.HbaseUtil;
+import com.missionsky.scp.dataanalysis.utils.PropertiesUtil;
+import com.missionsky.scp.dataanalysis.utils.RemoteHadoopUtil;
 
-public class StoreToHBaseAlgorithm extends BasicAlgorithm {
+public class StoreToHBaseAlgorithm  extends BasicAlgorithm{
 	
 	private static Logger logger = LoggerFactory.getLogger(StoreToHBaseAlgorithm.class);
 	
-	public class Mapper01 extends Mapper<Object, Text, Text, Text>{
+	public static class Mapper01 extends Mapper<Object, Text, Text, Text>{
 		
 		@Override
 		public void map(Object key,Text value, Context context) throws IOException, InterruptedException{
@@ -38,18 +44,26 @@ public class StoreToHBaseAlgorithm extends BasicAlgorithm {
 	}
 	
 	
-	public class Reducer01 extends TableReducer<Text, Text, NullWritable>{
+	public static class Reducer01 extends TableReducer<Text, Text, NullWritable>{
 		
 		private byte[] tableNameBytes = null;
-		private ArrayList<byte[]> columnNames = null;
+		private ArrayList<byte[]> columnNames = new ArrayList<byte[]>();
+		
 		
 		@Override
 		public void setup(Context context){
+			
 			tableNameBytes = Bytes.toBytes(context.getConfiguration().get("TABLE_NAME"));
+			
 			String [] tempColumnNames = context.getConfiguration().getStrings("COLUMN_NAMES");
+			
 			for (int i = 0; i < tempColumnNames.length; i++) {
 				columnNames.add(Bytes.toBytes(tempColumnNames[i]));
+			   
 			}
+			
+			
+		
 		}
 		
 		@Override
@@ -60,8 +74,11 @@ public class StoreToHBaseAlgorithm extends BasicAlgorithm {
 			String[] values = pattern.split(key.toString());
 			
 			for (int i = 0; i < columnNames.size(); i++) {
-				put.add(tableNameBytes, columnNames.get(i), Bytes.toBytes(values[i]));
+				put.add(columnNames.get(i),null , Bytes.toBytes(values[i]));
 			}
+			
+			
+			
 			
 			context.write(NullWritable.get(), put);
 		}
@@ -69,6 +86,7 @@ public class StoreToHBaseAlgorithm extends BasicAlgorithm {
 
 	@Override
 	public int run(Configuration conf, List<String> inputPaths, String outputPath, StandardTask task, String taskName) {
+		
 		int result = Constants.ALGORITHM_RESULT_SUCCESS;
 		Path jarPath = null;
 		
@@ -77,15 +95,19 @@ public class StoreToHBaseAlgorithm extends BasicAlgorithm {
 			int i = 0;
 			
 			for (String in : inputPaths) {
-				input = new Path(in);
+				input = new Path(in+"/part-r-00000");
 				
 				Job job = Job.getInstance(conf, taskName + "store_to_hbase_job_" + i);
 				
 				jarPath = storeTempJarToHDFS(conf, StoreToHBaseAlgorithm.class);
 				
 				job.addArchiveToClassPath(jarPath);
+				job.addArchiveToClassPath(storeTempJarToHDFS(conf, BasicAlgorithm.class));
+				
 				job.setJarByClass(StoreToHBaseAlgorithm.class);
+				
 				job.setMapperClass(Mapper01.class);
+				job.setReducerClass(Reducer01.class);
 				job.setMapOutputKeyClass(Text.class);
 				job.setMapOutputValueClass(Text.class);
 				
@@ -121,4 +143,5 @@ public class StoreToHBaseAlgorithm extends BasicAlgorithm {
 		
 		return result;
 	}
+	
 }
