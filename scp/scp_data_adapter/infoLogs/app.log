@@ -9490,3 +9490,127 @@ java.io.IOException: Could not locate executable D:\Program Files\hadoop\bin\win
 [20140919 18:32:38-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
 [20140919 18:32:38-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
 [20140919 18:32:38-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411112358989
+[20140922 10:43:39-INFO][ConfigParser.java:32][main]-- Begin to load system configuration:src/main/resources/config.xml
+[20140922 10:43:39-INFO][Main.java:43][main]-- Begin to parser the datasources configuration file:d:\\config\conf_template.xml
+[20140922 10:43:39-INFO][DataFetcherDispenser.java:160][main]-- Use class com.missionsky.scp.dataadapter.datafetcher.JSONDataFetcher to fetching data of the datasource Fire
+[20140922 10:43:39-INFO][DataFetcherDispenser.java:165][main]-- Create a timer task thread for datasource Fire in threadpool.
+[20140922 10:43:43-ERROR][JSONDataFetcher.java:105][pool-1-thread-1]-- Can not get the input stream of the URL http://www.civicdata.com/api/action/datastore_search?resource_id=ed0d4651-dbc3-48a6-b1df-17676f6e30f8&offset=0:java.net.UnknownHostException: www.civicdata.com
+[20140922 10:43:43-ERROR][JSONDataFetcher.java:124][pool-1-thread-1]-- Can not convert string into JSONNode:java.io.EOFException: No content to map to Object due to end of input
+[20140922 10:43:53-INFO][ConfigParser.java:32][main]-- Begin to load system configuration:src/main/resources/config.xml
+[20140922 10:43:53-INFO][Main.java:43][main]-- Begin to parser the datasources configuration file:d:\\config\conf_template.xml
+[20140922 10:43:53-INFO][DataFetcherDispenser.java:160][main]-- Use class com.missionsky.scp.dataadapter.datafetcher.JSONDataFetcher to fetching data of the datasource Fire
+[20140922 10:43:53-INFO][DataFetcherDispenser.java:165][main]-- Create a timer task thread for datasource Fire in threadpool.
+[20140922 10:43:58-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:43:58-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:43:58-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:43:58-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:43:58-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:43:59-INFO][DataFilterApi.java:120][pool-1-thread-1]-- create file fire_1411353838201 and write data
+[20140922 10:44:00-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:00-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:00-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:00-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:00-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:00-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:02-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:02-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:02-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:02-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:02-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:02-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:04-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:04-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:04-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:04-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:04-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:04-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:06-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:06-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:06-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:06-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:06-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:06-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:07-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:07-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:07-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:07-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:07-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:07-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:09-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:09-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:09-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:09-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:09-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:09-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:11-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:11-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:11-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:11-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:11-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:11-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:12-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:12-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:12-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:12-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:12-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:12-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:14-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:14-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:14-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:14-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:14-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:14-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:15-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:15-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:15-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:15-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:16-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:16-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:17-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:17-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:17-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:17-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:17-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:17-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:19-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:19-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:19-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:19-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:19-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:19-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:20-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:20-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:20-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:20-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:20-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:20-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:22-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:22-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:22-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:22-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:22-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:22-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:24-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:24-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:24-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:24-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:24-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:24-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:25-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:25-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:25-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:25-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:25-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:26-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:27-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:27-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:27-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:27-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:27-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:27-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
+[20140922 10:44:29-INFO][ExcuteFecthThread.java:86][pool-1-thread-1]-- Save data to hdfs.
+[20140922 10:44:29-INFO][DataFilterApi.java:45][pool-1-thread-1]-- instanceof object types:Map or List,recommend to use List
+[20140922 10:44:29-INFO][DataFilterApi.java:86][pool-1-thread-1]-- transfrom data to byte[]
+[20140922 10:44:29-INFO][DataFilterApi.java:88][pool-1-thread-1]-- get file name from xml configuration
+[20140922 10:44:29-INFO][DataFilterApi.java:110][pool-1-thread-1]-- Fire directory created.
+[20140922 10:44:29-INFO][DataFilterApi.java:126][pool-1-thread-1]-- append data to exist file /Fire/fire_1411353838201
