@@ -38,7 +38,7 @@
 		</property>
 	</bean>
 
-	<bean
+	<!--  <bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
@@ -47,6 +47,7 @@
 			</props>
 		</property>
 	</bean>
+	-->
 
 	<mvc:resources location="/images/" mapping="/images/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />

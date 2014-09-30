@@ -35,11 +35,11 @@
     			$(input).validationEngine("hideAll");
     		});
     	});
-		<!--  
+		<!--
 		function reloadVerifyCode(){  
 		    document.getElementById('verifyCodeImage').setAttribute('src', '${pageContext.request.contextPath}/getVerifyCodeImage');  
 		}  
-		//-->
+		-->
 		function showError(errorkey){
 			var msg = "";
 			if(errorkey != null || errorKey != ''){

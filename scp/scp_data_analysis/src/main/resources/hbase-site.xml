@@ -23,7 +23,7 @@
 <configuration>
 	<property>
 		<name>hbase.rootdir</name>
-		<value>hdfs://192.168.10.115/hbase</value>
+		<value>hdfs://192.168.10.115:8020/hbase</value>
 	</property>
 	<property>
 		<name>hbase.master</name>

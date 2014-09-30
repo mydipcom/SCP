@@ -44,7 +44,7 @@ public class LoginAction {
 	@Autowired
 	private TaskService taskService;
 	
-	@RequestMapping("/getVerifyCodeImage")
+	@RequestMapping("/getVerifyCodeImage") 
 	public void getVerifyCodeImage(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		// 设置页面不缓存
@@ -138,13 +138,7 @@ public class LoginAction {
 		response.setHeader("Content-Disposition", "attachment;fileName="
 				+ rowkey+".txt");
 		try {
-			/*List<String> list = taskService.downLoadData(rowkey);*/
-			List<String> list = new ArrayList<String>();
-			for(int i=0;i<50;i++){
-				for(int j=0;j<i;j++){
-					list.add("X:"+i+";Y:"+j+"------------"+rowkey);
-				}
-			}
+			List<String> list = taskService.downLoadData(rowkey);
 			OutputStream os = response.getOutputStream();
 			if(list != null && !list.isEmpty()){
 				for(String str:list){

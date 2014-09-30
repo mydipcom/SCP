@@ -147,7 +147,7 @@
 				name:'file',
 				responseType:'json',
 				onSubmit:function(file,text){
-					if(!(text&&/^(xml|XML)$/.exec(text))){
+					if(!(text&&/^(xml|XML)$/.exec(text))){   //判断文件的格式 
 						alert("please select available file which type is xml");
 						return false;
 					}

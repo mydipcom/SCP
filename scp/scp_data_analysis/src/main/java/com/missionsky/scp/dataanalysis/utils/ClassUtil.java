@@ -39,7 +39,7 @@ public class ClassUtil {
 				returnClassList = new ArrayList<Class>();
 				for(Class classes : allClass) {
 					// determine whether the same interface
-					if(c.isAssignableFrom(classes)) {
+					if(c.isAssignableFrom(classes)) {   //判断是否为继承关系
 						// remove interface itself
 						if(!c.equals(classes)) {
 							returnClassList.add(classes);		

@@ -18,7 +18,7 @@ import org.apache.shiro.subject.Subject;
 public class MyRealm extends AuthorizingRealm {
 
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {      //授权的实现
 		//获取当前登录的用户名,等价于(String)principals.fromRealm(this.getName()).iterator().next()  
         String currentUsername = (String)super.getAvailablePrincipal(principals);
 //      List<String> roleList = new ArrayList<String>();  
@@ -69,8 +69,8 @@ public class MyRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken authcToken) throws AuthenticationException {
-		 //获取基于用户名和密码的令牌  
+			AuthenticationToken authcToken) throws AuthenticationException {  //认证实现
+		//获取基于用户名和密码的令牌  
         //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的  
         //两个token的引用都是一样的,本例中是org.apache.shiro.authc.UsernamePasswordToken@33799a1e  
         UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
@@ -86,13 +86,13 @@ public class MyRealm extends AuthorizingRealm {
         //此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
         //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
         //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证  
-        if("jadyer".equals(token.getUsername())){  
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("jadyer", "jadyer", this.getName());  
-            this.setSession("currentUser", "jadyer");  
+        if("admin".equals(token.getUsername())){  
+            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("admin", "admin", this.getName());  
+            this.setSession("currentUser", "admin");  
             return authcInfo;  
-        }else if("玄玉".equals(token.getUsername())){  
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("玄玉", "xuanyu", this.getName());  
-            this.setSession("currentUser", "玄玉");  
+        }else if("songjie".equals(token.getUsername())){  
+            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("songjie", "songjie", this.getName());  
+            this.setSession("currentUser", "songjie");  
             return authcInfo;  
         }  
         //没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常  

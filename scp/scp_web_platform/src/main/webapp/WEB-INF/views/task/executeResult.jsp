@@ -114,8 +114,10 @@
 									</c:choose>
 								</td>
 								<td>
-									<button type="button" class="btn btn-info" onclick="viewtaskresult(this)">view</button>
+								    <c:if test="${task.status eq 3}">
+								    <button type="button" class="btn btn-info" onclick="viewtaskresult(this)">view</button>
 									<button type="button" class="btn btn-info" onclick="runTask(this)">download</button>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

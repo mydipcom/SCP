@@ -34,7 +34,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<description>web init</description>
 		<listener-class>com.missionsky.scp.util.WebInit</listener-class>
 	</listener>
-
+     
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

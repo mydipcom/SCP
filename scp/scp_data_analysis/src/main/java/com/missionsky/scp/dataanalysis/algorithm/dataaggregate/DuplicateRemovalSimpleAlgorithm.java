@@ -19,6 +19,8 @@ import org.springframework.context.support.StaticApplicationContext;
 
 import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 
 /**
@@ -27,7 +29,7 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  * @version 1.0
  */
 
-
+@AlgorithmInfoAnnotation(name="DuplicateRemovalSimpleAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="DuplicateRemovalSimple aggregate algorithm")
 public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 	
 	private Logger logger = LoggerFactory.getLogger(DuplicateRemovalSimpleAlgorithm.class);

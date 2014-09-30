@@ -38,7 +38,7 @@ public abstract class BasicAlgorithm implements Algorithm {
 		try {
 			FileSystem fs = FileSystem.get(conf);
 			
-			Path standardPath = new Path(getHDFSUrl() + "/"+standardFileName);			
+			Path standardPath = new Path(getHDFSUrl() + "/"+standardFileName.split(".xml")[0]);			
 			FileStatus[] fileStatus = fs.listStatus(standardPath);
 			for (FileStatus fStatus : fileStatus) {
 				

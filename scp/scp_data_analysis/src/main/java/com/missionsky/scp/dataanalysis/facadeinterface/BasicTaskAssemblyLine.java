@@ -49,7 +49,7 @@ public class BasicTaskAssemblyLine {
 			
 			for (String algorithmName : task.getAligorithms()) {
 				algorithm = (BasicAlgorithm) Class.forName(algorithmName).newInstance();
-				algorithmTaskOutput = "/Fire_Out" + taskName + "/" + algorithm.getClass().getSimpleName();
+				algorithmTaskOutput = "/Task_Out" + taskName + "/" + algorithm.getClass().getSimpleName();
 				if (firstStep) {
 					conf.set("mapreduce.jobtracker.address", getJobTracker());
 					algorithmResult = algorithm.run(conf,algorithmTaskOutput, standardFile.getName(), task);
@@ -60,6 +60,7 @@ public class BasicTaskAssemblyLine {
 						tempIntput.add(algorithmTaskOutput+"/"+algorithm.getClass().getSimpleName()+"_" + i);
 						}
 					} else {
+						
 						throw new InterruptedException("the algorithm "+ algorithmName +" in the task " + taskName + " fail");
 					}
 				} else {
@@ -79,15 +80,15 @@ public class BasicTaskAssemblyLine {
 			}
 		
 			// store parsed data to HBase.
-			HbaseUtil.CreateHBaseTable(taskName, standardFile.getColumnNames());
+			HbaseUtil.CreateHBaseTable("task_"+taskName, standardFile.getColumnNames());
 			algorithm = new StoreToHBaseAlgorithm();
 			conf = HBaseConfiguration.create();
-			conf.set("TABLE_NAME", taskName);
+			conf.set("TABLE_NAME", "task_"+taskName);
 			conf.setStrings("COLUMN_NAMES",  (String[]) standardFile.getColumnNames().toArray(new String[standardFile.getColumnNames().size()]));
 			
 			conf.set("mapreduce.jobtracker.address", getJobTracker());
 			
-			algorithmResult = algorithm.run(conf, tempIntput, null, task, taskName);
+			algorithmResult = algorithm.run(conf, tempIntput, null, task,  "task_"+taskName);
 			if (algorithmResult == Constants.ALGORITHM_RESULT_FAIL) {
 				throw new InterruptedException("the algorithm StoreToHBaseAlgorithm in the task " + taskName + " fail.");
 			}

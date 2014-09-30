@@ -338,10 +338,10 @@ public class TaskService {
 		}
 		
 		List<String> columns = basicDao.findColumnByRowkey(rowKey);
-		if(columns.isEmpty()){
+		/*if(columns.isEmpty()){
 			map.put("msg", "empty");
 			return;
-		}
+		}*/
 		List<Result> results = basicDao.findDataByTableAndSize("task"+rowKey, 50);
 		if(results == null || results.isEmpty()){
 			map.put("msg", "empty");
@@ -350,44 +350,46 @@ public class TaskService {
 		List<List<String>> list = new ArrayList<List<String>>();
 		for(Result result:results){
 			List<String> strs = new ArrayList<String>();
-			for(int i=0;i<columns.size();i++){
-				byte[] obj = result.getValue(Bytes.toBytes("task"), Bytes.toBytes(columns.get(i)));
+			//for(int i=0;i<columns.size();i++){
+				//byte[] obj = result.getValue(Bytes.toBytes("task"), Bytes.toBytes(columns.get(i)));
+			     byte[] obj = result.getValue(Bytes.toBytes("id"), null);
 				if(obj != null){
 					strs.add(Bytes.toString(obj));
 				}else {
 					strs.add("");
 				}
-			}
+			//}
 		}
 		map.put("msg", "success");
 		map.put("list", list);
 		map.put("columns", columns);
 	}
 	
-	public List<String> downLoadData(String rowKey) throws IOException {
+	public List<String> downLoadData(String rowKey) throws IOException {  //根据analysis写回hbase数据库的格式配置
 		List<String> list = new ArrayList<String>();
 		if(rowKey == null || "".equals(rowKey.trim())){
 			return list;
 		}
 		
 		List<String> columns = basicDao.findColumnByRowkey(rowKey);
-		if(columns.isEmpty()){
+		/*if(columns.isEmpty()){
 			return list;
-		}
+		}*/
 		List<Result> results = basicDao.findDataByTableAndSize("task"+rowKey, null);
 		if(results == null || results.isEmpty()){
 			return list;
 		}
 		for(Result result:results){
 			StringBuffer sb = new StringBuffer();
-			for(int i=0;i<columns.size();i++){
-				byte[] obj = result.getValue(Bytes.toBytes("task"), Bytes.toBytes(columns.get(i)));
+			//for(int i=0;i<columns.size();i++){
+				//byte[] obj = result.getValue(Bytes.toBytes("task"), Bytes.toBytes(columns.get(i)));
+				byte[] obj = result.getValue(Bytes.toBytes("id"), null);
 				if(obj != null){
 					sb.append(Bytes.toString(obj)+";");
 				}else {
 					sb.append(" ;");
 				}
-			}
+			//}
 			if(sb.length() > 0){
 				list.add(sb.toString());
 			}

@@ -184,6 +184,7 @@
     	function deleteTask(k){
     		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
     		if(rowKey == undefined){
+    		
     			return false;
     		}
     		$.ajax({

@@ -12,7 +12,7 @@ public class Task implements Serializable{
 	
 	private String description;
 	
-	private String fileName;
+	private String fileName;  //标准文件的name
 	
 	private Integer triggerType;
 	

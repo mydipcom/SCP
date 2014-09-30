@@ -47,7 +47,6 @@ public class DataSource {
 	private HashMap<String, HashMap<String, String>> standardFieldNameMaps;
 	// 数据字段以及该字段的类型的hashmap
 	private HashMap<String, String> fields;
-	
 	public String getName() {
 		return name;
 	}
@@ -163,5 +162,6 @@ public class DataSource {
 	public void setFields(HashMap<String, String> fields) {
 		this.fields = fields;
 	}
+	
 	
 }
