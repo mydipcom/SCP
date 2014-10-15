@@ -9,7 +9,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 
 
+
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
 
 /**
  * Aggregate Algorithm  abstract class
@@ -17,7 +20,7 @@ import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
  * @version 1.0
  */
 
-
+@AlgorithmInfoAnnotation(name="AggregateAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="Aggregate  algorithm")
 public abstract class AggregateAlgorithm extends BasicAlgorithm{
 	
 	/**

@@ -24,7 +24,10 @@ public class Action implements Serializable {
 	
 	//算法参数
 	private List<ActionParam> params;
-
+    
+	//算法的输入
+	private List<String> inputpaths;
+	
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -80,4 +83,13 @@ public class Action implements Serializable {
 	public void setParams(List<ActionParam> params) {
 		this.params = params;
 	}
+
+	public List<String> getInputpaths() {
+		return inputpaths;
+	}
+
+	public void setInputpaths(List<String> inputpaths) {
+		this.inputpaths = inputpaths;
+	}
+	
 }

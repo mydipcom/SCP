@@ -21,6 +21,7 @@ import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
 import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
 import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
+import com.missionsky.scp.dataanalysis.entity.ParamField;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 
 /**
@@ -30,7 +31,12 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  */
 
 @AlgorithmInfoAnnotation(name="DuplicateRemovalSimpleAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="DuplicateRemovalSimple aggregate algorithm")
+
 public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
+	@ParamField(description = "The algorithm must be input id", name = "id", type = "int")
+	private int id;
+	@ParamField(description = "The algorithm must be input name", name = "name", type = "String")
+	private String name;
 	
 	private Logger logger = LoggerFactory.getLogger(DuplicateRemovalSimpleAlgorithm.class);
 	

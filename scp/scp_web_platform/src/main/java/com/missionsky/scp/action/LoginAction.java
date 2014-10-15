@@ -74,10 +74,10 @@ public class LoginAction {
         //获取用户请求表单中输入的验证码  
         String submitCode = WebUtils.getCleanParam(request, "verifyCode");  
         System.out.println("用户[" + username + "]登录时输入的验证码为[" + submitCode + "],HttpSession中的验证码为[" + verifyCode + "]");  
-        if (StringUtils.isEmpty(submitCode) || !StringUtils.equals(verifyCode, submitCode.toLowerCase())){  
-            request.setAttribute("message_login", "org.apache.shiro.authc.IncorrectAuthCodeException");  
-            return resultPageURL;  
-        }  
+        //if (StringUtils.isEmpty(submitCode) || !StringUtils.equals(verifyCode, submitCode.toLowerCase())){  
+          //  request.setAttribute("message_login", "org.apache.shiro.authc.IncorrectAuthCodeException");  
+            //return resultPageURL;  
+        //}  
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
         token.setRememberMe(true);  
         System.out.println("为了验证登录用户而封装的token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));  

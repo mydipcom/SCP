@@ -11,6 +11,7 @@ import java.util.Date;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
+import org.quartz.JobListener;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -27,9 +28,10 @@ public class SimpleQuartz {
 
 	public static void runOneTime(String name, String group, Date date,
 			StandardTask task) throws SchedulerException {
+		
 		SchedulerFactory schedFact = new StdSchedulerFactory();
 		Scheduler sched = schedFact.getScheduler();
-		sched.start();
+		
 		JobDetail job = newJob(SimpleJob.class).withIdentity(name, group)
 				.build();
 		JobDataMap dataMap = new JobDataMap();
@@ -37,7 +39,9 @@ public class SimpleQuartz {
 		SimpleTrigger trigger = (SimpleTrigger) newTrigger()
 				.withIdentity("trigger", "group").startAt(date).forJob(job)
 				.usingJobData(dataMap).build();
+        sched.getListenerManager().addJobListener(new MyJobListener());
 		sched.scheduleJob(job, trigger);
+		sched.start();
 	}
 
 	public static void runDaily(String name, String group, Date date,
@@ -47,7 +51,7 @@ public class SimpleQuartz {
 		}
 		SchedulerFactory schedFact = new StdSchedulerFactory();
 		Scheduler sched = schedFact.getScheduler();
-		sched.start();
+		
 		JobDetail job = newJob(SimpleJob.class).withIdentity(name, group)
 				.build();
 		String cron = "";
@@ -61,7 +65,9 @@ public class SimpleQuartz {
 		Trigger trigger = newTrigger().withIdentity("trigger", "group")
 				.withSchedule(cronSchedule(cron)).forJob(job)
 				.usingJobData(dataMap).build();
+		sched.getListenerManager().addJobListener(new MyJobListener());
 		sched.scheduleJob(job, trigger);
+		sched.start();
 	}
 
 	public static void runWeek(String name, String group, Date date,
@@ -71,7 +77,7 @@ public class SimpleQuartz {
 		}
 		SchedulerFactory schedFact = new StdSchedulerFactory();
 		Scheduler sched = schedFact.getScheduler();
-		sched.start();
+		
 		String str = sdf.format(date);
 		String[] strs = str.split(" ");
 		JobDetail job = newJob(SimpleJob.class).withIdentity(name, group)
@@ -85,7 +91,9 @@ public class SimpleQuartz {
 								Integer.valueOf(strs[1]),
 								Integer.valueOf(strs[0])))
 				.usingJobData(dataMap).forJob(job).build();
+		sched.getListenerManager().addJobListener(new MyJobListener());
 		sched.scheduleJob(job, trigger);
+		sched.start();
 	}
 
 	/**

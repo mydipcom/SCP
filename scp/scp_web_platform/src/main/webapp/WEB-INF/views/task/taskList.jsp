@@ -12,6 +12,7 @@
 <title>Task List</title>
 <link href="${ctx}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/static/css/navbar.css" rel="stylesheet">
+<link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -58,8 +59,7 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li class="active"><a href="${ctx}/task/tasklist">Task List</a></li>
 							<li><a href="${ctx}/task/mininglist">Mining List</a></li>
-							<li><a href="${ctx}/task/executeresult">Execute Result</a></li>
-							<li><a href="${ctx}/task/miningresult">Mining Result</a></li>
+							
 						</ul>
 					</div>
 				</div>
@@ -91,6 +91,7 @@
 							<th>Standard File Name</th>
 							<th>Start Time</th>
 							<th>Trigger Type</th>
+							<th>Assembly</th>
 							<th>Status</th>
 							<th>Operation</th>
 						</tr>
@@ -100,6 +101,7 @@
 								<td>${task.fileName}</td>
 								<td><fmt:formatDate value="${task.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								<td>${task.triggerType}</td>
+								<td>${task.assembly}</td>
 								<td>
 									<c:choose>
 										<c:when test="${task.status eq 0}">
@@ -116,13 +118,17 @@
 										</c:when>
 									</c:choose>
 								</td>
-								<td>
+								 <td>
 									<c:if test="${empty task.status}">
 										<button type="button" class="btn btn-info" onclick="editTask(this)">mod</button>&nbsp;
 									</c:if>
 									<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>&nbsp;
 									<c:if test="${empty task.status}">
 										<button type="button" class="btn btn-info" onclick="runTask(this)">run</button>
+									</c:if>
+									 <c:if test="${task.status eq 3}">
+								      <button type="button" class="btn btn-info" onclick="viewtaskresult(this)">view</button>
+									  <button type="button" class="btn btn-info" onclick="downloadSource(this)">Down</button>
 									</c:if>
 								</td>
 							</tr>
@@ -141,10 +147,30 @@
 				</div>
 			</div>
 		</div>
+		
+	</div>
+	
+	<div id="viewDialogDiv" class="container">
+		<table class="table table-bordered"></table>
 	</div>
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/bootstrap.min.js"></script>
+	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
+	  $(document).ready(function() {
+		$("#viewDialogDiv").dialog({
+			autoOpen : false,
+			height : 380,
+			width : 800,
+			modal : true,
+			title : 'View Source',
+			buttons : {
+				"OK" : function() {
+					$(this).dialog("close");
+				}
+			}
+		});
+	   });
     	function addTask(){
     		location.href="${ctx}/task/updatetask";
 		}
@@ -225,6 +251,69 @@
     			}
     		});
     	}
+    	
+    	function viewtaskresult(k) {
+			var rowKey = $(k).parent().parent().find("input[type='hidden']")
+					.val();
+			if (rowKey == undefined) {
+				return false;
+			}
+			$.ajax({
+				type : 'post',
+				url : '${ctx}/task/viewtaskresult',
+				dataType : 'json',
+				data : {
+					"rowKey" : rowKey
+				},
+				success : function(data) {
+					var e = eval(data);
+					if (e.msg == "success") {
+						var html = "";
+						var columns = e.columns;
+						if (columns != undefined && columns != null) {
+							
+							html = html + "<tr class='success'>";
+							$.each(columns, function(i, item) {
+								html = html + "<th>" + item + "</th>";
+							});
+							html = html + "</tr>";
+							var list = e.list;
+							if (list != undefined && list != null) {
+								$.each(list, function(i, items) {
+									if (items != undefined || items != null) {
+										html = html + "<tr>";
+										$.each(items, function(i, item) {
+											html = html + "<td>" + item
+													+ "</td>";
+										});
+										html = html + "</tr>";
+									}
+								});
+							}
+						}
+						
+						$("#viewDialogDiv").find("table:eq(0)").html(html);
+						$("#viewDialogDiv").dialog("open");
+					} else if (e.msg == "failure") {
+						alert("retrieve data failure!!!");
+					} else {
+						alert(e.msg);
+					}
+				}
+			});
+		}
+    	
+    	function downloadSource(k) {
+			var rowKey = $(k).parent().parent().find("input[type='hidden']")
+					.val();
+			if (rowKey == undefined) {
+				return false;
+			}
+// 			if (confirm("are you ensure download these datas")) {
+
+// 			}
+			document.location.href = "${ctx}/download/"+rowKey;
+		}
     </script>
 </body>
 </html>

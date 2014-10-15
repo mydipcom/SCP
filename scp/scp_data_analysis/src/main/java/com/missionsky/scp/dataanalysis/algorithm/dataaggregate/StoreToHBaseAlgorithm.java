@@ -25,11 +25,16 @@ import org.slf4j.LoggerFactory;
 
 import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
 import com.missionsky.scp.dataanalysis.entity.StandardFile;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 import com.missionsky.scp.dataanalysis.utils.HbaseUtil;
 import com.missionsky.scp.dataanalysis.utils.PropertiesUtil;
 import com.missionsky.scp.dataanalysis.utils.RemoteHadoopUtil;
+
+
+@AlgorithmInfoAnnotation(name="StoreToHBaseAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="StoreToHBase aggregate algorithm")
 
 public class StoreToHBaseAlgorithm  extends BasicAlgorithm{
 	

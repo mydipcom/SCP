@@ -1,7 +1,10 @@
 package com.missionsky.scp.dataanalysis.entity;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
+import java.util.List;
+
+import com.missionsky.scp.entity.Action;
 
 /**
  * Standard task entity class
@@ -10,24 +13,31 @@ import java.util.HashMap;
  */
 
 public class StandardTask {
-	
+	//
+	private String rowKey;
 	// task name
 	private String name;
 	
-	// algorithm list
-	private ArrayList<String> aligorithms;
+	// task acton list
+	private List<Action> acions;
 	
-	// jobs input path in hdfs
-	private ArrayList<String> inputPaths;
-	
-	// task output path
-	private String outputPath;
+	//task assembly
+	private String assembly;
 	
 	// standard file name
 	private String standardFile;
 	
 	// configuration file name map(key:intput path,value:configuration file name)
 	private HashMap<String, String> confPathMap;
+    
+	
+	public String getRowKey() {
+		return rowKey;
+	}
+
+	public void setRowKey(String rowKey) {
+		this.rowKey = rowKey;
+	}
 
 	public String getName() {
 		return name;
@@ -37,31 +47,8 @@ public class StandardTask {
 		this.name = name;
 	}
 
-	public ArrayList<String> getAligorithms() {
-		return aligorithms;
-	}
 
-	public void setAligorithms(ArrayList<String> aligorithms) {
-		this.aligorithms = aligorithms;
-	}
-
-	public ArrayList<String> getInputPaths() {
-		return inputPaths;
-	}
-
-	public void setInputPaths(ArrayList<String> inputPaths) {
-		this.inputPaths = inputPaths;
-	}
-
-	public String getOutputPath() {
-		return outputPath;
-	}
-
-	public void setOutputPath(String outputPath) {
-		this.outputPath = outputPath;
-	}
-
-	public String getStandardFile() {
+   public String getStandardFile() {
 		return standardFile;
 	}
 
@@ -75,6 +62,24 @@ public class StandardTask {
 
 	public void setConfPathMap(HashMap<String, String> confPathMap) {
 		this.confPathMap = confPathMap;
+	}
+
+
+
+	public List<Action> getAcions() {
+		return acions;
+	}
+
+	public void setAcions(List<Action> acions) {
+		this.acions = acions;
+	}
+
+	public String getAssembly() {
+		return assembly;
+	}
+
+	public void setAssembly(String assembly) {
+		this.assembly = assembly;
 	}
 	
 }

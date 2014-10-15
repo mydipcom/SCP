@@ -117,4 +117,6 @@ public class FileService {
 		helper.deleteRowData(TABLE_NAME, rowKey);
 		logger.info("delete row which rowKey is" + rowKey + " success!");
 	}
+	
+	
 }

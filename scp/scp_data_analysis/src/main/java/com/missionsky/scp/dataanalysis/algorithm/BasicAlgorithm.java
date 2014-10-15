@@ -32,13 +32,13 @@ public abstract class BasicAlgorithm implements Algorithm {
 	
 	public static Pattern pattern = Pattern.compile(",");
 	
-	public int run(Configuration conf, String output, String standardFileName, StandardTask task){
+	public int run(Configuration conf, String output, StandardTask task,List <String>actionInputpath){
 		
 		ArrayList<String> inputpaths = new ArrayList<String>();
 		try {
 			FileSystem fs = FileSystem.get(conf);
 			
-			Path standardPath = new Path(getHDFSUrl() + "/"+standardFileName.split(".xml")[0]);			
+			Path standardPath = new Path(getHDFSUrl() + "/"+actionInputpath.get(0));			
 			FileStatus[] fileStatus = fs.listStatus(standardPath);
 			for (FileStatus fStatus : fileStatus) {
 				

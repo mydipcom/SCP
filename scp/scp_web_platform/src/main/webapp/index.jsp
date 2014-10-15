@@ -93,7 +93,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">AuthCode：</label>
 				<div class="col-sm-8">
-					<input id="verifyCode" type="text" class="form-control" name="verifyCode" required>
+					<input id="verifyCode" type="text" class="form-control" name="verifyCode" >
 				</div>
 				<div class="col-sm-2">
 					<img id="verifyCodeImage" onclick="reloadVerifyCode()"

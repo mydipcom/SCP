@@ -39,4 +39,6 @@ public interface IDataUtil extends Remote {
 	public void removeRecord(String rowKey) throws RemoteException;
 
 	public List<String> getAlgorithmByType(Integer type) throws RemoteException;
+	
+	public List<String> getAssembly() throws RemoteException;
 }

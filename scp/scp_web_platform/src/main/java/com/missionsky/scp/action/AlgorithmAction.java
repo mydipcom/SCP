@@ -109,6 +109,7 @@ public class AlgorithmAction {
 	@RequestMapping(value = "getalgorithmparam", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getAlgorithmParam(String algorithmName) {
+		
 		Map<String, Object> ret = new HashMap<String, Object>();
 		try {
 			ret.putAll(client.getAlgorithmMsg(algorithmName));

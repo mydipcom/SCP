@@ -1,8 +1,9 @@
 package com.missionsky.scp.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Algorithm {
+public class Algorithm implements Serializable{
 	//hbase row rowkey
 	private String rowKey;
 	
@@ -20,8 +21,8 @@ public class Algorithm {
 	
 	//algorithm params
 	private List<Parameter> params;
-
-	public String getRowKey() {
+    
+    public String getRowKey() {
 		return rowKey;
 	}
 
@@ -68,4 +69,6 @@ public class Algorithm {
 	public void setParams(List<Parameter> params) {
 		this.params = params;
 	}
+
+	
 }

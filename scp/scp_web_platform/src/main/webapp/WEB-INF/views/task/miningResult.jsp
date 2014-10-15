@@ -59,7 +59,7 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li><a href="${ctx}/task/tasklist">Task List</a></li>
 							<li><a href="${ctx}/task/mininglist">Mining List</a></li>
-							<li><a href="${ctx}/task/executeresult">Execute Result</a></li>
+							
 							<li class="active"><a href="${ctx}/task/miningresult">Mining Result</a></li>
 						</ul>
 					</div>

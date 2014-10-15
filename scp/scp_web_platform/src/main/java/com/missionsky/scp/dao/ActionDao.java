@@ -2,6 +2,8 @@ package com.missionsky.scp.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,7 @@ import com.missionsky.scp.util.UUIDGenerator;
 public class ActionDao {
 	private static final String TABLE_NAME = "actions";
 	private static final String FAMILY = "action";
-	private static final String[] QUALIFIERS = {"taskId","rowId","name","params","description", "pathName"};
+	private static final String[] QUALIFIERS = {"taskId","rowId","name","params","description", "pathName","inputPaths"};
 	
 	@Autowired
 	private HbaseHelper helper;
@@ -64,6 +66,16 @@ public class ActionDao {
 							values.put(QUALIFIERS[3], Bytes.toBytes(sb.substring(0, sb.length()-1)));
 						}
 					}
+					if(action.getInputpaths() != null && !action.getInputpaths().isEmpty()){
+						StringBuffer sb = new StringBuffer();
+						for(String inputpath:action.getInputpaths()){
+							sb.append(inputpath+";");
+						}
+						if(sb.length() > 0 ){
+							values.put(QUALIFIERS[6], Bytes.toBytes(sb.substring(0,sb.length()-1)));
+						}
+						
+					}
 					if(action.getPathName() != null){
 						values.put(QUALIFIERS[5], Bytes.toBytes(action.getPathName()));
 					}
@@ -96,13 +108,14 @@ public class ActionDao {
 					List<ActionParam> actionParams = new ArrayList<ActionParam>();
 					for(String str:parameters){
 						String[] strs = str.split(":");
-						if(strs.length == 2){
+						if(strs.length == 3){
 							ActionParam actionParam = new ActionParam();
 							actionParam.setName(strs[0]);
-							actionParam.setValue(strs[1]);
+							actionParam.setValue(strs[2]);
 							actionParams.add(actionParam);
 						}
 					}
+					
 					action.setParams(actionParams);
 				}
 				byte[] description = result.getValue(Bytes.toBytes(FAMILY), Bytes.toBytes(QUALIFIERS[4]));
@@ -113,8 +126,18 @@ public class ActionDao {
 				if(pathName != null){
 					action.setPathName(Bytes.toString(pathName));
 				}
+				byte[] inputPaths=result.getValue(Bytes.toBytes(FAMILY), Bytes.toBytes(QUALIFIERS[6]));
+				if(inputPaths != null){
+					String [] inputpath=Bytes.toString(inputPaths).split(";");
+					List <String> list =new ArrayList<String>();
+					for(String in : inputpath){
+						list.add(in);
+					}
+				    action.setInputpaths(list);
+				}
 				actions.add(action);
 			}
+		
 			return actions;
 		}
 		return null;

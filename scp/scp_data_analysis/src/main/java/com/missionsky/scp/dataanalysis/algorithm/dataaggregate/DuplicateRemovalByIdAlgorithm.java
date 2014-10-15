@@ -19,12 +19,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
+import com.missionsky.scp.dataanalysis.entity.ParamField;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 
 /**
@@ -33,7 +35,7 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  * @version 1.0
  */
 
-
+@AlgorithmInfoAnnotation(name="DuplicateRemovalByIdAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="DuplicateRemovalById aggregate algorithm")
 public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 	
 	private static Logger logger = LoggerFactory.getLogger(DuplicateRemovalByIdAlgorithm.class);

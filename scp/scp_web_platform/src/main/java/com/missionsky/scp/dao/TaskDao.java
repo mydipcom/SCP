@@ -21,8 +21,8 @@ public class TaskDao {
 	private static final String TABLE_NAME = "scheduleTask";
 	private static final String FAMILY = "task";
 	private static final String[] QUALIFIERS = { "taskName", "description",
-			"fileName", "storePath", "triggerType", "startTime", "time",
-			"weekday" };
+			"fileName", "assembly", "triggerType", "startTime", "time",
+			"weekday"};
 	@Autowired
 	private HbaseHelper helper;
 
@@ -36,8 +36,8 @@ public class TaskDao {
 			if (task.getFileName() != null) {
 				map.put(QUALIFIERS[2], Bytes.toBytes(task.getFileName()));
 			}
-			if (task.getStorePath() != null) {
-				map.put(QUALIFIERS[3], Bytes.toBytes(task.getStorePath()));
+			if (task.getAssembly() != null) {
+				map.put(QUALIFIERS[3], Bytes.toBytes(task.getAssembly()));
 			}
 			if (task.getTriggerType() != null) {
 				map.put(QUALIFIERS[4], Bytes.toBytes(task.getTriggerType()));
@@ -123,10 +123,10 @@ public class TaskDao {
 			if (file != null) {
 				task.setFileName(Bytes.toString(file));
 			}
-			byte[] storePath = result.getValue(Bytes.toBytes(FAMILY),
+			byte[] assembly = result.getValue(Bytes.toBytes(FAMILY),
 					Bytes.toBytes(QUALIFIERS[3]));
-			if (storePath != null) {
-				task.setStorePath(Bytes.toString(storePath));
+			if (assembly != null) {
+				task.setAssembly(Bytes.toString(assembly));
 			}
 			byte[] triggerType = result.getValue(Bytes.toBytes(FAMILY),
 					Bytes.toBytes(QUALIFIERS[4]));

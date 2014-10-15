@@ -1,4 +1,3 @@
-
 package com.missionsky.scp.quartz;
 
 import java.io.IOException;
@@ -17,31 +16,31 @@ public class SimpleJob implements Job {
 	private StandardTask task;
 
 	@Override
-	public void execute(JobExecutionContext context)
-		{
+	public void execute(JobExecutionContext context) {
 		JobDataMap dataMap = context.getTrigger().getJobDataMap();
 		task = (StandardTask) dataMap.get("task");
-		if(task != null){
-			System.out.println("taskName:"+task.getName());
+		if (task != null) {
+			System.out.println("taskName:" + task.getName());
+
 			try {
-				ScheduleDao.getInstance().updateScheduleRecord(task.getName(),
-						Constants.jobToBeExecuted);
-				BasicTaskAssemblyLine basicTaskAssemblyLine = new BasicTaskAssemblyLine();
-				basicTaskAssemblyLine.stream(task);
-				ScheduleDao.getInstance().updateScheduleRecord(task.getName(),
-						Constants.jobWasExecuted);
+
+				if (task.getAssembly() != null && !task.getAssembly().equals("")) {
+					if (task.getAssembly().equals("BasicTaskAssemblyLine")) {
+						
+						BasicTaskAssemblyLine basicTaskAssemblyLine = new BasicTaskAssemblyLine();
+						basicTaskAssemblyLine.stream(task);
+						
+					} else {
+
+					}
+				}
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				try {
-					ScheduleDao.getInstance().updateScheduleRecord(task.getName(),
-							Constants.jobExecutionVetoed);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 

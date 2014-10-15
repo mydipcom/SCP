@@ -16,6 +16,8 @@ public class Task implements Serializable{
 	
 	private Integer triggerType;
 	
+	private String assembly;
+	
 	private Date startTime;
 	
 	private Integer time;
@@ -26,8 +28,6 @@ public class Task implements Serializable{
 
 	private List<Action> actions;
 	
-	private String storePath;
-
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -108,11 +108,16 @@ public class Task implements Serializable{
 		this.actions = actions;
 	}
 
-	public String getStorePath() {
-		return storePath;
+	public String getAssembly() {
+		return assembly;
 	}
 
-	public void setStorePath(String storePath) {
-		this.storePath = storePath;
+	public void setAssembly(String assembly) {
+		this.assembly = assembly;
 	}
+    
+	
+	
+
+	
 }

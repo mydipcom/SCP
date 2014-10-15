@@ -65,4 +65,9 @@ public class DataClient {
 	public void removeRecord(String rowKey) throws RemoteException {
 		dataUtil.removeRecord(rowKey);
 	}
+
+	public List<String> getAssembly() throws RemoteException {
+		// TODO Auto-generated method stub
+		return dataUtil.getAssembly();
+	}
 }

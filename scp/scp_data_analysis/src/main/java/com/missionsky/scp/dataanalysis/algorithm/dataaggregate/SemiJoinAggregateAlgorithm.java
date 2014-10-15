@@ -8,6 +8,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 
+import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
+import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 
 /**
@@ -16,7 +18,8 @@ import com.missionsky.scp.dataanalysis.entity.StandardTask;
  * @version 1.0
  */
 
-@Deprecated
+@AlgorithmInfoAnnotation(name="SemiJoinAggregateAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="SemiJoinAggregate aggregate algorithm")
+
 public class SemiJoinAggregateAlgorithm extends AggregateAlgorithm {
 	
 	public class Mapper01 extends Mapper<Text, Text, Text, Text>{

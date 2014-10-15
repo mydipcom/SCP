@@ -24,9 +24,7 @@ public class Mining implements Serializable {
 
 	private Integer status;
 	
-	private String algorithm;
-	
-	private List<String> params;
+	private Action action;
 
 	public String getRowKey() {
 		return rowKey;
@@ -100,19 +98,11 @@ public class Mining implements Serializable {
 		this.status = status;
 	}
 
-	public String getAlgorithm() {
-		return algorithm;
+	public Action getAction() {
+		return action;
 	}
 
-	public void setAlgorithm(String algorithm) {
-		this.algorithm = algorithm;
-	}
-
-	public List<String> getParams() {
-		return params;
-	}
-
-	public void setParams(List<String> params) {
-		this.params = params;
+	public void setAction(Action action) {
+		this.action = action;
 	}
 }

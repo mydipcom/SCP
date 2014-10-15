@@ -27,6 +27,7 @@ import com.missionsky.scp.entity.Mining;
 import com.missionsky.scp.entity.Task;
 import com.missionsky.scp.service.AlgorithmService;
 import com.missionsky.scp.service.FileService;
+import com.missionsky.scp.service.SourceService;
 import com.missionsky.scp.service.TaskService;
 import com.missionsky.scp.util.EncodingTool;
 import com.missionsky.scp.util.SysConstants;
@@ -44,6 +45,9 @@ public class TaskAction {
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private SourceService sourceService;
 	
 	@Autowired
 	private DataClient client;
@@ -182,8 +186,10 @@ public class TaskAction {
 			}
 		}
 		model.addAttribute("task", task);
+		
 		try {
 			model.addAttribute("files", fileService.getAllFiles());
+			model.addAttribute("assembly", client.getAssembly());
 			model.addAttribute("algorithms", algorithmService.findAllAlgorithmsByType(SysConstants.BASIC));
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -205,7 +211,7 @@ public class TaskAction {
 			}
 		}
 		try {
-			model.addAttribute("sources", taskService.findByTaskName(null));
+			model.addAttribute("sources", sourceService.findBySourceName(null));
 			model.addAttribute("algorithms", algorithmService.findAllAlgorithmsByType(SysConstants.MINING));
 		} catch (IOException e) {
 			e.printStackTrace();

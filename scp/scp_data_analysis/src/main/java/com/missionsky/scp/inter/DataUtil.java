@@ -19,6 +19,7 @@ import com.missionsky.scp.dataanalysis.algorithm.MinerAlgorithm;
 import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
 import com.missionsky.scp.dataanalysis.entity.ParamField;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
+import com.missionsky.scp.dataanalysis.facadeinterface.Assembly;
 import com.missionsky.scp.dataanalysis.utils.ClassUtil;
 import com.missionsky.scp.entity.Action;
 import com.missionsky.scp.entity.Mining;
@@ -162,6 +163,7 @@ public class DataUtil extends UnicastRemoteObject implements IDataUtil {
 			ScheduleDao.getInstance().updateScheduleRecord(mining.getRowKey(),
 					Constants.jobIsReady);
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
@@ -175,14 +177,11 @@ public class DataUtil extends UnicastRemoteObject implements IDataUtil {
 				return;
 			}
 			StandardTask standardTask = new StandardTask();
-			standardTask.setName(task.getRowKey());
+			standardTask.setRowKey(task.getRowKey());
+			standardTask.setName(task.getTaskName());
 			standardTask.setStandardFile(task.getFileName());
-			standardTask.setOutputPath(task.getStorePath());
-			ArrayList<String> aligorithms = new ArrayList<String>();
-			for (Action action : task.getActions()) {
-				aligorithms.add(action.getPathName());
-			}
-			standardTask.setAligorithms(aligorithms);
+			standardTask.setAssembly(task.getAssembly());
+			standardTask.setAcions(task.getActions());
 			if (task.getTriggerType() != null) {
 				Integer type = task.getTriggerType();
 				if (type == 1) {
@@ -259,5 +258,19 @@ public class DataUtil extends UnicastRemoteObject implements IDataUtil {
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			System.out.println(entry.getKey() + ":" + entry.getValue());
 		}
+	}
+
+	@Override
+	public List<String> getAssembly() throws RemoteException{
+		// TODO Auto-generated method stub
+		List <String> list=new ArrayList<String>();
+		List <Class>  classes=new ArrayList<Class>();
+		classes=ClassUtil.getAllClassByFatherClass(Assembly.class);
+		if(classes != null && !classes.isEmpty()){
+			for(Class c:classes){
+				list.add(c.getSimpleName());
+			}
+		}
+		return list;
 	}
 }

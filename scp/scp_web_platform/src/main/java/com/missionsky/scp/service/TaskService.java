@@ -294,6 +294,8 @@ public class TaskService {
 			for(Parameter param:params){
 				ActionParam actionParam = new ActionParam();
 				actionParam.setName(param.getName());
+				actionParam.setType(param.getType());
+				actionParam.setDescription(param.getDescription());
 				list.add(actionParam);
 			}
 		}
@@ -342,7 +344,7 @@ public class TaskService {
 			map.put("msg", "empty");
 			return;
 		}*/
-		List<Result> results = basicDao.findDataByTableAndSize("task"+rowKey, 50);
+		List<Result> results = basicDao.findDataByTableAndSize("task_"+rowKey, 50);
 		if(results == null || results.isEmpty()){
 			map.put("msg", "empty");
 			return;
@@ -375,7 +377,7 @@ public class TaskService {
 		/*if(columns.isEmpty()){
 			return list;
 		}*/
-		List<Result> results = basicDao.findDataByTableAndSize("task"+rowKey, null);
+		List<Result> results = basicDao.findDataByTableAndSize("task_"+rowKey, null);
 		if(results == null || results.isEmpty()){
 			return list;
 		}

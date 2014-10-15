@@ -227,7 +227,9 @@ public class GenericAggregateAlgorithm extends AggregateAlgorithm {
 				
 				//Data trimer
 				Path dataTrimJobIn = null;
-				Path dataTrimJobOut = new Path(task.getOutputPath() + "datatrim");
+				// 修改代码后的问题
+				//Path dataTrimJobOut = new Path(task.getOutputPath() + "datatrim");
+				Path dataTrimJobOut = new Path( "datatrim");
 				Path dataTrimJobOutSub = null;
 				
 				Job dataTrimJob = null;
@@ -270,7 +272,8 @@ public class GenericAggregateAlgorithm extends AggregateAlgorithm {
 				
 				Path dataAggrIn = dataTrimJobOut;
 				//TODO data output
-				Path dataAggrOut = new Path(task.getOutputPath());
+				//Path dataAggrOut = new Path(task.getOutputPath());
+				Path dataAggrOut = new Path("");
 				
 				Job aggrJob = Job.getInstance(conf, taskName + "_generic_aggregate_aggregation_job_1");
 				jarPath = storeTempJarToHDFS(conf, GenericAggregateAlgorithm.class);

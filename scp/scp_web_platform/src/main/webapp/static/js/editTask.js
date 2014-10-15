@@ -49,7 +49,7 @@ $(document).ready(function(e) {
 			radioclick(this);
 		}
 	});
-
+    
 	$("#dialogDiv").dialog({
 		autoOpen : false,
 		height : 380,
@@ -61,17 +61,19 @@ $(document).ready(function(e) {
 				var flag = jQuery("#paramForm").validationEngine("validate");
 				if(flag){
 					var index = 0;
-					var html = "<div class=\"action-params\"></div>";
+					var html = "<div class=\"action-params\">";
 					var select = $("#paramForm").find("select");
 					var key = $(select).val();
 					var value = $(select).find("option:selected").text();
 					var description = $("#paramForm").find("div:eq(1)").find("input:eq(0)").val();
+					var inputPath = $("#paramForm").find("div:eq(2)").find("input:eq(0)").val();
 					var flag = false;
 					if($(".action-params").length>0){
 						$(".action-params").each(function(i,item){
 							if(key == $(this).find("input:eq(0)").val()){
 								flag = true;
 								index = parseInt($(this).find("input:eq(0)").attr("indexData"));
+								$(this).find("input:eq(2)").val(inputPath);
 								$(this).find(".form-group:eq(1)").find("div").empty();
 								var htmls = "";
 								$("#paramForm .stepParam").each(function(i,item){
@@ -83,19 +85,21 @@ $(document).ready(function(e) {
 								return false;
 							}
 						});
-						if(index == 0){
-							index = parseInt($(".action-params:last").find("input:eq(0)").attr("indexData") + 1);
-						}
+						
+						index = parseInt($(".action-params:last").find("input:eq(0)").attr("indexData"))+1;
+						
 					}
 					if(flag){
 						$(this).dialog("close");
 						return false;
 					}
 					html = html + "<div class='form-group'><input name='actions["+index+"].rowId' type='hidden' value="+key+" indexData="+index+">"
-								+ "<label class='col-sm-2 control-label'>Algorithm Name:</label><div class='col-sm-3'><input name='actions["+index+"].name' class='form-control validate[required]' readonly='readonly' type='text' value="+value+"></div>"
-								+ "<div class='col-sm-5'><div class='input-group'><span class='input-group-addon'>describe</span><input name='actions["+index+"].description' class='form-control' readonly='readonly' type='text' value="+description+"></div></div>"
-								+ "<div class='col-sm-2'><input type='button' class='btn btn-info' value='edit' onclick='editStep(this)'><input type='button' class='btn btn-info' value='del' onclick='delStep(this)'></div></div>";
-					if($(".stepParam").length > 0){
+						+ "<label class='col-sm-2 control-label'>Algorithm Name:</label><div class='col-sm-3'><input name='actions["+index+"].name' class='form-control validate[required]' readonly='readonly' type='text' value="+value+"></div>"
+						+ "<div class='col-sm-2' ><div class='input-group'><span class='input-group-addon'>Input</span><input name='actions["+index+"].inputpaths' class='form-control' readonly='readonly' type='type' value="+inputPath+"></div></div>"
+						+ "<div class='col-sm-3' ><div class='input-group'><span class='input-group-addon'>Describe</span><input name='actions["+index+"].description' class='form-control' readonly='readonly' type='type' value="+description+"></div></div>"
+						+ "<div class='col-sm-2'><input type='button' class='btn btn-info' value='edit' onclick='editStep(this)'><input type='button' class='btn btn-info' value='del' onclick='delStep(this)'></div></div>";
+						
+			       if($(".stepParam").length > 0){
 						html = html + "<div class='form-group'><label class='col-sm-2 control-label'>Params：</label><div class='col-sm-10'>";
 						$("#paramForm .stepParam").each(function(i,item){
 							var name = $(this).find("label").text();
@@ -103,7 +107,7 @@ $(document).ready(function(e) {
 							html = html + "<dl class='dl-horizontal'><input name='actions["+index+"].params["+i+"].name' type='hidden' value="+name+"><input name='actions["+index+"].params["+i+"].value' type='hidden' value="+value+"><dt>"+name+":</dt><dd>"+value+"</dd></dl>";
 						});
 						html = html + "</div></div>";
-						alert(html);
+						
 					}
 					if($(".action-params").length > 0){
 						$("#taskForm").find(".action-params:last").after(html);
@@ -115,18 +119,64 @@ $(document).ready(function(e) {
 			}
 		}
 	});
+	
 });
 
+
+
+function stepChange(k) {
+	$(".stepParam").remove();
+	if($(k).val() == undefined){
+		return false;
+	}
+	$.ajax({
+		type:'post',
+		url:ctx+'/task/getalgorithmparam',
+		data:{"rowKey":$(k).val()},
+		async:false,
+		dataType:'json',
+		success:function(data){
+			var e = eval(data);
+			if(e.msg == "success"){
+				var list = e.list;
+				if(list != null){
+					var html = "";
+					$.each(list,function(i,item){
+						html = html + "<br><div class=\"row stepParam\"><label class=\"col-sm-2\" style=\"text-align: right;\">"+item.name+":"+item.type+"</label><input type=\"text\" class='col-sm-5 validate[required,custom[onlyLetterNumber]]'></div>";
+					});
+					$(k).parent().next().next().after(html);
+				}
+				var description = e.description;
+				$(k).parent().next().find("input").val(description);
+			}else if(e.msg = "failure"){
+				alert("search failure");
+			}
+		}
+	});
+}
+
 function addStep() {
+	
+	$(".stepParam").remove();
+	var a=$("#assembly_selected").find("option:selected").text();
+	
+	if((a == "BasicTaskAssemblyLine" || a == "--Please select--") && $(".action-params").length>0){
+		
+		$("#paramForm").find("div:eq(2)").hide();
+	}else{
+		$("#paramForm").find("div:eq(2)").show();
+	}
 	$("#dialogDiv").find("select").attr("disabled",false);
 	$("#dialogDiv").find("select").val("");
 	$("#dialogDiv").find("input").val("");
 	$("#paramForm").validationEngine("hideAll");
 	$("#dialogDiv").dialog("open");
+
 }
 
 function editStep(k) {
 	var key = $(k).parent().parent().parent().find("input:eq(0)").val();
+	
 	$("#dialogDiv").find("select").attr("disabled",false);
 	$("#dialogDiv").find("select").val(key);
 	stepChange($("#dialogDiv").find("select"));
@@ -137,6 +187,7 @@ function editStep(k) {
 			$("#paramForm").find(".stepParam:eq("+i+")").find("input").val($(this).find("input:eq(1)").val());
 		});
 	}
+	$("#paramForm").find("input:eq(1)").val($(k).parent().parent().parent().find("input:eq(2)").val());
 	$("#paramForm").validationEngine("hideAll");
 	$("#dialogDiv").dialog("open");
 }
@@ -165,33 +216,6 @@ function radioclick(k){
 	}
 }
 
-function stepChange(k) {
-	$(".stepParam").remove();
-	if($(k).val() == undefined){
-		return false;
-	}
-	$.ajax({
-		type:'post',
-		url:ctx+'/task/getalgorithmparam',
-		data:{"rowKey":$(k).val()},
-		async:false,
-		dataType:'json',
-		success:function(data){
-			var e = eval(data);
-			if(e.msg == "success"){
-				var list = e.list;
-				if(list != null){
-					var html = "";
-					$.each(list,function(i,item){
-						html = html + "<br><div class=\"row stepParam\"><label class=\"col-sm-2\" style=\"text-align: right;\">"+item+"</label><input type=\"text\" class='col-sm-10 validate[required,custom[onlyLetterNumber]]'></div>";
-					});
-					$(k).parent().next().after(html);
-				}
-				var description = e.description;
-				$(k).parent().next().find("input").val(description);
-			}else if(e.msg = "failure"){
-				alert("search failure");
-			}
-		}
-	});
-}
+
+
+

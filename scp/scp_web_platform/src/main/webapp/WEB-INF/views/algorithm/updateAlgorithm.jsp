@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -210,7 +209,7 @@
 								var html = "<div class=\"form-group algorithm-param\"><label class=\"control-label col-sm-2\">Parameters:</label><label class=\"control-label col-sm-3\" style=\"text-align: center;\">Name</label><label class=\"control-label col-sm-5\" style=\"text-align: center;\">Description</label><label class=\"control-label col-sm-2\" style=\"text-align: center;\">Type</label></div>";
 								$.each(params,function(i,item){
 										html = html + "<div class='form-group algorithm-param'>"
-											+"<div class='col-sm-offset-2 col-sm-3'><input type='text' class='form-control' name='params["+i+"].name' value='"+item.name+"' readonly='readonly'/></div>"
+											+"<div class='col-sm-offset-2 col-sm-3'><input  type='text' name='params["+i+"].name' class='form-control' value='"+item.name+"' readonly='readonly'/></div>"
 											+"<div class='col-sm-5'><input type='text' name='params["+i+"].description' class='form-control' value='"+item.description+"' readonly='readonly'/></div>"
 											+"<div class='col-sm-2'><input type='text' class='form-control' name='params["+i+"].type' value='"+item.type+"' readonly='readonly'/></div></div>";
 								});

@@ -2,11 +2,9 @@
 <root>
 	<filePath>d:\\config\</filePath>
 	<standardFiles>
-		
 		<standardFile id="1" fileName="Fire.xml"></standardFile>
 	</standardFiles>
 	<configFiles>
-		
 		<configFile id="1" fileName="conf_template.xml"></configFile>
 	</configFiles>
 </root>

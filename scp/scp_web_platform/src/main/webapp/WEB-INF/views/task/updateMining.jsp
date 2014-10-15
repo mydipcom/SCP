@@ -54,8 +54,7 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li><a href="${ctx}/task/tasklist">Task List</a></li>
 							<li class="active"><a href="${ctx}/task/mininglist">Mining List</a></li>
-							<li><a href="${ctx}/task/executeresult">Execute Result</a></li>
-							<li><a href="${ctx}/task/miningresult">Mining Result</a></li>
+							
 						</ul>
 					</div>
 				</div>
@@ -85,7 +84,7 @@
 								<div class="col-sm-10">
 									<form:select path="source" class="form-control validate[required]">
 										<form:option value="">--Please select--</form:option>
-										<form:options items="${sources}" itemLabel="taskName" itemValue="rowKey"/>
+										<form:options items="${sources}" itemLabel="sourceName" itemValue="rowKey"/>
 									</form:select>
 								</div>
 							</div>

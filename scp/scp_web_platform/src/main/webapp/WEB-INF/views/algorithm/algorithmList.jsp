@@ -11,6 +11,7 @@
 <title>Algorithm List</title>
 <link href="${ctx}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/static/css/navbar.css" rel="stylesheet">
+<link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -86,6 +87,7 @@
 							<th class="col-md-2">Algorithm Name</th>
 							<th class="col-md-5">Description</th>
 							<th class="col-md-1">type</th>
+							<th class="col-md-1">Params</th>
 							<th class="col-md-2">Operation</th>
 						</tr>
 							<c:forEach items="${algorithms}" var="item" varStatus="status"
@@ -109,6 +111,11 @@
 										</c:otherwise>
 									</c:choose>
 									</td>
+									
+									<td>
+									     <button type="button" class="btn btn-info" value="${item.name}"
+											onclick="viewParamDialog(this)">view</button>
+									</td>
 									<td>
 										<button type="button" class="btn btn-info"
 											onclick="modAlgorithm(this)">mod</button>&nbsp;
@@ -118,7 +125,7 @@
 							</c:forEach>
 						
 					</table>
-					<!-- <ul class="pager">
+					<!--  <ul class="pager">
 						<li><a href="#">&laquo;</a></li>
 						<li><a href="#">1</a></li>
 						<li><a href="#">2</a></li>
@@ -132,10 +139,61 @@
 			</div>
 		</div>
 	</div>
-
+    <div id="paramDialogDiv" class="container">
+       
+    </div>
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/bootstrap.min.js"></script>
+	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
+	   $("#paramDialogDiv").dialog(
+	    	{   title:"Algorithm Param",
+	    		autoOpen:false,
+	    		modal:true
+	    	}		
+	    	);
+	    	
+
+	    
+	    function viewParamDialog(k){
+	    	var algorithmName = $(k).val();;
+	    	
+	    	$.ajax({
+	    		type:'post',
+	    		url:'${ctx}/algorithm/getalgorithmparam',
+	    		data:{"algorithmName":algorithmName},
+	    		dataType:'json',
+	    		success:function(data){
+	    			var e=eval(data);
+	    			if(e.msg=="success"){
+	    				var params = e.params;
+	    				if(params != null){
+	    					
+							var html = "<table class=\"table table-bordered\">"+
+							"<tr class=\"active\">"+
+							"<th class=\"col-md-2\">Name</th><th class=\"col-md-5\">Type</th><th class=\"col-md-1\">Description</th></tr>";
+							$.each(params,function(i,item){
+									html=html+"<tr class=\"success\"><td>"+item.name+"</td><td>"+item.type+"</td><td>"+item.description+"</td></tr>";
+							});
+							html+="</table>";
+							$("#paramDialogDiv").html(html);
+		    				$("#paramDialogDiv").dialog("open");
+						}
+	    				else{
+	    					 alert(" Params Not Exist!");
+	    				}
+	    				
+	    			}
+	    			else{
+	    			    alert("View Params Failure!");
+	    			}
+	    		}
+	    	});
+	    	
+	    	
+	    	
+	    }
+	 
     	function addTask(){
 			location.href="${ctx}/algorithm/updatealgorithm";
 		}

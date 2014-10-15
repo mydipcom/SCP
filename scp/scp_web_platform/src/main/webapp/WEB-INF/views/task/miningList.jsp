@@ -12,6 +12,7 @@
 <title>Mining List</title>
 <link href="/scp_web_platform/static/css/bootstrap.css" rel="stylesheet">
 <link href="/scp_web_platform/static/css/navbar.css" rel="stylesheet">
+<link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -58,8 +59,7 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li><a href="${ctx}/task/tasklist">Task List</a></li>
 							<li class="active"><a href="${ctx}/task/mininglist">Mining List</a></li>
-							<li><a href="${ctx}/task/executeresult">Execute Result</a></li>
-							<li><a href="${ctx}/task/miningresult">Mining Result</a></li>
+							
 						</ul>
 					</div>
 				</div>
@@ -118,13 +118,17 @@
 										</c:choose>
 									</td>
 									<td>
-										<c:if test="${empty item.status}">
+									    <c:if test="${empty item.status}">
 											<button type="button" class="btn btn-info" onclick="editMining(this)">mod</button>&nbsp;
 										</c:if>
 										<button type="button" class="btn btn-info" onclick="deleteMining(this)">del</button>&nbsp;
 										<c:if test="${empty item.status}">
 											&nbsp;<button type="button" class="btn btn-info" onclick="runMining(this)">run</button>
 										</c:if>
+										<c:if test="${item.status eq 0}">
+										        <button type="button" class="btn btn-info" onclick="viewMining(this)">view</button>
+										        <button type="button" class="btn btn-info" onclick="">Down</button>    
+									    </c:if>
 									</td>
 								</tr>
 							</c:forEach>
@@ -134,8 +138,10 @@
 			</div>
 		</div>
 	</div>
+	<div id="dialogDiv" class="container"></div>
 	<script src="/scp_web_platform/static/js/jquery-1.10.2.min.js"></script>
 	<script src="/scp_web_platform/static/js/bootstrap.min.js"></script>
+	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
 		function addMining(){
 			location.href="${ctx}/task/updatemining";
@@ -192,6 +198,53 @@
     			}
     		});
     	}
+    	
+    	$(document).ready(function() {
+			$("#dialogDiv").dialog({
+				autoOpen : false,
+				height : 380,
+				width : 800,
+				modal : true,
+				title : 'Add Action',
+				buttons : {
+					"OK" : function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		});
+		function viewMining(k) {
+			var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
+			if (rowKey == undefined) {
+				return false;
+			}
+			$.ajax({
+				type : 'post',
+				url : '${ctx}/task/viewminingresult',
+				dataType : 'json',
+				data : {
+					"rowKey" : rowKey
+				},
+				success : function(data) {
+					var e = eval(data);
+					if (e.msg == "success") {
+						var html = "";
+						var map = e.retMap;
+						if(map != undefined && map != null){
+							$.each(map,function(k,v){
+								html = html + "<div class=\"input-group\"><span class=\"input-group-addon\">"+k+"</span><input type=\"text\" class=\"form-control\" value="+v+" readonly=\"readonly\"></div>";
+							});
+						}
+						$("#dialogDiv").html(html);
+						$("#dialogDiv").dialog("open");
+					} else if (e.msg == "failure") {
+						alert("Retrieve data failure");
+					} else {
+						alert(e.msg);
+					}
+				}
+			});
+		}
 	</script>
 </body>
 </html>
