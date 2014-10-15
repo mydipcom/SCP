@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="${ctx}/static/images/favicon.png">
-<title>Task List</title>
+<title>Source Tasklist</title>
 <link href="${ctx}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/static/css/navbar.css" rel="stylesheet">
-<link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
+
+
 </head>
 <body>
 	<div class="container">
@@ -35,11 +36,11 @@
 							src="${ctx}/static/images/logout.png" />Exit</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="${ctx}/task/tasklist">Task
+					<li ><a href="${ctx}/task/tasklist">Task
 							Manage</a></li>
 					<li><a href="${ctx}/algorithm/algorithmlist">Algorithm
 							Manage</a></li>
-					<li><a href="${ctx}/source/adapterTask">Source
+					<li class="active"><a href="${ctx}/source/adapterTask">Source
 							Manage</a></li>
 					<li><a href="${ctx}/inter/interlist">Interface
 							Manage</a></li>
@@ -57,82 +58,72 @@
 				<div class="panel panel-default" style="min-height: 400px;">
 					<div class="panel-body">
 						<ul class="nav nav-pills nav-stacked">
-							<li class="active"><a href="${ctx}/task/tasklist">Task List</a></li>
-							<li><a href="${ctx}/task/mininglist">Mining List</a></li>
-							
-						</ul>
+							<li ><a href="${ctx}/source/adapterTask">Adap Task</a></li>
+							<li class="active"><a href="${ctx}/source/sourcelist">Source List</a></li>
+						</ul>			
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10">
 				<div class="panel panel-default" id="content-panel">
 					<div class="panel-heading">
-						<div class="alert alert-info" style="margin-bottom:0px;">Task List</div>
+						<div class="alert alert-info" style="margin-bottom:0px;">Source Tasklist</div>
 					</div>
 					<div class="panel-body">
-						<form:form action="${ctx}/task/tasklist" method="get" modelAttribute="task" role="form" id="taskForm">
+						<form:form action="${ctx}/source/sourcelist" method="get" modelAttribute="sourcefile" role="form" id="sourcefileForm">
 							<div class="form-group">
-								<label class="col-sm-2 control-label" style="text-align:right;">Task Name：</label>
+								<label class="col-sm-2 control-label" style="text-align:right;">Source Name：</label>
 								<div class="col-sm-7">
-									<form:input path="taskName" id="taskName" class="form-control" value="${taskName}"/>
+									<form:input path="sourceName" id="sourceName" class="form-control" value="${sourceName}"/>
 								</div>
 								<div class="col-sm-3">
 									<button type="submit" class="btn btn-default">Search</button>
 									&nbsp;
-								<button type="button" class="btn btn-default" onClick="addTask();">Add</button>
 								</div>
 							</div>
 						</form:form>
 					</div>
-					<c:if test="${not empty tasks}">
+					<c:if test="${not empty tasks || not empty htasks}">
 					<table id="taskTable" class="table table-bordered">
 						<tr>
-							<th>Task Name</th>
-							<th>Standard File Name</th>
-							<th>Start Time</th>
-							<th>Trigger Type</th>
-							<th>Assembly</th>
-							<th>Status</th>
+							<th>Source Name</th>
+							<th>Source Type</th>
+							<th>Storage Time</th>
 							<th>Operation</th>
+							
 						</tr>
-						<c:forEach items="${tasks}" var="task">
+						<c:forEach items="${htasks}" var="htask">
 							<tr class="active">
-								<td><input type="hidden" value="${task.rowKey}">${task.taskName}</td>
-								<td>${task.fileName}</td>
-								<td><fmt:formatDate value="${task.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								<td>${task.triggerType}</td>
-								<td>${task.assembly}</td>
+								<td><input type="hidden" value="${htask.sourceName}">${htask.sourceName}</td>
+								<td><input type="hidden" value="${htask.sourceType}">${htask.sourceType}</td>
+								
+								<th>${htask.storageTime}</th>
 								<td>
-									<c:choose>
-										<c:when test="${task.status eq 0}">
-											ready
-										</c:when>
-										<c:when test="${task.status eq 1}">
-											running
-										</c:when>
-										<c:when test="${task.status eq 2}">
-											interrupt
-										</c:when>
-										<c:when test="${task.status eq 3}">
-											finished
-										</c:when>
-									</c:choose>
-								</td>
-								 <td>
-									<c:if test="${empty task.status}">
-										<button type="button" class="btn btn-info" onclick="editTask(this)">mod</button>&nbsp;
-									</c:if>
-									<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>&nbsp;
-									<c:if test="${empty task.status}">
-										<button type="button" class="btn btn-info" onclick="runTask(this)">run</button>
-									</c:if>
-									 <c:if test="${task.status eq 3}">
-								      <button type="button" class="btn btn-info" onclick="viewtaskresult(this)">view</button>
-									  <button type="button" class="btn btn-info" onclick="downloadSource(this)">Down</button>
-									</c:if>
-								</td>
+										<button type="button" class="btn btn-info" onclick="sourceview(this)">view</button>&nbsp;
+									
+										<button type="button" class="btn btn-info" onclick="download(this)">down</button>&nbsp;
+										
+										<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>	
+					 			</td>
+							
 							</tr>
 						</c:forEach>
+						<c:forEach items="${tasks}" var="task">
+							<tr class="active">
+								<td><input type="hidden" value="${task.sourceName}">${task.sourceName}</td>
+								<td>${task.sourceType}</td>
+								<th>${task.storageTime}</th>
+								<td>
+										<button type="button" class="btn btn-info" onclick="sourceview(this)">view</button>&nbsp;
+									
+										<button type="button" class="btn btn-info" onclick="download(this)">down</button>&nbsp;
+										
+										<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>	
+					 			</td>
+							
+							</tr>
+						</c:forEach>
+						
 					</table>
 					<!-- <ul class="pager">
 						<li><a href="#">&laquo;</a></li>
@@ -147,32 +138,31 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 	
-	<div id="viewDialogDiv" class="container">
+	<div id="dialogDiv" class="container">
 		<table class="table table-bordered"></table>
 	</div>
+ 
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/bootstrap.min.js"></script>
-	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
-	  $(document).ready(function() {
-		$("#viewDialogDiv").dialog({
+	$(document).ready(function() {
+		$("#dialogDiv").dialog({
 			autoOpen : false,
 			height : 380,
 			width : 800,
 			modal : true,
-			title : 'View Source',
+			title : 'Add Action',
 			buttons : {
 				"OK" : function() {
 					$(this).dialog("close");
 				}
 			}
 		});
-	   });
+	});
     	function addTask(){
-    		location.href="${ctx}/task/updatetask";
+    		location.href="${ctx}/source/adpaupdatetask";
 		}
     	
     	function searchTasks(){
@@ -208,16 +198,15 @@
     	}
     	
     	function deleteTask(k){
-    		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
-    		if(rowKey == undefined){
-    		
+    		var sourceName = $(k).parent().parent().find("input[type='hidden']").val();
+    		if(sourceName == undefined){
     			return false;
     		}
     		$.ajax({
     			type:'post',
-    			url:'${ctx}/task/deletetask',
+    			url:'${ctx}/source/deletesource',
     			dataType:'json',
-    			data:{"rowKey":rowKey},
+    			data:{"sourceName":sourceName},
     			success:function(data){
     				var e = eval(data);
     				if(e.msg == "success"){
@@ -230,48 +219,25 @@
     		});
     	}
     	
-    	function runTask(k){
-    		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
-    		if(rowKey == undefined){
+    	function sourceview(k) {
+    		var sourceName = $(k).parent().parent().find("input[type='hidden']").val();
+    		if(sourceName == undefined){
     			return false;
     		}
     		$.ajax({
-    			type:'post',
-    			url:'${ctx}/task/runtask',
-    			dataType:'json',
-    			data:{"rowKey":rowKey},
-    			success:function(data){
-    				var e = eval(data);
-    				if(e.msg == "success"){
-    					alert("start task success");
-    					location.reload();
-    				}else if(e.msg = "failure"){
-    					alert("start task failure");
-    				}
-    			}
-    		});
-    	}
-    	
-    	function viewtaskresult(k) {
-			var rowKey = $(k).parent().parent().find("input[type='hidden']")
-					.val();
-			if (rowKey == undefined) {
-				return false;
-			}
-			$.ajax({
 				type : 'post',
-				url : '${ctx}/task/viewtaskresult',
+				url : '${ctx}/source/sourceview',
 				dataType : 'json',
 				data : {
-					"rowKey" : rowKey
+					"sourceName" : sourceName
 				},
+				
 				success : function(data) {
 					var e = eval(data);
 					if (e.msg == "success") {
 						var html = "";
 						var columns = e.columns;
 						if (columns != undefined && columns != null) {
-							
 							html = html + "<tr class='success'>";
 							$.each(columns, function(i, item) {
 								html = html + "<th>" + item + "</th>";
@@ -291,9 +257,8 @@
 								});
 							}
 						}
-						
-						$("#viewDialogDiv").find("table:eq(0)").html(html);
-						$("#viewDialogDiv").dialog("open");
+						$("#dialogDiv").find("table:eq(0)").html(html);
+						$("#dialogDiv").dialog("open");
 					} else if (e.msg == "failure") {
 						alert("retrieve data failure!!!");
 					} else {
@@ -302,17 +267,18 @@
 				}
 			});
 		}
-    	
-    	function downloadSource(k) {
-			var rowKey = $(k).parent().parent().find("input[type='hidden']")
-					.val();
-			if (rowKey == undefined) {
-				return false;
-			}
+    	function download(k) {
+    		var sourceName = $(k).parent().parent().find("input[type='hidden']").val();
+    		var sourceType = $(k).parent().parent().find("input:eq(1)[type='hidden']").val();
+    		if(sourceName == undefined){
+    			return false;
+    		}
 // 			if (confirm("are you ensure download these datas")) {
 
 // 			}
-			document.location.href = "${ctx}/download/"+rowKey;
+			alert(sourceName);
+			alert(sourceType);
+			document.location.href = "${ctx}/source/download/"+sourceName+"&&"+sourceType;
 		}
     </script>
 </body>

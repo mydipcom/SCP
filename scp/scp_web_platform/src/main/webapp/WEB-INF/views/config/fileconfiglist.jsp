@@ -37,7 +37,7 @@
 							Manage</a></li>
 					<li><a href="${ctx}/algorithm/algorithmlist">Algorithm
 							Manage</a></li>
-					<li><a href="${ctx}/source/sourcelist">Source
+					<li><a href="${ctx}/source/adapterTask">Source
 							Manage</a></li>
 					<li><a href="${ctx}/inter/interlist">Interface
 							Manage</a></li>
@@ -87,9 +87,10 @@
 					<c:if test="${not empty files}">
 					<table class="table table-bordered">
 						<tr class="active">
-							<th class="col-md-3">File Name</th>
-							<th class="col-md-5">Description</th>
-							<th class="col-md-2">Operation</th>
+							<th >File Name</th>
+							<th >Description</th>
+							<th >type</th>
+							<th >Operation</th>
 						</tr>
 							<c:forEach items="${files}" var="item" varStatus="status"
 								begin="0" step="1">
@@ -99,7 +100,11 @@
 										${item.name}
 									</td>
 									<td>${item.description}</td>
-									<td><button type="button" class="btn btn-info" onclick="delFile(this)">del</button></td>
+									<td>${item.type}</td>
+									<td>
+										<button type="button" class="btn btn-info" onclick="view(this)">view</button>&nbsp;
+										<button type="button" class="btn btn-info" onclick="delFile(this)">del</button>
+									</td>
 								</tr>
 							</c:forEach>
 						
@@ -120,6 +125,16 @@
 				<button type="button" class="btn btn-default" id="upload">select</button>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">File Type</label>
+				<div class="col-sm-8">
+							<form:select path="type" class="form-control validate[required]">
+								<option value="">--Please Select--</option>
+								<form:option value="standard config">standard config</form:option>
+								<form:option value="source config">source config</form:option>
+							</form:select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">Description</label>
 				<div class="col-sm-10">
 					<form:textarea path="description" class="form-control validate[required]" rows="3"/>
@@ -131,6 +146,8 @@
 				</div>
 			</div>
 		</form:form>
+	</div>
+	<div class="container" id="dialogDiv1">
 	</div>
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/jquery-ui.js"></script>
@@ -147,7 +164,7 @@
 				name:'file',
 				responseType:'json',
 				onSubmit:function(file,text){
-					if(!(text&&/^(xml|XML)$/.exec(text))){   //判断文件的格式 
+					if(!(text&&/^(xml|XML)$/.exec(text))){
 						alert("please select available file which type is xml");
 						return false;
 					}
@@ -180,6 +197,13 @@
 			title : 'Upload File'
 		});
 		
+		$("#dialogDiv1").dialog({
+			autoOpen : false,
+			height : 380,
+			width : 800,
+			modal : true,
+			title : 'source File'
+		});
 		$("#btnUp").click(function(){
 			$("#dialogDiv").find("input").val("");
 			$("#fileForm").validationEngine("hideAll");
@@ -203,11 +227,41 @@
 					alert(e.msg);
 				}
 			},
+	
 			success : false,
 			failure : function() {
 			}
 		});
 	});
+	
+	function view(k){
+		var rowkey = $(k).parent().parent().find("input[type='hidden']").val();
+		
+		if(rowkey == undefined){
+			alert("get rowkey error");
+			return;
+		}	
+		$.ajax({
+			type:'post',
+			url:'${ctx}/config/configview',
+			data:{"rowkey":rowkey},
+			dataType:'json',
+			success:function(data){
+				var e = eval(data);
+				if(e.msg == "success"){
+					
+					var content = e.content;
+					alert(content);
+					$("#dialogDiv1").text(content);
+					$("#dialogDiv1").dialog("open");
+				}else if(e.msg == "failure"){
+					alert("delete failure!");
+				}else{
+					alert(e.msg);
+				}
+			}
+		});
+	}
 	
 	function delFile(k){
 		var rowkey = $(k).parent().parent().find("input[type='hidden']").val();

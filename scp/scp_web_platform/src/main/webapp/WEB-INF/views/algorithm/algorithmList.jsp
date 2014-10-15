@@ -36,7 +36,7 @@
 							Manage</a></li>
 					<li class="active"><a href="${ctx}/algorithm/algorithmlist">Algorithm
 							Manage</a></li>
-					<li><a href="${ctx}/source/sourcelist">Source
+					<li><a href="${ctx}/source/adapterTask">Source
 							Manage</a></li>
 					<li><a href="${ctx}/inter/interlist">Interface
 							Manage</a></li>

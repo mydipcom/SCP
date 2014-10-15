@@ -15,6 +15,9 @@ public class StandardFile implements Serializable {
 	//file content
 	private String content;
 	
+	//file Type
+	private String type;
+	
 	private String path;
 	
 	public StandardFile(){
@@ -60,4 +63,13 @@ public class StandardFile implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 }

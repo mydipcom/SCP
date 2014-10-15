@@ -46,6 +46,25 @@ public class ConfigAction {
 		return "config/fileconfiglist";
 	}
 	
+	@RequestMapping(value="configview",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> viewconfig(String rowkey) {
+		StandardFile file=null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			file = fileService.getFileByRowKey(rowkey);
+			String content=file.getContent();
+			map.put("content", content);
+			map.put("msg", "success");
+		} catch (IOException e) {
+			e.printStackTrace();
+			map.put("msg", "failure");
+		}
+		
+		
+		return map;
+	}
+	
 	@RequestMapping(value="saveuploadfile",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> saveUploadFile(StandardFile file){

@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="${ctx}/static/images/favicon.png">
-<title>Task List</title>
+<title>Source Tasklist</title>
 <link href="${ctx}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/static/css/navbar.css" rel="stylesheet">
-<link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
+
+
 </head>
 <body>
 	<div class="container">
@@ -35,11 +36,11 @@
 							src="${ctx}/static/images/logout.png" />Exit</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="${ctx}/task/tasklist">Task
+					<li ><a href="${ctx}/task/tasklist">Task
 							Manage</a></li>
 					<li><a href="${ctx}/algorithm/algorithmlist">Algorithm
 							Manage</a></li>
-					<li><a href="${ctx}/source/adapterTask">Source
+					<li class="active"><a href="${ctx}/source/adapterTask">Source
 							Manage</a></li>
 					<li><a href="${ctx}/inter/interlist">Interface
 							Manage</a></li>
@@ -57,20 +58,19 @@
 				<div class="panel panel-default" style="min-height: 400px;">
 					<div class="panel-body">
 						<ul class="nav nav-pills nav-stacked">
-							<li class="active"><a href="${ctx}/task/tasklist">Task List</a></li>
-							<li><a href="${ctx}/task/mininglist">Mining List</a></li>
-							
-						</ul>
+							<li class="active"><a href="${ctx}/task/tasklist">Adap Task</a></li>
+							<li><a href="${ctx}/source/sourcelist">Source List</a></li>
+						</ul>			
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10">
 				<div class="panel panel-default" id="content-panel">
 					<div class="panel-heading">
-						<div class="alert alert-info" style="margin-bottom:0px;">Task List</div>
+						<div class="alert alert-info" style="margin-bottom:0px;">Source Tasklist</div>
 					</div>
 					<div class="panel-body">
-						<form:form action="${ctx}/task/tasklist" method="get" modelAttribute="task" role="form" id="taskForm">
+						<form:form action="${ctx}/source/adapterTask" method="get" modelAttribute="source" role="form" id="sourceForm">
 							<div class="form-group">
 								<label class="col-sm-2 control-label" style="text-align:right;">Task Name：</label>
 								<div class="col-sm-7">
@@ -91,45 +91,22 @@
 							<th>Standard File Name</th>
 							<th>Start Time</th>
 							<th>Trigger Type</th>
-							<th>Assembly</th>
-							<th>Status</th>
 							<th>Operation</th>
 						</tr>
 						<c:forEach items="${tasks}" var="task">
 							<tr class="active">
 								<td><input type="hidden" value="${task.rowKey}">${task.taskName}</td>
 								<td>${task.fileName}</td>
-								<td><fmt:formatDate value="${task.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								  <td>${task.startTime}</td>
 								<td>${task.triggerType}</td>
-								<td>${task.assembly}</td>
+								
 								<td>
-									<c:choose>
-										<c:when test="${task.status eq 0}">
-											ready
-										</c:when>
-										<c:when test="${task.status eq 1}">
-											running
-										</c:when>
-										<c:when test="${task.status eq 2}">
-											interrupt
-										</c:when>
-										<c:when test="${task.status eq 3}">
-											finished
-										</c:when>
-									</c:choose>
-								</td>
-								 <td>
-									<c:if test="${empty task.status}">
+									
 										<button type="button" class="btn btn-info" onclick="editTask(this)">mod</button>&nbsp;
-									</c:if>
-									<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>&nbsp;
-									<c:if test="${empty task.status}">
+										<button type="button" class="btn btn-info" onclick="deleteTask(this)">del</button>&nbsp;
 										<button type="button" class="btn btn-info" onclick="runTask(this)">run</button>
-									</c:if>
-									 <c:if test="${task.status eq 3}">
-								      <button type="button" class="btn btn-info" onclick="viewtaskresult(this)">view</button>
-									  <button type="button" class="btn btn-info" onclick="downloadSource(this)">Down</button>
-									</c:if>
+									
+								
 								</td>
 							</tr>
 						</c:forEach>
@@ -147,32 +124,12 @@
 				</div>
 			</div>
 		</div>
-		
-	</div>
-	
-	<div id="viewDialogDiv" class="container">
-		<table class="table table-bordered"></table>
 	</div>
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/bootstrap.min.js"></script>
-	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script type="text/javascript">
-	  $(document).ready(function() {
-		$("#viewDialogDiv").dialog({
-			autoOpen : false,
-			height : 380,
-			width : 800,
-			modal : true,
-			title : 'View Source',
-			buttons : {
-				"OK" : function() {
-					$(this).dialog("close");
-				}
-			}
-		});
-	   });
     	function addTask(){
-    		location.href="${ctx}/task/updatetask";
+    		location.href="${ctx}/source/adpaterupdatetask";
 		}
     	
     	function searchTasks(){
@@ -180,7 +137,7 @@
     			type:'post',
     			url:'${ctx}/task/searchtasks',
     			dataType:'json',
-    			data:$("#taskForm").serialize(),
+    			data:$("#sourceForm").serialize(),
     			success:function(data){
     				var e = eval(data);
     				if(e.msg == "success"){
@@ -204,18 +161,17 @@
     		if(rowKey == undefined){
     			return false;
     		}
-    		location.href="${ctx}/task/updatetask?rowKey="+rowKey;
+    		location.href="${ctx}/source/adpaterupdatetask?rowKey="+rowKey;
     	}
     	
     	function deleteTask(k){
     		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
     		if(rowKey == undefined){
-    		
     			return false;
     		}
     		$.ajax({
     			type:'post',
-    			url:'${ctx}/task/deletetask',
+    			url:'${ctx}/source/deletetask',
     			dataType:'json',
     			data:{"rowKey":rowKey},
     			success:function(data){
@@ -232,6 +188,7 @@
     	
     	function runTask(k){
     		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
+    		
     		if(rowKey == undefined){
     			return false;
     		}
@@ -251,69 +208,6 @@
     			}
     		});
     	}
-    	
-    	function viewtaskresult(k) {
-			var rowKey = $(k).parent().parent().find("input[type='hidden']")
-					.val();
-			if (rowKey == undefined) {
-				return false;
-			}
-			$.ajax({
-				type : 'post',
-				url : '${ctx}/task/viewtaskresult',
-				dataType : 'json',
-				data : {
-					"rowKey" : rowKey
-				},
-				success : function(data) {
-					var e = eval(data);
-					if (e.msg == "success") {
-						var html = "";
-						var columns = e.columns;
-						if (columns != undefined && columns != null) {
-							
-							html = html + "<tr class='success'>";
-							$.each(columns, function(i, item) {
-								html = html + "<th>" + item + "</th>";
-							});
-							html = html + "</tr>";
-							var list = e.list;
-							if (list != undefined && list != null) {
-								$.each(list, function(i, items) {
-									if (items != undefined || items != null) {
-										html = html + "<tr>";
-										$.each(items, function(i, item) {
-											html = html + "<td>" + item
-													+ "</td>";
-										});
-										html = html + "</tr>";
-									}
-								});
-							}
-						}
-						
-						$("#viewDialogDiv").find("table:eq(0)").html(html);
-						$("#viewDialogDiv").dialog("open");
-					} else if (e.msg == "failure") {
-						alert("retrieve data failure!!!");
-					} else {
-						alert(e.msg);
-					}
-				}
-			});
-		}
-    	
-    	function downloadSource(k) {
-			var rowKey = $(k).parent().parent().find("input[type='hidden']")
-					.val();
-			if (rowKey == undefined) {
-				return false;
-			}
-// 			if (confirm("are you ensure download these datas")) {
-
-// 			}
-			document.location.href = "${ctx}/download/"+rowKey;
-		}
     </script>
 </body>
 </html>

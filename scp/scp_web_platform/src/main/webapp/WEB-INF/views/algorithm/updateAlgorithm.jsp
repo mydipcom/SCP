@@ -33,7 +33,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="${ctx}/task/tasklist">Task Manage</a></li>
 					<li class="active"><a href="${ctx}/algorithm/algorithmlist">Algorithm Manage</a></li>
-					<li><a href="${ctx}/source/sourcelist">Source Manage</a></li>
+					<li><a href="${ctx}/source/adapterTask">Source Manage</a></li>
 					<li><a href="${ctx}/inter/interlist">Interface Manage</a></li>
 					<li><a href="${ctx}/config/configlist">Config Manage</a></li>
 					<li><a href="${ctx}/user/userlist">User Manager</a></li>

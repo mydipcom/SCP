@@ -39,7 +39,7 @@
 							Manage</a></li>
 					<li><a href="/scp_web_platform/algorithm/algorithmlist">Algorithm
 							Manage</a></li>
-					<li><a href="/scp_web_platform/source/sourcelist">Source
+					<li><a href="/scp_web_platform/source/adapterTask">Source
 							Manage</a></li>
 					<li><a href="/scp_web_platform/inter/interlist">Interface
 							Manage</a></li>
