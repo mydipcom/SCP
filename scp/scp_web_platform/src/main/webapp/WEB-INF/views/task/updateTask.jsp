@@ -15,8 +15,9 @@
 <link href="${ctx}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${ctx}/static/css/navbar.css" rel="stylesheet">
 <link href="${ctx}/static/css/jquery-ui.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="${ctx}/static/css/validationEngine.jquery.css" type="text/css" />
+<link href="${ctx}/static/css/jquery.multiselect.css" rel="stylesheet" type="text/css"/>
+<link href="${ctx}/static/css/jquery.multiselect.filter.css"  rel="stylesheet" type="text/css"/>
+<link href="${ctx}/static/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="container">
@@ -59,7 +60,7 @@
 						<ul class="nav nav-pills nav-stacked">
 							<li class="active"><a href="${ctx}/task/tasklist">Task
 									List</a></li>
-							<li><a href="${ctx}/task/tasklist">Mining List</a></li>
+							<li><a href="${ctx}/task/mininglist">Mining List</a></li>
 							
 						</ul>
 					</div>
@@ -111,8 +112,6 @@
 									<form:select path="assembly"
 										class="form-control validate[required]"
 										 id="assembly_selected">
-										<form:option value="">--Please select--</form:option>
-
 										<c:if test="${not empty assembly}">
 											<c:forEach items="${assembly}" var="item">
 												<form:option value="${item}">${item}</form:option>
@@ -280,7 +279,7 @@
 											<div class="col-sm-2">
 												<div class="input-group">
 													<span class="input-group-addon">Input</span>
-													<form:input path="actions[${status.index}].inputpaths"
+													<form:input path="actions[${status.index}].input"
 														class="form-control" readonly="true" />
 												</div>
 											</div>
@@ -318,7 +317,7 @@
 									</div>
 								</c:forEach>
 							</c:if>
-							<div class="form-group">
+						    <div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10" align="center">
 									<button type="submit" class="btn btn-info">Save</button>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -353,11 +352,22 @@
 			</div>
 			<div class="row" >
 				<label class="col-sm-2" style="text-align: right;">Input Paths</label>
-                <input type="text" class='col-sm-10 validate[required]' >
-		    </div>
+                <input type="text" class='col-sm-6 validate[required]' readonly="readonly"/>
+                    <select multiple="multiple" style="width:200px" id="multipleselect">
+		             <option value="Fire1">Fire1</option>
+		             <option value="Fire2">Fire2</option>
+		             <c:if test="${not empty inputpaths}">
+		             	<c:forEach items="${inputpaths}" var="item">
+		             	   <option value="${item}">${item}</option>
+		                </c:forEach>
+		             
+		             </c:if>
+		            </select>
+		        
+		     </div>
+		    
 		</form>
 	</div>
-
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -365,15 +375,12 @@
 	<script src="${ctx}/static/js/jquery-1.10.2.min.js"></script>
 	<script src="${ctx}/static/js/jquery-ui.js"></script>
 	<script src="${ctx}/static/js/bootstrap.min.js"></script>
-	<script src="${ctx}/static/js/jquery.validationEngine.js"
-		type="text/javascript" charset="utf-8"></script>
-	<script src="${ctx}/static/js/My97DatePicker/WdatePicker.js"
-		type="text/javascript" charset="utf-8"></script>
-	<script src="${ctx}/static/js/jquery.validationEngine-en.js"
-		type="text/javascript"></script>
-	<script src="${ctx}/static/js/editTask.js" type="text/javascript"
-		charset="utf-8">
-	</script>
+	<script src="${ctx}/static/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${ctx}/static/js/My97DatePicker/WdatePicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${ctx}/static/js/jquery.validationEngine-en.js" type="text/javascript"></script>
+	<script src="${ctx}/static/js/editTask.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${ctx}/static/js/jquery.multiselect.js" type="text/javascript" ></script>
+    <script src="${ctx}/static/js/jquery.multiselect.filter.js" type="text/javascript" ></script>
 
 </body>
 </html>

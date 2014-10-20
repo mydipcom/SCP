@@ -107,8 +107,7 @@ public class DataUtil extends UnicastRemoteObject implements IDataUtil {
 					if (fields != null && fields.length > 0) {
 						List<Parameter> parameters = new ArrayList<Parameter>();
 						for (Field field : fields) {
-							ParamField paramField = field
-									.getAnnotation(ParamField.class);
+							ParamField paramField = field.getAnnotation(ParamField.class);
 							if (paramField != null) {
 								Parameter param = new Parameter();
 								param.setName(paramField.name());

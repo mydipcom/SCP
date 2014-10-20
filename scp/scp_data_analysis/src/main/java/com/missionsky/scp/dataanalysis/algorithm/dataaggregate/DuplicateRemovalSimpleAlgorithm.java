@@ -1,6 +1,7 @@
 package com.missionsky.scp.dataanalysis.algorithm.dataaggregate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
@@ -66,17 +67,14 @@ public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 		try {
 			String hdfs = getHDFSUrl();
 			Path outputPath = new Path(hdfs + output);
-			Path input = null; 
-			Path outputPathSub = null;
+			Path []input = new Path[inputPaths.size()];; 
+			
 			int i = 0;
-			
-			
-			for (String in : inputPaths) {
-				input = new Path(in);
-				outputPathSub = new Path(outputPath, DuplicateRemovalSimpleAlgorithm.class.getSimpleName()+"_" + i);
-				
-
-				Job job = Job.getInstance(conf, taskName + "_duplicate_removal_simple_job_" + i++);
+			for(String in:inputPaths){
+				input[i++]=new Path(in);
+			}
+		       
+				Job job = Job.getInstance(conf, taskName + "_duplicate_removal_simple_job");
 				
 				jarPath = storeTempJarToHDFS(conf, DuplicateRemovalSimpleAlgorithm.class);
 				job.addArchiveToClassPath(jarPath);
@@ -90,8 +88,9 @@ public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 				job.setOutputKeyClass(Text.class);
 				job.setOutputValueClass(Text.class);
 				
-				FileInputFormat.addInputPath(job, input);
-				FileOutputFormat.setOutputPath(job, outputPathSub);
+				
+				FileInputFormat.setInputPaths(job, input);
+				FileOutputFormat.setOutputPath(job, outputPath);
 				
 				if (!job.waitForCompletion(true)) {
 					throw new InterruptedException(job.getJobName());
@@ -101,8 +100,7 @@ public class DuplicateRemovalSimpleAlgorithm extends BasicAlgorithm {
 						jarPath = null;
 					}
 				}
-			}
-			input_count=i;   //返回处理后输出文件数量
+			
 		} catch (IOException e) {
 			//TODO log info
 			e.printStackTrace();

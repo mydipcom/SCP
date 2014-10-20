@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import com.missionsky.scp.dataanalysis.algorithm.BasicAlgorithm;
 import com.missionsky.scp.dataanalysis.entity.AlgorithmInfoAnnotation;
 import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
+import com.missionsky.scp.dataanalysis.entity.ParamField;
 
 /**
  * Aggregate Algorithm  abstract class
@@ -22,7 +23,8 @@ import com.missionsky.scp.dataanalysis.entity.AlgorithmType;
 
 @AlgorithmInfoAnnotation(name="AggregateAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="Aggregate  algorithm")
 public abstract class AggregateAlgorithm extends BasicAlgorithm{
-	
+	@ParamField(description = "The algorithm must be input id", name = "id", type = "int")
+	  private int id;
 	/**
 	 * Data Trim Mapper
 	 * @author ellis.xie

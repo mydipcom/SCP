@@ -11,6 +11,7 @@ import com.missionsky.scp.dao.ScheduleDao;
 import com.missionsky.scp.dataanalysis.Constants;
 import com.missionsky.scp.dataanalysis.entity.StandardTask;
 import com.missionsky.scp.dataanalysis.facadeinterface.BasicTaskAssemblyLine;
+import com.missionsky.scp.dataanalysis.facadeinterface.SpecialTaskAssemblyLine;
 
 public class SimpleJob implements Job {
 	private StandardTask task;
@@ -30,8 +31,11 @@ public class SimpleJob implements Job {
 						BasicTaskAssemblyLine basicTaskAssemblyLine = new BasicTaskAssemblyLine();
 						basicTaskAssemblyLine.stream(task);
 						
-					} else {
-
+					} else if(task.getAssembly().equals("SpecialTaskAssemblyLine")){
+						SpecialTaskAssemblyLine specialTaskAssemblyLine = new SpecialTaskAssemblyLine();
+						specialTaskAssemblyLine.stream(task);
+					}else {
+						
 					}
 				}
 

@@ -26,6 +26,8 @@ public class Action implements Serializable {
 	
     //算法输入
 	private List<String> inputpaths;
+	
+	private String input;
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -88,6 +90,14 @@ public class Action implements Serializable {
 
 	public void setInputpaths(List<String> inputpaths) {
 		this.inputpaths = inputpaths;
+	}
+
+	public String getInput() {
+		return input;
+	}
+
+	public void setInput(String input) {
+		this.input = input;
 	}
 	
 }

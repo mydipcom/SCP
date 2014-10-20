@@ -96,13 +96,14 @@ public class StoreToHBaseAlgorithm  extends BasicAlgorithm{
 		Path jarPath = null;
 		
 		try {
-			Path input = null;
+			Path[] input =new Path[inputPaths.size()] ;
 			int i = 0;
 			
 			for (String in : inputPaths) {
-				input = new Path(in+"/part-r-00000");
-				
-				Job job = Job.getInstance(conf, taskName + "store_to_hbase_job_" + i);
+				  input[i++] = new Path(in);
+			    }
+			    
+				Job job = Job.getInstance(conf, taskName + "store_to_hbase_job");
 				
 				jarPath = storeTempJarToHDFS(conf, StoreToHBaseAlgorithm.class);
 				
@@ -116,7 +117,7 @@ public class StoreToHBaseAlgorithm  extends BasicAlgorithm{
 				job.setMapOutputKeyClass(Text.class);
 				job.setMapOutputValueClass(Text.class);
 				
-				FileInputFormat.addInputPath(job, input);
+				FileInputFormat.setInputPaths(job, input);
 				
 				TableMapReduceUtil.initTableReducerJob(taskName, Reducer01.class, job);
 				
@@ -128,7 +129,7 @@ public class StoreToHBaseAlgorithm  extends BasicAlgorithm{
 						jarPath = null;
 					}
 				}
-			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Algorithm implements Serializable{
+	/**
+	 * 
+	 */
 	//hbase row rowkey
 	private String rowKey;
 	

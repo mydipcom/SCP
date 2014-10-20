@@ -27,37 +27,42 @@ import com.missionsky.scp.dataanalysis.utils.RemoteHadoopUtil;
 
 @AlgorithmInfoAnnotation(name="BasicAlgorithm", algorithmType=AlgorithmType.BasicAlgothm, description="Basic algorithm abstract class.")
 public abstract class BasicAlgorithm implements Algorithm {
-	public static int input_count=0;
-	private static Logger logger = LoggerFactory.getLogger(BasicAlgorithm.class);
-	
+	public static int input_count = 0;
+	private static Logger logger = LoggerFactory
+			.getLogger(BasicAlgorithm.class);
+
 	public static Pattern pattern = Pattern.compile(",");
-	
-	public int run(Configuration conf, String output, StandardTask task,List <String>actionInputpath){
-		
+
+	public int run(Configuration conf, String output, StandardTask task,
+			List<String> actionInputpath) {
+
 		ArrayList<String> inputpaths = new ArrayList<String>();
 		try {
 			FileSystem fs = FileSystem.get(conf);
-			
-			Path standardPath = new Path(getHDFSUrl() + "/"+actionInputpath.get(0));			
-			FileStatus[] fileStatus = fs.listStatus(standardPath);
-			for (FileStatus fStatus : fileStatus) {
-				
-				inputpaths.add(fStatus.getPath().toString());
+			for (String inputpath : actionInputpath) {
+				Path standardPath = new Path(getHDFSUrl() + "/" + inputpath);
+				FileStatus[] fileStatus = fs.listStatus(standardPath);
+				for (FileStatus fStatus : fileStatus) {
+
+					inputpaths.add(fStatus.getPath().toString());
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return run(conf, inputpaths, output, task, task.getName());
 	}
-	
-	public abstract int run(Configuration conf, List<String> inputPaths, String outputPath, StandardTask task, String taskName);
-	
+
+	public abstract int run(Configuration conf, List<String> inputPaths,
+			String outputPath, StandardTask task, String taskName);
+
 	/**
 	 * Create a jar of current running job and store the jar to temp index in hdfs
 	 * @author ellis.xie 
 	 * @version 1.0
 	 */
-	public static Path storeTempJarToHDFS(Configuration conf, Class<?> AlgorithmClazz){
+	public static Path storeTempJarToHDFS(Configuration conf,
+			Class<?> AlgorithmClazz) {
 		String jarPath = null;
 		String hdfs = getHDFSUrl();
 		
@@ -92,11 +97,11 @@ public abstract class BasicAlgorithm implements Algorithm {
 			logger.error("Delete temp jar {} fail.", jarPath.toString());
 		}
 	}
-	
-	
-	public static String getHDFSUrl(){
-		return PropertiesUtil.loadPropertiesFile(BasicAlgorithm.class.getResource("/").getPath() + "hadoop.properties").getProperty("hdfs.url");
-	} 
-	
-	
+
+	public static String getHDFSUrl() {
+		return PropertiesUtil.loadPropertiesFile(
+				BasicAlgorithm.class.getResource("/").getPath()
+						+ "hadoop.properties").getProperty("hdfs.url");
+	}
+
 }

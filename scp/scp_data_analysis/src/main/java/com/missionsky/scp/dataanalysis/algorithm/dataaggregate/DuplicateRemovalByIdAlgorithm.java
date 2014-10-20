@@ -195,16 +195,18 @@ public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 		Path jarPath =null;
 		
 		try {
-			String hdfs = getHDFSUrl();
-			Path outputPath = new Path(hdfs + output);
-			Path input = null; 
-			Path outputPathSub = null;
-			int i = 0;
+			    String hdfs = getHDFSUrl();
+		 	    Path outputPath = new Path(hdfs + output);
+			    Path[] input = new Path[inputPaths.size()]; 
+		 	    
+			    int i = 0;
 			
-			for (String in : inputPaths) {
-				input = new Path(hdfs + in);
-				outputPathSub = new Path(outputPath, "_duplicate_removal_by_id_job_" + i);
-				Job job = Job.getInstance(conf, taskName + "_duplicate_removal_by_id_job_" + i++);
+			    for(String in:inputPaths){
+			    	input[i++] = new Path(in);
+				}
+			  
+				
+				Job job = Job.getInstance(conf, taskName + "_duplicate_removal_by_id_job");
 				
 				jarPath = storeTempJarToHDFS(conf, DuplicateRemovalByIdAlgorithm.class);
 				job.addArchiveToClassPath(jarPath);
@@ -215,7 +217,7 @@ public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 				job.setOutputValueClass(Text.class);
 				
 				FileInputFormat.setInputPaths(job, input);
-				FileOutputFormat.setOutputPath(job, outputPathSub);
+				FileOutputFormat.setOutputPath(job, outputPath);
 				
 				Configuration mapper1Conf = new Configuration(false);
 				ChainMapper.addMapper(job, Mapper01.class, Text.class, Text.class, Text.class, Iterable.class, mapper1Conf);
@@ -232,7 +234,8 @@ public class DuplicateRemovalByIdAlgorithm extends BasicAlgorithm{
 						jarPath = null;
 					}
 				}
-			}
+				input_count++;
+			
 			
 		} catch (IOException e) {
 			//TODO log info

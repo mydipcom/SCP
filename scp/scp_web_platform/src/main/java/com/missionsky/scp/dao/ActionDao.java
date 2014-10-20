@@ -66,16 +66,9 @@ public class ActionDao {
 							values.put(QUALIFIERS[3], Bytes.toBytes(sb.substring(0, sb.length()-1)));
 						}
 					}
-					if(action.getInputpaths() != null && !action.getInputpaths().isEmpty()){
-						StringBuffer sb = new StringBuffer();
-						for(String inputpath:action.getInputpaths()){
-							sb.append(inputpath+";");
+					if(action.getInput() != null && !action.getInput().isEmpty()){
+						 values.put(QUALIFIERS[6], Bytes.toBytes(action.getInput()));
 						}
-						if(sb.length() > 0 ){
-							values.put(QUALIFIERS[6], Bytes.toBytes(sb.substring(0,sb.length()-1)));
-						}
-						
-					}
 					if(action.getPathName() != null){
 						values.put(QUALIFIERS[5], Bytes.toBytes(action.getPathName()));
 					}
@@ -128,10 +121,10 @@ public class ActionDao {
 				}
 				byte[] inputPaths=result.getValue(Bytes.toBytes(FAMILY), Bytes.toBytes(QUALIFIERS[6]));
 				if(inputPaths != null){
-					String [] inputpath=Bytes.toString(inputPaths).split(";");
+					String [] inputpath=Bytes.toString(inputPaths).split(",");
 					List <String> list =new ArrayList<String>();
 					for(String in : inputpath){
-						list.add(in);
+						list.add("/"+in);
 					}
 				    action.setInputpaths(list);
 				}

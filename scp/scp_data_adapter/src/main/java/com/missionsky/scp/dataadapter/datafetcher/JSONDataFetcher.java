@@ -109,7 +109,7 @@ public class JSONDataFetcher implements DataFetcher {
 			
 			// 关闭reader，断开连接
 			reader.close();
-			//connection.disconnect();
+			connection.disconnect();
 		} catch (MalformedURLException e) {
 			logger.error("The URL {} is invalid and cannot be loaded:{}", link, e.toString());
 		} catch (IOException e) {

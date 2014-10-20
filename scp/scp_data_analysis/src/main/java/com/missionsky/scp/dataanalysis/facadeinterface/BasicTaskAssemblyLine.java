@@ -63,25 +63,18 @@ public class BasicTaskAssemblyLine extends Assembly{
 					
 					if (algorithmResult == Constants.ALGORITHM_RESULT_SUCCESS) {
 						firstStep=false;
-						for(int i=0;i<BasicAlgorithm.input_count;i++){
-						
-						   tempIntput.add(algorithmTaskOutput+"/"+algorithm.getClass().getSimpleName()+"_" + i);
-						}
-					} else {
+					    tempIntput.add(algorithmTaskOutput+"/part-r-00000");
+						} else {
 						
 						throw new InterruptedException("the algorithm "+ action.getName() +" in the task " + taskName + " fail");
 					}
 				} else {
-					conf.clear();
-					conf.set("mapreduce.jobtracker.address", getJobTracker());
-					algorithmResult = algorithm.run(conf, tempIntput, algorithmTaskOutput, task, taskName);
+				    algorithmResult = algorithm.run(conf, tempIntput, algorithmTaskOutput, task, taskName);
 					
 					if (algorithmResult == Constants.ALGORITHM_RESULT_SUCCESS) {
 						tempIntput.clear();
-						for(int i=0;i<BasicAlgorithm.input_count;i++){
-							 tempIntput.add(algorithmTaskOutput+"/"+algorithm.getClass().getSimpleName()+"_" + i);
-							}
-					} else {
+						tempIntput.add(algorithmTaskOutput+"/part-r-00000");
+						} else {
 						throw new InterruptedException("the algorithm "+ action.getName() +" in the task " + taskName + " fail.");
 					}
 				}
