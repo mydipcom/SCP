@@ -12,14 +12,14 @@ public class DataServer {
 		try {
 			IDataUtil dataUtil = new DataUtil();
 			// 本地主机上的远程对象注册表Registry的实例，并指定端口为8888，这一步必不可少（Java默认端口是1099），必不可缺的一步，缺少注册表创建，则无法绑定对象到远程注册表上
-			LocateRegistry.createRegistry(8888);
+			LocateRegistry.createRegistry(8000);
 
 			// 把远程对象注册到RMI注册服务器上，并命名为RHello
 			// 绑定的URL标准格式为：rmi://host:port/name(其中协议名可以省略，下面两种写法都是正确的）
-			Naming.bind("rmi://localhost:8888/datautil", dataUtil);
+			Naming.bind("rmi://localhost:8000/datautil", dataUtil);
 			// Naming.bind("//localhost:8888/RHello",rhello);
 
-			System.out.println(">>>>>INFO:远程IHello对象绑定成功！");
+			System.out.println(">>>>>INFO:远程datautil对象绑定成功！");
 		} catch (RemoteException e) {
 			System.out.println("创建远程对象发生异常！");
 			e.printStackTrace();

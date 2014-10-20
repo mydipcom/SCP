@@ -68,7 +68,9 @@ public class TaskAction {
 	@RequestMapping(value = "tasklist", method = RequestMethod.GET)
 	public String taskList(Model model, Task task) {
 		List<Task> list = new ArrayList<Task>();
-		try {
+		
+		 try {
+		 
 			list = taskService.findByTaskName(task);
 			if(list != null && !list.isEmpty()){
 				for(Task t:list){
@@ -79,6 +81,7 @@ public class TaskAction {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+	
 		model.addAttribute("tasks", list);
 		model.addAttribute("task", new Task());
 		if(task != null){
@@ -105,6 +108,7 @@ public class TaskAction {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+
 		model.addAttribute("tasks", list);
 		model.addAttribute("task", new Task());
 		if(task != null){
@@ -122,6 +126,7 @@ public class TaskAction {
 		if(name != null){
 			name = EncodingTool.encodeStr(name);
 		}
+		
 		try {
 			List<Mining> minings = taskService.findMingsByName(name);
 			if(minings != null && !minings.isEmpty()){
@@ -133,6 +138,7 @@ public class TaskAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		model.addAttribute("mining", new Mining());
 		model.addAttribute("name", name);
 		return "task/miningList";
@@ -143,6 +149,7 @@ public class TaskAction {
 		if(name != null){
 			name = EncodingTool.encodeStr(name);
 		}
+		
 		try {
 			List<Mining> minings = taskService.findMingsByName(name);
 			if(minings != null && !minings.isEmpty()){
@@ -154,6 +161,7 @@ public class TaskAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		model.addAttribute("mining", new Mining());
 		model.addAttribute("name", name);
 		return "task/miningResult";
@@ -196,6 +204,7 @@ public class TaskAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return "task/updateTask";
 	}
 	
@@ -248,6 +257,7 @@ public class TaskAction {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+	
 		return map;
 	}
 	
@@ -265,6 +275,7 @@ public class TaskAction {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+	
 		return map;
 	}
 	
@@ -306,6 +317,7 @@ public class TaskAction {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+	
 		return map;
 	}
 	
@@ -337,6 +349,8 @@ public class TaskAction {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+		
+		
 		return map;
 	}
 	
@@ -354,6 +368,8 @@ public class TaskAction {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+		
+		
 		return map;
 	}
 	

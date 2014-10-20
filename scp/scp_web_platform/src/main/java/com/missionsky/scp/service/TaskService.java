@@ -264,7 +264,7 @@ public class TaskService {
 			tasks = taskDao.findAllTasks("");
 		}
 		if(tasks != null && !tasks.isEmpty()){
-			for(Task task:tasks){
+			for(Task task:tasks){//通过rowkey取得配置文件的名字
 				String fileId = task.getFileName();
 				if(fileId != null && !"".equals(fileId.trim())){
 					StandardFile file = fileService.getFileByRowKey(fileId);

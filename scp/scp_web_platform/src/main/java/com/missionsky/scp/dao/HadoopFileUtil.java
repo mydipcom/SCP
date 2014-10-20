@@ -96,21 +96,39 @@ public class HadoopFileUtil {
 	@SuppressWarnings("deprecation")
 	public  String downFile(String srcFile,String dstFile){
 		Configuration conf = new Configuration();
+		StringBuffer sb=new StringBuffer();
+		ArrayList<String> strr=new ArrayList<String>();
+		try {
+			FileSystem hdfs = FileSystem.get(conf);
+			Path listf = new Path("/Source/"+srcFile);
+				FileStatus stats[] = hdfs.listStatus(listf);
+				for(int i=0;i<stats.length;i++){
+					String str=stats[i].getPath().toString();
+					String[] paths = str.split(srcFile+"/");
+					str=paths[paths.length-1];
+					strr.add(str);
+			
+				}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String filevalue = null;
 		try {
-			FileSystem fs = FileSystem.get(URI.create("/"+"Source"+"/"+dstFile), conf);
-			FSDataInputStream in = fs.open(new Path("/"+"Source"+"/"+dstFile+".txt"));
+			for(int i=0;i<strr.size();i++){
+			FileSystem fs = FileSystem.get(URI.create("/"+"Source"+"/"+dstFile+"/"+strr.get(i)), conf);
+			FSDataInputStream in = fs.open(new Path("/"+"Source"+"/"+dstFile+"/"+strr.get(i)));
 		
 			//OutputStream out = new FileOutputStream(srcFile);
 			//IOUtils.copyBytes(in, out, 1024, true);
 			//System.out.println(in.readLine());
-			StringBuffer sb=new StringBuffer();
+				sb.append("file is:"+strr.get(i)+"\n");
 			String data=null;
 					while((data=in.readLine())!=null){
-					sb.append(data);	
+					sb.append(data+"\n");	
 					}
 			filevalue=sb.toString();
-			System.out.println("++++++++++++++++"+filevalue);
+			}
 		} catch (IllegalArgumentException e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
@@ -120,33 +138,7 @@ public class HadoopFileUtil {
 		} 
 		return filevalue;
 	}
-	@SuppressWarnings("deprecation")
-	public  String viewFile(String srcFile,String dstFile){
-		Configuration conf = new Configuration();
-		String filevalue = null;
-		try {
-			FileSystem fs = FileSystem.get(URI.create("/"+"Source"+"/"+dstFile), conf);
-			FSDataInputStream in = fs.open(new Path("/"+"Source"+"/"+dstFile));
-		
-			//OutputStream out = new FileOutputStream(srcFile);
-			//IOUtils.copyBytes(in, out, 1024, true);
-			//System.out.println(in.readLine());
-			StringBuffer sb=new StringBuffer();
-			String data=null;
-					while((data=in.readLine())!=null){
-					sb.append(data);	
-					}
-			filevalue=sb.toString();
-			System.out.println("++++++++++++++++"+filevalue);
-		} catch (IllegalArgumentException e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} 
-		return filevalue;
-	}
+	
 	
 	/**
 	 * 创建HDFS目录
@@ -212,7 +204,7 @@ public class HadoopFileUtil {
 	 * 查看某个HDFS文件是否存在
 	 * @param fileName 检测文件的路径
 	 */
-	public static boolean checkFile(String fileName){
+	public boolean checkFile(String fileName){
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
@@ -247,6 +239,51 @@ public class HadoopFileUtil {
 		return 0;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public  String viewFile(String srcFile,String dstFile){
+		Configuration conf = new Configuration();
+		StringBuffer sb=new StringBuffer();
+		ArrayList<String> strr=new ArrayList<String>();
+		try {
+			FileSystem hdfs = FileSystem.get(conf);
+			Path listf = new Path("/Source/"+srcFile);
+				FileStatus stats[] = hdfs.listStatus(listf);
+				for(int i=0;i<stats.length;i++){
+					String str=stats[i].getPath().toString();
+					String[] paths = str.split(srcFile+"/");
+					str=paths[paths.length-1];
+					strr.add(str);
+			
+				}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String filevalue = null;
+		try {
+			for(int i=0;i<strr.size();i++){
+			FileSystem fs = FileSystem.get(URI.create("/"+"Source"+"/"+dstFile+"/"+strr.get(i)), conf);
+			FSDataInputStream in = fs.open(new Path("/"+"Source"+"/"+dstFile+"/"+strr.get(i)));
+		
+			//OutputStream out = new FileOutputStream(srcFile);
+			//IOUtils.copyBytes(in, out, 1024, true);
+			//System.out.println(in.readLine());
+				sb.append("file is:"+strr.get(i)+"\n");
+			String data=null;
+					while((data=in.readLine())!=null){
+					sb.append(data+"\n");	
+					}
+			filevalue=sb.toString();
+			}
+		} catch (IllegalArgumentException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} 
+		return filevalue;
+	}
 	/**
 	 * 读取HDFS某个目录下的所有文件并返回最小的文件
 	 * @param dir
@@ -266,7 +303,6 @@ public class HadoopFileUtil {
 					//System.out.println(stats[i].getPath().toString());
 					//System.out.println(stats[i].getModificationTime());
 					//System.out.println(getDateStr(stats[i].getModificationTime()));
-					String str=stats[i].getPath().toString().substring(27);
 					map.put("path", stats[i].getPath().toString().substring(34));
 					map.put("time", getDateStr(stats[i].getModificationTime()));
 					list.add(map);
@@ -299,6 +335,14 @@ public class HadoopFileUtil {
 	 * 查找某个文件在HDFS集群的位置
 	 * @param fileName
 	 */
+	
+/*	
+	public ArrayList<Map<String, String>> listBy(String dir){
+		
+	}
+	
+*/
+	
 	public ArrayList<Map<String, String>> getFileLoc(String fileName){
 		Configuration conf = new Configuration();
 		ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -393,7 +437,7 @@ public class HadoopFileUtil {
 }
 	public static void main(String arg[]){
 		HadoopFileUtil hdfs=new HadoopFileUtil();
-	hdfs.downFile("test1.txt","test1.txt" );
+		System.out.println("testcheckfile:           "+hdfs.checkFile("Test"));
 	
 	}
 }

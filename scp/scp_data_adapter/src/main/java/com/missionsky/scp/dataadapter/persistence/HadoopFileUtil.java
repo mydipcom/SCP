@@ -104,7 +104,7 @@ public class HadoopFileUtil {
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
-			Path dfs = new Path("/" + dir);
+			Path dfs = new Path("/Source/" + dir);
 			hdfs.mkdirs(dfs);
 		} catch (IllegalArgumentException e) {
 			logger.error(e.getMessage());
@@ -158,7 +158,7 @@ public class HadoopFileUtil {
 	 * 查看某个HDFS文件是否存在
 	 * @param fileName 检测文件的路径
 	 */
-	public static boolean checkFile(String fileName){
+	public static  boolean checkFile(String fileName){
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
@@ -201,7 +201,7 @@ public class HadoopFileUtil {
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
-			Path listf = new Path("/"+dir);
+			Path listf = new Path("/Source/"+dir);
 			if(hdfs.exists(listf)){
 				FileStatus stats[] = hdfs.listStatus(listf);
 				int j = 0;
@@ -310,4 +310,5 @@ public class HadoopFileUtil {
 			e.printStackTrace();
 		}
 	}
+	
 }

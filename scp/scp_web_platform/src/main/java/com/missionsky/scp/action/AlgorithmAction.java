@@ -72,10 +72,11 @@ public class AlgorithmAction {
 			if(algorithm.getType() != null){
 				model.addAttribute("algorithms", client.getAlgorithmByType(algorithm.getType()));
 			}
-		} catch (RemoteException e) {
+		}catch (RemoteException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
+		
 		return "algorithm/updateAlgorithm";
 	}
 
@@ -125,13 +126,15 @@ public class AlgorithmAction {
 	@ResponseBody
 	public Map<String, Object> getAlgorithmByType(Integer type) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
+	try {
 			map.put("algorithms", client.getAlgorithmByType(type));
 			map.put("msg", "success");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+	
+
 		return map;
 	}
 }

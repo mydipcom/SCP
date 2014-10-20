@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<filePath>d:\\config\</filePath>
+	<filePath>c:\\config\</filePath>
 	<standardFiles>
 		<standardFile id="1" fileName="Fire.xml"></standardFile>
 	</standardFiles>

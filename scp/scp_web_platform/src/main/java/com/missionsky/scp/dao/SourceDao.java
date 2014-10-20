@@ -63,6 +63,7 @@ public class SourceDao {
 			for (Result result : results) {
 				Sourcefile sourcefile = getSourcefile(result);
 				if (sourcefile != null) {
+					System.out.println("rowkey:++++++++"+sourcefile.getRowKey());
 					sources.add(sourcefile);
 				}
 			}
@@ -70,4 +71,17 @@ public class SourceDao {
 		return sources;
 	}
 
+		public void deletesource(String sourceName,String rowkey){
+			try {
+				helper.deleteRowData(TABLE_NAME, rowkey);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				helper.deleteTable(sourceName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }

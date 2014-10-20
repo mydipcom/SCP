@@ -20,12 +20,14 @@ public class DataClient {
 	
 	static{
 		try {
-			dataUtil = (IDataUtil) Naming.lookup("rmi://localhost:8888/datautil");
+			dataUtil = (IDataUtil) Naming.lookup("rmi://localhost:8000/datautil");
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	
+
 	public Map<String, String> getFiles() throws RemoteException{
 		return dataUtil.getFiles();
 	}

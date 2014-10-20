@@ -52,20 +52,24 @@ public class SourceService {
 			}
 		}
 		adpaterDao.saveTask(source);
+		/*
 		List<Action> actions = source.getActions();
 		if(actions != null && !actions.isEmpty()){
 			actionDao.saveActions(actions, rowKey);
 		}
+		*/
 	}
 	
 	public Source findTask(String rowKey) throws IOException{
 		Source source  = adpaterDao.findTaskByRowKey(rowKey);
+		/*
 		if(source != null){
 			List<Action> actions = actionDao.findActionsByTaskId(source.getRowKey());
 			if(actions != null){
 				source.setActions(actions);
 			}
 		}
+		*/
 		return source;
 	}
 	
@@ -77,6 +81,11 @@ public class SourceService {
 		}
 	}
 	
+	public void deletesource(String sourceName,String rowkey){
+		if(rowkey != null && !"".equals(rowkey.trim())){
+			sourcedao.deletesource(sourceName,rowkey);
+		}
+	}
 	
 	public List<Source> findByTaskName(Source searchtask) throws IOException {
 		logger.info("select all task records:default pageSize 20");
@@ -99,10 +108,12 @@ public class SourceService {
 				}else{
 					source.setFileName("");
 				}
+				/*
 				List<Action> actions = actionDao.findActionsByTaskId(source.getRowKey());
 				if(actions != null){
 					source.setActions(actions);
 				}
+				*/
 			}
 		}
 		return sources;

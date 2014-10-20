@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.missionsky.scp.dao.AdapterClient;
 import com.missionsky.scp.dao.DataClient;
 import com.missionsky.scp.entity.Algorithm;
 import com.missionsky.scp.entity.Source;
 import com.missionsky.scp.entity.Sourcefile;
 import com.missionsky.scp.entity.Task;
-
 import com.missionsky.scp.service.AlgorithmService;
 import com.missionsky.scp.service.FileService;
 import com.missionsky.scp.service.SourceService;
@@ -45,6 +45,9 @@ public class SourceAction {
 	
 	@Autowired
 	private SourceService sourceService;
+	
+@Autowired
+private AdapterClient client;
 
 	
 	@RequestMapping(value = "adapterTask", method = RequestMethod.GET)
@@ -56,7 +59,7 @@ public class SourceAction {
 			if(list != null && !list.isEmpty()){
 				for(Source t:list){
 					
-			// t.setStatus(client.getRunStatus(t.getRowKey()));//使用RMI；
+			//t.setStatus(client.getRunStatus(t.getRowKey()));//使用RMI；
 				}
 			}
 		} catch (IOException e) {
@@ -76,7 +79,7 @@ public class SourceAction {
 	}
 	
 	@RequestMapping(value = "sourcelist", method = RequestMethod.GET)
-	public String sourcelist(Model model, Sourcefile sourcefile){
+	public String sourcelist(Model model, Sourcefile sourcefile ){
 		List<Sourcefile> list = new ArrayList<Sourcefile>();//hadoop
 		List<Sourcefile> lists = new ArrayList<Sourcefile>();//hbase
 
@@ -129,7 +132,7 @@ public class SourceAction {
 		}
 		model.addAttribute("source", source);
 		try {
-			model.addAttribute("files", fileService.getAllFiles());
+			model.addAttribute("files", fileService.getFilesBytype());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,18 +155,40 @@ public class SourceAction {
 		return map;
 	}
 	
-	@RequestMapping(value="deletesource", method=RequestMethod.POST)
+	@RequestMapping(value="runtask", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deletesource(String sourceName){
+	public Map<String, Object> runTask(String rowKey){
 		Map<String, Object> map = new HashMap<String,Object>();
 		try {
-			fileService.deletesource(sourceName);
-		//	client.deleteJob(rowKey);
+			Source task = sourceService.findTask(rowKey);
+			if(task != null){
+				client.runTask(task);
+			}
 			map.put("msg", "success");
 		} catch (IOException e) {
 			e.printStackTrace();
 			map.put("msg", "failure");
 		}
+		return map;
+	}
+	
+	@RequestMapping(value="deletesource", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deletesource(String sourceName,String sourceType,String rowkey){
+		Map<String, Object> map = new HashMap<String,Object>();
+		if(sourceType.equals("Preprocess Data")){
+			sourceService.deletesource(sourceName,rowkey);
+			map.put("msg", "success");
+		}else {
+				try {
+						fileService.deletesource(sourceName);
+							//	client.deleteJob(rowKey);
+							map.put("msg", "success");
+					} catch (IOException e) {
+						e.printStackTrace();
+						map.put("msg", "failure");
+					}
+			}
 		return map;
 	}
 	@RequestMapping("/download/{sourceName}&&{sourceType}")
@@ -176,7 +201,7 @@ public class SourceAction {
 		
 		
 		System.out.println(sourceName+"++++++++++"+sourceType);
-		if(sourceType.equals("hadoop")){
+		if(sourceType.equals("Original Data")){
 		try {
 			String value=fileService.downloadsource(sourceName);
 
@@ -193,7 +218,7 @@ public class SourceAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		}else if(sourceType.equals("hbase")){
+		}else if(sourceType.equals("Preprocess Data")){
 			try {
 				
 			List<String> list=fileService.downLoadData(sourceName);

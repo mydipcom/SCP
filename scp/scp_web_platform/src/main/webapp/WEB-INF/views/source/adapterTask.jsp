@@ -58,7 +58,7 @@
 				<div class="panel panel-default" style="min-height: 400px;">
 					<div class="panel-body">
 						<ul class="nav nav-pills nav-stacked">
-							<li class="active"><a href="${ctx}/task/tasklist">Adap Task</a></li>
+							<li class="active"><a href="${ctx}/source/adpaterTask">Adap Task</a></li>
 							<li><a href="${ctx}/source/sourcelist">Source List</a></li>
 						</ul>			
 					</div>
@@ -97,7 +97,7 @@
 							<tr class="active">
 								<td><input type="hidden" value="${task.rowKey}">${task.taskName}</td>
 								<td>${task.fileName}</td>
-								  <td>${task.startTime}</td>
+								 <td>${task.startTime}</td>
 								<td>${task.triggerType}</td>
 								
 								<td>
@@ -188,13 +188,12 @@
     	
     	function runTask(k){
     		var rowKey = $(k).parent().parent().find("input[type='hidden']").val();
-    		
     		if(rowKey == undefined){
     			return false;
     		}
     		$.ajax({
     			type:'post',
-    			url:'${ctx}/task/runtask',
+    			url:'${ctx}/source/runtask',
     			dataType:'json',
     			data:{"rowKey":rowKey},
     			success:function(data){

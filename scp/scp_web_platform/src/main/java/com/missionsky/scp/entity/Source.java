@@ -22,7 +22,7 @@ public class Source implements Serializable{
 	
 	private Integer weekday;
 
-	private List<Action> actions;
+
 	
 	public String getRowKey() {
 		return rowKey;
@@ -90,12 +90,6 @@ public class Source implements Serializable{
 
 
 
-	public List<Action> getActions() {
-		return actions;
-	}
-
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
+	
 
 }

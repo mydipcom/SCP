@@ -96,7 +96,7 @@
 							<tr class="active">
 								<td><input type="hidden" value="${htask.sourceName}">${htask.sourceName}</td>
 								<td><input type="hidden" value="${htask.sourceType}">${htask.sourceType}</td>
-								
+								<input type="hidden" value="${htask.rowKey}"/>
 								<th>${htask.storageTime}</th>
 								<td>
 										<button type="button" class="btn btn-info" onclick="sourceview(this)">view</button>&nbsp;
@@ -111,7 +111,7 @@
 						<c:forEach items="${tasks}" var="task">
 							<tr class="active">
 								<td><input type="hidden" value="${task.sourceName}">${task.sourceName}</td>
-								<td>${task.sourceType}</td>
+								<td><input type="hidden" value="${task.sourceType}">${task.sourceType}</td>
 								<th>${task.storageTime}</th>
 								<td>
 										<button type="button" class="btn btn-info" onclick="sourceview(this)">view</button>&nbsp;
@@ -199,6 +199,8 @@
     	
     	function deleteTask(k){
     		var sourceName = $(k).parent().parent().find("input[type='hidden']").val();
+    		var sourceType = $(k).parent().parent().find("input:eq(1)[type='hidden']").val();
+    		var rowkey = $(k).parent().parent().find("input:eq(2)[type='hidden']").val();
     		if(sourceName == undefined){
     			return false;
     		}
@@ -206,7 +208,11 @@
     			type:'post',
     			url:'${ctx}/source/deletesource',
     			dataType:'json',
-    			data:{"sourceName":sourceName},
+    			data:{	
+    					"sourceName" : sourceName,
+    					"sourceType" : sourceType,
+    					"rowkey"     : rowkey
+    				},
     			success:function(data){
     				var e = eval(data);
     				if(e.msg == "success"){
@@ -221,6 +227,7 @@
     	
     	function sourceview(k) {
     		var sourceName = $(k).parent().parent().find("input[type='hidden']").val();
+    		var sourceType = $(k).parent().parent().find("input:eq(1)[type='hidden']").val();
     		if(sourceName == undefined){
     			return false;
     		}
@@ -229,7 +236,8 @@
 				url : '${ctx}/source/sourceview',
 				dataType : 'json',
 				data : {
-					"sourceName" : sourceName
+					"sourceName" : sourceName,
+					"sourceType" : sourceType
 				},
 				
 				success : function(data) {

@@ -54,6 +54,22 @@ public class FileService {
 		return map;
 	}
 	
+	public Map<String, String> getFilesBytype() throws IOException{
+		Map<String, byte[]> values = new HashMap<String, byte[]>();
+		values.put(QUALIFIERS[3], Bytes.toBytes("source config"));
+		List<Result> list = helper.getRowResults(TABLE_NAME, FAMILY, QUALIFIERS, values, null);
+		Map<String, String> map = new HashMap<String,String>();
+		if(list != null && !list.isEmpty()){
+			for(Result result:list){
+				byte[] rowKey = result.getRow();
+				byte[] fileName = result.getValue(Bytes.toBytes(FAMILY), Bytes.toBytes(QUALIFIERS[0]));
+				if(rowKey != null && fileName != null){
+					map.put(Bytes.toString(rowKey), Bytes.toString(fileName));
+				}
+			}
+		}
+		return map;
+	}
 	public StandardFile getFileByRowKey(String rowKey) throws IOException{
 		Result result = helper.selectRowResult(TABLE_NAME, rowKey);
 		if(result != null){
@@ -142,7 +158,7 @@ public class FileService {
 			//sources = adpaDao.findAllTasks(searchtask.getsourceName());
 			String sourcename=searchtask.getSourceName();
 			if(sourcename!=null){
-				if(sourcename.endsWith(".txt"))
+				if(hdfs.checkFile("/Source/"+sourcename))
 				list=hdfs.getFileLoc(sourcename);
 				else{
 					list=null;
@@ -168,7 +184,7 @@ public class FileService {
 					  }else if(s.equals("path")){
 						  source.setSourceName(map.get(s));
 					  }
-					  source.setSourceType("hadoop");
+					  source.setSourceType("Original Data");
 				   System.out.println(s+","+map.get(s));
 				  }
 				sources.add(source);
