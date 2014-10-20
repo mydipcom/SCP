@@ -1,25 +1,9 @@
 package com.missionsky.scp.dataadapter.datafetcher;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,88 +17,71 @@ import com.missionsky.scp.dataadapter.entity.DataSource;
  * @version 1.0
  * data-adapter线程
  */
-public class JSONDataFetcher implements DataFetcher {
+public class ExcuteFecthThread extends Thread {
 
-	private static Logger logger = LoggerFactory.getLogger(JSONDataFetcher.class);
+	private DataSource dataSource;
 
-	@Override
-	public List<Map<String, String>> renderMergedFetchedData(DataSource dataSource, Integer offset) {
-		
-		String jsonStr = getJSONString(dataSource.getLink(), dataSource.getOffsetParameterName(), offset);
-		JsonNode successNode = (JsonNode) getTargetByPath(jsonStr, dataSource.getSuccessFlagPath());
-		Integer successValue = dataSource.getSuccessValues().get(successNode.toString());
-		HashMap<String, String> singleField = null;
-		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-
-		// 判断获取数据操作是否成功
-		if (successValue.equals(SystemConstants.SUCCESS_FLAG_HALT)) {
-			
-			logger.error("{}:{}",getTargetByPath(jsonStr, dataSource.getErrorTypePath()),getTargetByPath(jsonStr, dataSource.getErrorMessagePath()));
-			return null;
-		} else if (successValue.equals(SystemConstants.SUCCESS_FLAG_GOON)) {
-			
-			JsonNode recordsNode = (JsonNode) getTargetByPath(jsonStr, dataSource.getRecordsPath());
-			
-			if (!recordsNode.isNull() && recordsNode.isArray()) {
-				
-				for (JsonNode record : recordsNode) {
-					
-					singleField = new HashMap<String, String>();
-					for (String key : dataSource.getFields().keySet()) {
-						
-						singleField.put(key,record.get(key).toString());
-					}
-					
-					result.add(singleField);
-				}
-			}
-		}
-		
-		return result;
+	private DataFetcher dataFetcher;
+	
+	private Logger logger = LoggerFactory.getLogger(ExcuteFecthThread.class);
+	
+	public ExcuteFecthThread(DataSource dataSource, DataFetcher dataFetcher) {
+		this.dataSource = dataSource;
+		this.dataFetcher = dataFetcher;
 	}
 
-	/**
-	 * @author Ellis Xie 获取JSON字符串
-	 */
-	protected String getJSONString(String link, String offsetParameterName, Integer offset) {
+	@Override
+	public void run() {
 		
-		if (offset != null) {
-			if (link.contains("?")) {
-				link = link + "&" + offsetParameterName + "=" + offset;
-			} else {
-				link = link + "?" + offsetParameterName + "=" + offset;
-			}
-			
-		}
-		StringBuffer sb = new StringBuffer();
-		String str = null;
-		try {
-			
-			// 连接数据源
-			
-			URL url = new URL(link);
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
-			connection.connect();
-			// 获取JSON数据
-			InputStream in = connection.getInputStream();
-			Reader reader = new InputStreamReader(in, "UTF-8");
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			
+		HashMap<String, DataSource> dataSources = SingleInstance.getDataSources();
+		Integer step = dataSource.getStep();
+		Integer offset = 0;
 		
+		if (dataSources.get(dataSource.getName()).getIsFirst()) {
 			
-			while ((str = bufferedReader.readLine()) != null) {
-				sb.append(str);
+			Integer total = divideProcess(offset, step);
+			
+			dataSource.setIsFirst(false);
+			dataSource.setTotal(total);
+			dataSources.put(dataSource.getName(), dataSource);
+			SingleInstance.setDataSources(dataSources);
+		} else {
+			
+			Integer currentTotal = dataFetcher.getTotal(dataSource);
+			
+			if (dataSource.getTotal() != null && currentTotal != null) {
+				if (dataSource.getTotal() < currentTotal) {
+					// 增量update,保存增加的数据
+					divideProcess(dataSource.getTotal(), step);
+				} else if (dataSource.getTotal() > currentTotal) {
+					divideProcess(offset, step);
+				}
 			}
-			
-			// 关闭reader，断开连接
-			reader.close();
-			connection.disconnect();
-		} catch (MalformedURLException e) {
-			logger.error("The URL {} is invalid and cannot be loaded:{}", link, e.toString());
-		} catch (IOException e) {
-			logger.error("Can not get the input stream of the URL {}:{}", link, e.toString());
+
 		}
+	}
+	
+	// 分块处理
+	protected Integer divideProcess(Integer offset, Integer step){
+		
+		Integer total = 0;
+		Integer result = null;
+		if (step != null && step > 0) {
+			do {
+				result = dataProcess(offset);
+				offset += step;
+				total += result;
+			} while (result.equals(step));
+		} else {
+			total = dataProcess(null);
+		}
+		return total;
+	}
+	
+	// 处理数据
+	protected Integer dataProcess(Integer offset) {
+		
+		List<Map<String, String>> records = dataFetcher.renderMergedFetchedData(dataSource, offset);
 		
 		logger.info("Save data to hdfs.");
 		DataFilterApi.filterClassifiedStorage(records, dataSource.getName(), SystemConstants.DATA_FLITER_TYPE_INSERT);
