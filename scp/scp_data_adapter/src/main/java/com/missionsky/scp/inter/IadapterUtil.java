@@ -8,4 +8,6 @@ import com.missionsky.scp.entity.Source;
 public interface IadapterUtil extends Remote {
 
 	public void runTask(Source source) throws RemoteException;
+	public Integer getRunStatus(String rowKey) throws RemoteException;
+	public void deleteJob(String rowkey) throws RemoteException;
 }

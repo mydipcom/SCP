@@ -34,6 +34,7 @@
                 /task/**=authc
                 /algorithm/**=authc
                 /config/**=authc
+                /source/**=authc
 			</value>
 		</property>
 	</bean>

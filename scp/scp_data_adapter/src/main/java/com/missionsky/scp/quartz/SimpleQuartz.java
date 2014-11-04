@@ -21,11 +21,33 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import com.missionsky.scp.dataadapter.entity.AdapterTask;
 public class SimpleQuartz {
-
+	private static SimpleDateFormat sdf = new SimpleDateFormat("mm HH");
+	
 	public static void runDaily(String name, String group, Date date,
-			Integer separate, AdapterTask task) throws SchedulerException {
+			Integer separate, AdapterTask adapterTask) throws SchedulerException {
 		
+		if (date == null) {
+			return;
+		}
+		SchedulerFactory schedFact = new StdSchedulerFactory();
+		Scheduler sched = schedFact.getScheduler();
 		
+		JobDetail job = newJob(SimpleJob.class).withIdentity(name, group)
+				.build();
+		String cron = "";
+		if (separate == null || separate == 0 || separate == 1) {
+			cron = "0 " + sdf.format(date) + " * * ?";
+		} else {
+			cron = "0 " + sdf.format(date) + " 0/" + separate + " * ?";
+		}
+		JobDataMap dataMap = new JobDataMap();
+		dataMap.put("task", adapterTask);
+		Trigger trigger = newTrigger().withIdentity("trigger", "group")
+				.withSchedule(cronSchedule(cron)).forJob(job)
+				.usingJobData(dataMap).build();
+		sched.getListenerManager().addJobListener(new MyJobListener());
+		sched.scheduleJob(job, trigger);
+		sched.start();
 		
 		
 		
@@ -33,6 +55,28 @@ public class SimpleQuartz {
 
 	public static void runWeek(String rowKey, String group, Date parse,
 			Integer weekday, AdapterTask adapterTask) throws SchedulerException {
+		if (parse == null || weekday == null || weekday > 7 || weekday < 0) {
+			return;
+		}
+		SchedulerFactory schedFact = new StdSchedulerFactory();
+		Scheduler sched = schedFact.getScheduler();
+		
+		String str = sdf.format(parse);
+		String[] strs = str.split(" ");
+		JobDetail job = newJob(SimpleJob.class).withIdentity(rowKey, group)
+				.build();
+		JobDataMap dataMap = new JobDataMap();
+		dataMap.put("task", adapterTask);
+		Trigger trigger = newTrigger()
+				.withIdentity("trigger", "group")
+				.withSchedule(
+						weeklyOnDayAndHourAndMinute(weekday,
+								Integer.valueOf(strs[1]),
+								Integer.valueOf(strs[0])))
+				.usingJobData(dataMap).forJob(job).build();
+		sched.getListenerManager().addJobListener(new MyJobListener());
+		sched.scheduleJob(job, trigger);
+		sched.start();
 		
 		
 	}
@@ -55,6 +99,16 @@ public class SimpleQuartz {
 		
 		
 		
+	}
+	public static void removeJob(String name, String group)
+			throws SchedulerException {
+		SchedulerFactory schedFact = new StdSchedulerFactory();
+		Scheduler sched = schedFact.getScheduler();
+		TriggerKey triggerKey = new TriggerKey("trigger", "group");
+		sched.pauseTrigger(triggerKey);
+		sched.unscheduleJob(triggerKey);
+		JobKey jobKey = new JobKey(name, group);
+		sched.deleteJob(jobKey);
 	}
 
 }

@@ -3,7 +3,7 @@ package com.missionsky.scp.dataanalysis;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.cassandra.cli.CliParser.newColumnFamily_return;
+
 import org.apache.hadoop.mapred.YARNRunner;
 
 import com.missionsky.scp.dataanalysis.algorithm.dataaggregate.DuplicateRemovalSimpleAlgorithm;

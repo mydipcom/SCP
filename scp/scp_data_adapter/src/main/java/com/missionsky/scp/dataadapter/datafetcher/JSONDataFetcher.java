@@ -1,9 +1,6 @@
 package com.missionsky.scp.dataadapter.datafetcher;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -86,11 +82,8 @@ public class JSONDataFetcher implements DataFetcher {
 		}
 		StringBuffer sb = new StringBuffer();
 		String str = null;
-		//File file=new File("src/main/resources/123.txt");
 		try {
-			
 			// 连接数据源
-			
 			URL url = new URL(link);
 			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
@@ -98,11 +91,7 @@ public class JSONDataFetcher implements DataFetcher {
 			// 获取JSON数据
 			InputStream in = connection.getInputStream();
 			Reader reader = new InputStreamReader(in, "UTF-8");
-			//Reader reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
 			BufferedReader bufferedReader = new BufferedReader(reader);
-			
-		
-			
 			while ((str = bufferedReader.readLine()) != null) {
 				sb.append(str);
 			}

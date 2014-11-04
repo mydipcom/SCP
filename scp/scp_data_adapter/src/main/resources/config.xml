@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
 	<filePath>c:\\config\</filePath>
-	<standardFiles>
-		<standardFile id="1" fileName="Fire.xml"></standardFile>
+	 <standardFiles>
+		<standardFile id="1" fileName="educationStandard.xml"></standardFile>
 	</standardFiles>
+	
 	<configFiles>
-		<configFile id="1" fileName="conf_template.xml"></configFile>
+		<configFile id="1" fileName="conf_template1.xml"></configFile>
 	</configFiles>
 </root>

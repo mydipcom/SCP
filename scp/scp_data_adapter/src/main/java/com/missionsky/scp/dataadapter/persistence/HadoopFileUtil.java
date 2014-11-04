@@ -27,7 +27,7 @@ public class HadoopFileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(HadoopFileUtil.class);
 	
 	private HadoopFileUtil(){}
-	
+	//public HadoopFileUtil(){}
 	/**
 	 * 创建HDFS文件
 	 * @param fileName 创建文件的文件名
@@ -158,11 +158,11 @@ public class HadoopFileUtil {
 	 * 查看某个HDFS文件是否存在
 	 * @param fileName 检测文件的路径
 	 */
-	public static  boolean checkFile(String fileName){
+	public static boolean checkFile(String fileName){
 		Configuration conf = new Configuration();
 		try {
 			FileSystem hdfs = FileSystem.get(conf);
-			Path findf = new Path(fileName);
+			Path findf = new Path("/Source/"+fileName);
 			return hdfs.exists(findf);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -310,5 +310,8 @@ public class HadoopFileUtil {
 			e.printStackTrace();
 		}
 	}
-	
+	public static void main(String arg[]){
+		listAllFile("");
+		
+	}
 }

@@ -25,9 +25,17 @@ import org.apache.mahout.common.Pair;
 
 @SuppressWarnings("deprecation")
 public class PFPGrowthAlgorithm extends MinerAlgorithm {
+	public  static void main(String args[]){
+		try {
+			new PFPGrowthAlgorithm().run(args);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
-	public int run(String[] args) throws Exception {
+	public  int run(String[] args) throws Exception {
 	    Set<String> features = new HashSet<String>();
 	    String input = "/usr/hadoop/testdata/pfp.txt";
 	    int minSupport = 3;

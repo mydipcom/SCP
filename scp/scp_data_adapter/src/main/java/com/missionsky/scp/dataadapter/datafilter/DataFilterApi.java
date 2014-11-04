@@ -75,7 +75,7 @@ public class DataFilterApi {
 				if(list != null && !list.isEmpty()){
 					DataFilter.parselistDate(list, name);//转换数据
 					StringBuffer sb = new StringBuffer();
-					for(int i=0;i<2;i++){
+					for(int i=0;i<list.size();i++){
 						Map<String, String> map = list.get(i);
 						for(Entry<String, String> entry:map.entrySet()){
 							sb.append(entry.getKey()+":"+entry.getValue()+" ");
@@ -116,25 +116,22 @@ public class DataFilterApi {
 		Map<String, String> hdfsPath = HadoopFileUtil.listAllFile(name);
 		//获取配置文件中上传服务器的uri
 		
-		System.out.println();
 		if(hdfsPath == null || Long.parseLong(hdfsPath.get("size"))>128*1024*1024){
 			logger.info("create file {} and write data",fileName);
 			HadoopFileUtil.createFile("/Source/"+name+"/"+fileName, bytes);
 		}else{
 			String path = hdfsPath.get("path");
-			System.out.println(path);
 			String[] paths = path.split(":8020");
 			path = paths[paths.length-1];
 			logger.info("append data to exist file {}",path);
+		
 			HadoopFileUtil.appendFile(bytes, path);
 		}
 	}
-	
 	
 	private static void deleteFile(String name){
 		if(HadoopFileUtil.checkFile(name)){
 			HadoopFileUtil.deleteFile(name);
 		}
 	}
-	
 }

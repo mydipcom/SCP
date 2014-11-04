@@ -132,7 +132,7 @@ private AdapterClient client;
 		}
 		model.addAttribute("source", source);
 		try {
-			model.addAttribute("files", fileService.getFilesBytype());
+			model.addAttribute("files", fileService.getFilesBytype("source config"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

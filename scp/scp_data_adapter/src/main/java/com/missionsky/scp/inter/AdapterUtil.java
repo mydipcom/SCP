@@ -15,9 +15,15 @@ import org.quartz.SchedulerException;
 
 
 
+
+
+
+
+
+
+import com.missionsky.scp.dataadapter.dao.AdapterstatusDao;
 import com.missionsky.scp.dataadapter.entity.AdapterTask;
 import com.missionsky.scp.entity.Source;
-
 import com.missionsky.scp.quartz.SimpleQuartz;
 
 
@@ -28,6 +34,8 @@ public class AdapterUtil extends UnicastRemoteObject implements IadapterUtil {
 	private static final String GROUP = "adapter_group";
 	
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static String rowkey;
+	public static final int jobIsReady = 0;
 	
 	protected AdapterUtil() throws RemoteException {
 		super();
@@ -41,7 +49,7 @@ public class AdapterUtil extends UnicastRemoteObject implements IadapterUtil {
 		adapterTask.setTaskName(source.getTaskName());
 		adapterTask.setFileName(source.getFileName());
 		adapterTask.setStartTime(source.getStartTime());
-		
+		rowkey=source.getRowKey();
 		if (source.getTriggerType() != null) {
 			Integer type = source.getTriggerType();
 			if (type == 1) {
@@ -85,7 +93,30 @@ public class AdapterUtil extends UnicastRemoteObject implements IadapterUtil {
 			}
 		
 		}
+		try {
+			AdapterstatusDao.getInstance().updateScheduleRecord(source.getRowKey(),
+					jobIsReady);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
-	
+	 public Integer getRunStatus(String rowKey) throws RemoteException {
+			try {
+				return AdapterstatusDao.getInstance().getRunStatus(rowKey);
+			} catch (IOException e) {
+				return null;
+			}
+	 }
+	public void deleteJob(String rowkey) throws RemoteException{
+		if (rowkey == null || "".equals(rowkey.trim())) {
+			return;
+		}
+		try {
+			SimpleQuartz.removeJob(rowkey, GROUP);
+		} catch (SchedulerException e) {
+			throw new RemoteException(e.getMessage());
+		}
+	}
 }

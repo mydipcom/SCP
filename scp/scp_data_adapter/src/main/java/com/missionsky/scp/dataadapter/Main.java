@@ -28,9 +28,6 @@ public class Main {
 	public static void main(String[] args) {
 //		TODO shell
 		
-		
-		
-		
 		// 加载配置文件
 		
 		ConfigParser.loadConfiguration();
@@ -45,8 +42,7 @@ public class Main {
 				DataFetcherDispenser dataFetcherDispenser = new DataFetcherDispenser();
 				dataFetcherDispenser.gainParsedData(doc);
 			} catch (DocumentException e) {
-				
-				logger.error("The configuration file {} is not found.", confFileName);
+					logger.error("The configuration file {} is not found.", confFileName);
 			}
 		}
 	}

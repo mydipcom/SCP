@@ -54,9 +54,9 @@ public class FileService {
 		return map;
 	}
 	
-	public Map<String, String> getFilesBytype() throws IOException{
+	public Map<String, String> getFilesBytype(String type) throws IOException{
 		Map<String, byte[]> values = new HashMap<String, byte[]>();
-		values.put(QUALIFIERS[3], Bytes.toBytes("source config"));
+		values.put(QUALIFIERS[3], Bytes.toBytes(type));
 		List<Result> list = helper.getRowResults(TABLE_NAME, FAMILY, QUALIFIERS, values, null);
 		Map<String, String> map = new HashMap<String,String>();
 		if(list != null && !list.isEmpty()){

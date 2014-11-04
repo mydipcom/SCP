@@ -24,7 +24,7 @@ public class MahoutDemo {
 	
 	public static void main(String [] args){
 		try {
-			DataModel model = new FileDataModel(new File("/home/hadoop/data.csv"));
+			DataModel model = new FileDataModel(new File("src/main/resources/123.txt"));
 			UserSimilarity similarity = new CachingUserSimilarity(new SpearmanCorrelationSimilarity(model),model);
 			UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
 			Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);

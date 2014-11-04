@@ -196,7 +196,7 @@ public class TaskAction {
 		model.addAttribute("task", task);
 		
 		try {
-			model.addAttribute("files", fileService.getAllFiles());
+			model.addAttribute("files", fileService.getFilesBytype("standard config"));
 			model.addAttribute("assembly", client.getAssembly());
 			model.addAttribute("algorithms", algorithmService.findAllAlgorithmsByType(SysConstants.BASIC));
 		} catch (RemoteException e) {

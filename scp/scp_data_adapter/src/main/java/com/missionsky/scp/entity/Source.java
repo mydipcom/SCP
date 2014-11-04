@@ -22,7 +22,7 @@ public class Source implements Serializable{
 	
 	private Integer weekday;
 
-
+	private Integer status;
 	
 	public String getRowKey() {
 		return rowKey;
@@ -58,6 +58,14 @@ public class Source implements Serializable{
 
 	public Integer getTriggerType() {
 		return triggerType;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public void setTriggerType(Integer triggerType) {

@@ -62,7 +62,7 @@ $(document).ready(function(e) {
 				if(flag){
 					var index = 0;
 					var html = "<div class=\"action-params\">";
-					var select = $("#paramForm").find("select");
+					var select = $("#paramForm").find("select:eq(0)");
 					var key = $(select).val();
 					var value = $(select).find("option:selected").text();
 					var description = $("#paramForm").find("div:eq(1)").find("input:eq(0)").val();
@@ -95,7 +95,7 @@ $(document).ready(function(e) {
 					}
 					html = html + "<div class='form-group'><input name='actions["+index+"].rowId' type='hidden' value="+key+" indexData="+index+">"
 						+ "<label class='col-sm-2 control-label'>Algorithm Name:</label><div class='col-sm-3'><input name='actions["+index+"].name' class='form-control validate[required]' readonly='readonly' type='text' value="+value+"></div>"
-						+ "<div class='col-sm-2' ><div class='input-group'><span class='input-group-addon'>Input</span><input name='actions["+index+"].inputpaths' class='form-control' readonly='readonly' type='type' value="+inputPath+"></div></div>"
+						+ "<div class='col-sm-2' ><div class='input-group'><span class='input-group-addon'>Input</span><input name='actions["+index+"].input' class='form-control' readonly='readonly' type='type' value="+inputPath+"></div></div>"
 						+ "<div class='col-sm-3' ><div class='input-group'><span class='input-group-addon'>Describe</span><input name='actions["+index+"].description' class='form-control' readonly='readonly' type='type' value="+description+"></div></div>"
 						+ "<div class='col-sm-2'><input type='button' class='btn btn-info' value='edit' onclick='editStep(this)'><input type='button' class='btn btn-info' value='del' onclick='delStep(this)'></div></div>";
 						
@@ -120,13 +120,33 @@ $(document).ready(function(e) {
 		}
 	});
 	
+	$("#multipleselect").multiselect().multiselectfilter();
+	$("#multipleselect").on("multiselectclick", function(event, ui) {
+    var array_of_checked_values = $("#multipleselect").multiselect("getChecked").map(function(){
+	   return this.value;}).get();
+	   
+	   $(this).parent().find("input").val(array_of_checked_values);
+	 });
+
+	$("#multipleselect").bind("multiselectuncheckall", function(event, ui){
+	     //event handler here
+		$(this).parent().find("input").val("");
+	});
+
+	$("#multipleselect").bind("multiselectcheckall", function(event, ui){
+	    // event handler here
+		var array_of_checked_values = $("#multipleselect").multiselect("getChecked").map(function(){
+	    return this.value;}).get();
+		$(this).parent().find("input").val(array_of_checked_values);
+	});
+
 });
 
 
 
 function stepChange(k) {
 	$(".stepParam").remove();
-	if($(k).val() == undefined){
+	if($(k).val() == undefined || $(k).val() == ""){
 		return false;
 	}
 	$.ajax({
@@ -160,7 +180,7 @@ function addStep() {
 	$(".stepParam").remove();
 	var a=$("#assembly_selected").find("option:selected").text();
 	
-	if((a == "BasicTaskAssemblyLine" || a == "--Please select--") && $(".action-params").length>0){
+	if((a == "BasicTaskAssemblyLine") && $(".action-params").length>0){
 		
 		$("#paramForm").find("div:eq(2)").hide();
 	}else{
@@ -175,12 +195,18 @@ function addStep() {
 }
 
 function editStep(k) {
+	var a=$("#assembly_selected").find("option:selected").text();
+	if((a == "BasicTaskAssemblyLine") && $(".action-params").length>1){
+		
+		$("#paramForm").find("div:eq(2)").hide();
+	}else{
+		$("#paramForm").find("div:eq(2)").show();
+	}
 	var key = $(k).parent().parent().parent().find("input:eq(0)").val();
-	
-	$("#dialogDiv").find("select").attr("disabled",false);
-	$("#dialogDiv").find("select").val(key);
-	stepChange($("#dialogDiv").find("select"));
-	$("#dialogDiv").find("select").attr("disabled",true);
+	$("#dialogDiv").find("select:eq(0)").attr("disabled",false);
+	$("#dialogDiv").find("select:eq(0)").val(key);
+	stepChange($("#dialogDiv").find("select:eq(0)"));
+	$("#dialogDiv").find("select:eq(0)").attr("disabled",true);
 	var params = $(k).parent().parent().next();
 	if(params != undefined && params != null){
 		$(params).find("dl").each(function(i,item){
@@ -189,7 +215,9 @@ function editStep(k) {
 	}
 	$("#paramForm").find("input:eq(1)").val($(k).parent().parent().parent().find("input:eq(2)").val());
 	$("#paramForm").validationEngine("hideAll");
+	
 	$("#dialogDiv").dialog("open");
+	
 }
 
 function delStep(k) {
@@ -214,8 +242,8 @@ function radioclick(k){
 	}else if(value == 3){
 		$("#start-time").show();
 	}
+	
+
 }
-
-
 
 

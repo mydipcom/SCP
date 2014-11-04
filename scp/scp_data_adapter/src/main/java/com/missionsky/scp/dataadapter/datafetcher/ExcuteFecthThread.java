@@ -1,5 +1,6 @@
 package com.missionsky.scp.dataadapter.datafetcher;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.missionsky.scp.dataadapter.common.SingleInstance;
 import com.missionsky.scp.dataadapter.common.SystemConstants;
+import com.missionsky.scp.dataadapter.dao.AdapterstatusDao;
 import com.missionsky.scp.dataadapter.datafilter.DataFilterApi;
 import com.missionsky.scp.dataadapter.entity.DataSource;
+import com.missionsky.scp.dataadapter.util.FileNameUtil;
+import com.missionsky.scp.inter.AdapterUtil;
 
 /**
  * @author Ellis Xie
@@ -22,6 +26,10 @@ public class ExcuteFecthThread extends Thread {
 	private DataSource dataSource;
 
 	private DataFetcher dataFetcher;
+	
+	private AdapterUtil adapterutil;
+	
+	public static String filename;//未使用
 	
 	private Logger logger = LoggerFactory.getLogger(ExcuteFecthThread.class);
 	
@@ -35,6 +43,12 @@ public class ExcuteFecthThread extends Thread {
 		
 		HashMap<String, DataSource> dataSources = SingleInstance.getDataSources();
 		Integer step = dataSource.getStep();
+		// filename 定义了但是没使用，可以再这里通过filename的使用实现存放不同时间段的数据源
+		try {
+			filename = FileNameUtil.getFileName(dataSource.getName());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		Integer offset = 0;
 		
 		if (dataSources.get(dataSource.getName()).getIsFirst()) {
@@ -59,6 +73,15 @@ public class ExcuteFecthThread extends Thread {
 			}
 
 		}
+		
+		System.out.println("the thread is end +++++++++++++");
+		try {
+			AdapterstatusDao.getInstance().updateScheduleRecord(adapterutil.rowkey,3);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	// 分块处理

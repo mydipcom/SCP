@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import org.apache.cassandra.cli.CliParser.newColumnFamily_return;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;

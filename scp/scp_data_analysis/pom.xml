@@ -1,10 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.missionsky.scp</groupId>
-  <artifactId>scp_data_analysis</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.missionsky.scp</groupId>
+	<artifactId>scp_data_analysis</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
 
 		<!-- Generic properties -->
 		<java.version>1.7</java.version>
@@ -13,19 +13,19 @@
 
 		<!-- Spring -->
 		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
-		
+
 		<!-- Spring-data-hadoop -->
 		<spring-data-hadoop.version>1.0.1.RELEASE</spring-data-hadoop.version>
-		
+
 		<!-- Hadoop -->
 		<hadoop.version>2.5.0</hadoop.version>
-		
+
 		<!-- Dom4j -->
 		<dom4j.version>1.6.1</dom4j.version>
-		
+
 		<!-- Quartz -->
 		<quartz.version>2.2.1</quartz.version>
-		
+
 		<!-- Jackson -->
 		<jackson.version>2.2.3</jackson.version>
 
@@ -38,50 +38,52 @@
 		<junit.version>4.11</junit.version>
 
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>2.3.2</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-				<encoding>UTF-8</encoding>
-			</configuration>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-jar-plugin</artifactId>
-			<configuration>
-			<archive>
-			<manifest>
-			<addClasspath>true</addClasspath>
-			<classpathPrefix>lib/</classpathPrefix>
-			<mainClass>com.missionsky.scp.dataadapter.Main</mainClass>
-			</manifest>
-			</archive>
-			</configuration>
-		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-dependency-plugin</artifactId>
-			<executions>
-			<execution>
-				<id>copy</id>
-				<phase>install</phase>
-				<goals>
-					<goal>copy-dependenceies</goal>
-				</goals>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
-					<outputDirectory>${project.build.directory}/lib</outputDirectory>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
-			</execution>
-			</executions>
-		</plugin>
-		</plugins>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.missionsky.scp.dataanalysis.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependenceies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			</plugins>
 	</build>
+
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -89,7 +91,7 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-		
+
 		<!-- Hadoop -->
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -97,54 +99,45 @@
 			<version>2.5.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.hadoop</groupId>
-		    <artifactId>hadoop-hdfs</artifactId>
-		    <version>2.5.0</version>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>2.5.0</version>
 		</dependency>
-		
+
 		<!-- Spring-data-hadoop -->
-	    <dependency>
-	        <groupId>org.springframework.data</groupId>
-	        <artifactId>spring-data-hadoop</artifactId>
-	        <version>${spring-data-hadoop.version}</version>
-	    </dependency>
-		
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-hadoop</artifactId>
+			<version>${spring-data-hadoop.version}</version>
+		</dependency>
+
 		<!-- Dom4j -->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>${dom4j.version}</version>
 		</dependency>
-		
+
 		<!-- Quartz -->
 		<dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz</artifactId>
-		    <version>${quartz.version}</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz-jobs</artifactId>
-		    <version>${quartz.version}</version>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>${quartz.version}</version>
 		</dependency>
-		
+
 		<!-- Jackson -->
-		<!-- <dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-        <dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
-		</dependency> -->
-            
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-core</artifactId> 
+			<version>${jackson.version}</version> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-databind</artifactId> <version>${jackson.version}</version> 
+			</dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+			<artifactId>jackson-annotations</artifactId> <version>${jackson.version}</version> 
+			</dependency> -->
+
 
 		<!-- Logging with SLF4J & Log4j -->
 		<dependency>
@@ -156,42 +149,31 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-nop</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-            
-		
-		<!-- <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<version>${logback.version}</version>
-		</dependency> -->
-		
+
+
+		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+			<version>${slf4j.version}</version> <scope>compile</scope> </dependency> 
+			<dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-classic</artifactId> 
+			<version>${logback.version}</version> <scope>runtime</scope> </dependency> 
+			<dependency> <groupId>ch.qos.logback</groupId> <artifactId>logback-core</artifactId> 
+			<version>${logback.version}</version> </dependency> -->
+
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -241,14 +223,30 @@
 			<version>0.96.2-hadoop2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.mahout</groupId>
-			<artifactId>mahout-core</artifactId>
-			<version>0.8</version>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-examples</artifactId>
-			<version>0.8</version>
+			<version>0.9</version>
+			<classifier>job</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-core</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-math</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-integration</artifactId>
+			<version>0.9</version>
 		</dependency>
 	</dependencies>	
 </project>

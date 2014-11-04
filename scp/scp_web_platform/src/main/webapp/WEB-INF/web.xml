@@ -31,7 +31,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	  
- 
+    
 	<listener>
 		<description>web init</description>
 		<listener-class>com.missionsky.scp.util.WebInit</listener-class>

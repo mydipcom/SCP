@@ -164,7 +164,9 @@ public class DataFetcherDispenser {
 			
 			logger.info("Create a timer task thread for datasource {} in threadpool.", dataSourceName);
 			System.out.println(ds.getFecthDuration()+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
-			threadPool.scheduleAtFixedRate(new ExcuteFecthThread(SingleInstance.getDataSources().get(dataSourceName), dataFetcher), 2000, ds.getFecthDuration(), TimeUnit.MILLISECONDS);
+			threadPool.scheduleAtFixedRate(new ExcuteFecthThread(
+					SingleInstance.getDataSources().get(dataSourceName), dataFetcher),
+					2000, ds.getFecthDuration(), TimeUnit.MILLISECONDS);
 		}
 		
 	}
