@@ -21,8 +21,10 @@ import org.quartz.SchedulerException;
 
 
 
+
 import com.missionsky.scp.dataadapter.dao.AdapterstatusDao;
 import com.missionsky.scp.dataadapter.entity.AdapterTask;
+import com.missionsky.scp.entity.Product;
 import com.missionsky.scp.entity.Source;
 import com.missionsky.scp.quartz.SimpleQuartz;
 
@@ -119,4 +121,7 @@ public class AdapterUtil extends UnicastRemoteObject implements IadapterUtil {
 			throw new RemoteException(e.getMessage());
 		}
 	}
+
+
+ 
 }
